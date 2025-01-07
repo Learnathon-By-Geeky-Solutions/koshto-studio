@@ -102,3 +102,5 @@ Assets/Gemserk.Favorites.asset
 Assets/Gemserk.Favorites.asset.meta
 Assets/3rdParty/PluginMaster/DesignTools/Editor/PrefabWorldBuilder/Resources/Data/Palettes/PWB_88DB4F53CC8E6BB0.meta
 Assets/3rdParty/PluginMaster/DesignTools/Editor/PrefabWorldBuilder/Resources/Data/Palettes/PWB_88DB4F53CC8E6BB0/
+
+Library/PackageCache/com.unity.burst@1.8.18/.Runtime/libburst-llvm-16.dylib
