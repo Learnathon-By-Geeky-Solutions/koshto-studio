@@ -1,6 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-
 # UnityYAMLMerge
 *.meta -text merge=unityyamlmerge diff
 *.unity -text merge=unityyamlmerge diff
@@ -28,3 +27,4 @@
 *.mixer -text merge=unityyamlmerge diff
 *.shadervariants -text merge=unityyamlmerge diff
 *.dylib -text merge=unityyamlmerge diff
+*dylib filter=lfs diff=lfs merge=lfs -text
