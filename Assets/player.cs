@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour
     public float wallSlideSpeed = 2f;
     public float wallJumpForce = 10f;
     public Transform wallCheck;
-    private bool isTouchingWall;
+    public bool isTouchingWall;
     private bool isWallSliding;
 
     [Header("Dash Settings")]
@@ -117,6 +118,13 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(groundCheck.position, 0.2f);
+        Gizmos.DrawWireSphere(wallCheck.position, 0.2f);
+
     }
 
     private void FixedUpdate()
