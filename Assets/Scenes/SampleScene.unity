@@ -246,7 +246,7 @@ Transform:
   m_GameObject: {fileID: 18577380}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.1809482, w: 0.9834927}
-  m_LocalPosition: {x: -6.4979997, y: 0.61100006, z: 0}
+  m_LocalPosition: {x: -6.4979997, y: 0.654, z: 0}
   m_LocalScale: {x: 3.133632, y: 1.0021762, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -566,6 +566,7 @@ MonoBehaviour:
   wallSlideSpeed: 2
   wallJumpForce: 10
   wallCheck: {fileID: 679281573}
+  isTouchingWall: 0
   dashSpeed: 20
   dashDuration: 0.2
   sprintSpeed: 8
@@ -615,7 +616,7 @@ GameObject:
   - component: {fileID: 444080119}
   - component: {fileID: 444080121}
   - component: {fileID: 444080120}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +632,7 @@ Transform:
   m_GameObject: {fileID: 444080118}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.8579998, y: 1.9754002, z: 0}
+  m_LocalPosition: {x: -1.06, y: 2.06, z: 0}
   m_LocalScale: {x: 1, y: 2.6008, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -995,7 +996,7 @@ Transform:
   m_GameObject: {fileID: 615904723}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.017, y: 0.043, z: 0}
   m_LocalScale: {x: 9.896986, y: 1.073684, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1108,7 +1109,7 @@ Transform:
   m_GameObject: {fileID: 679281572}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.11, y: 0.03, z: 0}
+  m_LocalPosition: {x: 0.14, y: 0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
