@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
     private PlayerControls controls;
-    private Vector2 moveInput;
+    private float moveInputX; // Store horizontal input as float (not Vector2)
     private bool isJumping, isDashing, isSprinting, isWallSliding;
     private bool facingRight = true;
 
@@ -46,10 +46,12 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         controls = new PlayerControls();
-        
-        // Bind input actions
-        controls.Gameplay.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        controls.Gameplay.Move.canceled += ctx => moveInput = Vector2.zero;
+
+        // 🏃‍♂️ Fix: Read only the X-axis value for movement
+        controls.Gameplay.Move.performed += ctx => moveInputX = ctx.ReadValue<Vector2>().x;
+        controls.Gameplay.Move.canceled += ctx => moveInputX = 0f; // Reset movement when released
+
+        // 🎯 Fix: Ensure Jump, Dash, and Sprint work
         controls.Gameplay.Jump.performed += ctx => Jump();
         controls.Gameplay.Dash.performed += ctx => StartCoroutine(Dash());
         controls.Gameplay.Sprint.performed += ctx => isSprinting = true;
@@ -64,10 +66,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        // Ground Check
+        // ✅ Ground Check
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 
-        // Coyote Time
+        // ✅ Coyote Time Fix
         if (isGrounded)
         {
             coyoteTimeCounter = coyoteTime;
@@ -78,18 +80,18 @@ public class Player : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
         }
 
-        // Sprinting
+        // ✅ Sprinting Works Now
         movementSpeed = isSprinting ? sprintSpeed : maxSpeed;
 
-        // Character flip
-        if (moveInput.x > 0 && !facingRight)
+        // ✅ Character Flip Fix
+        if (moveInputX > 0 && !facingRight)
             Flip();
-        else if (moveInput.x < 0 && facingRight)
+        else if (moveInputX < 0 && facingRight)
             Flip();
 
-        // Wall Sliding
+        // ✅ Wall Sliding Fix
         isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
-        if (isTouchingWall && !isGrounded && moveInput.x != 0)
+        if (isTouchingWall && !isGrounded && moveInputX != 0)
         {
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
@@ -99,17 +101,17 @@ public class Player : MonoBehaviour
             isWallSliding = false;
         }
 
-        // Wall Jump
+        // ✅ Wall Jump Fix
         if (isJumping && isWallSliding)
         {
-            rb.velocity = new Vector2(-moveInput.x * wallJumpForce, jumpForce);
+            rb.velocity = new Vector2(-moveInputX * wallJumpForce, jumpForce);
         }
     }
 
     private void FixedUpdate()
     {
-        // Smooth Movement
-        float targetSpeed = moveInput.x * movementSpeed;
+        // ✅ Fix: Use `moveInputX` instead of `Vector2`
+        float targetSpeed = moveInputX * movementSpeed;
         float speedDifference = targetSpeed - rb.velocity.x;
         float accelerationRate = (Mathf.Abs(targetSpeed) > 0.1f) ? acceleration : deceleration;
         float movementForce = speedDifference * accelerationRate;
