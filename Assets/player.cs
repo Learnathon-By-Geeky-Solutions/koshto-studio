@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
     private PlayerControls controls;
-    private float moveInputX; // Store horizontal input as float (not Vector2)
+    private float moveInputX;
     private bool isJumping, isDashing, isSprinting, isWallSliding;
     private bool facingRight = true;
 
@@ -47,12 +47,12 @@ public class Player : MonoBehaviour
     {
         controls = new PlayerControls();
 
-        // 🏃‍♂️ Fix: Read only the X-axis value for movement
+        // Read only the X-axis value for movement
         controls.Gameplay.Move.performed += ctx => moveInputX = ctx.ReadValue<Vector2>().x;
-        controls.Gameplay.Move.canceled += ctx => moveInputX = 0f; // Reset movement when released
+        controls.Gameplay.Move.canceled += ctx => moveInputX = 0f;
 
-        // 🎯 Fix: Ensure Jump, Dash, and Sprint work
-        controls.Gameplay.Jump.performed += ctx => Jump();
+        // Jump, Dash, and Sprint Events
+        controls.Gameplay.Jump.performed += ctx => HandleJump();
         controls.Gameplay.Dash.performed += ctx => StartCoroutine(Dash());
         controls.Gameplay.Sprint.performed += ctx => isSprinting = true;
         controls.Gameplay.Sprint.canceled += ctx => isSprinting = false;
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
         }
 
-        // ✅ Sprinting Works Now
+        // ✅ Sprinting
         movementSpeed = isSprinting ? sprintSpeed : maxSpeed;
 
         // ✅ Character Flip Fix
@@ -100,17 +100,11 @@ public class Player : MonoBehaviour
         {
             isWallSliding = false;
         }
-
-        // ✅ Wall Jump Fix
-        if (isJumping && isWallSliding)
-        {
-            rb.velocity = new Vector2(-moveInputX * wallJumpForce, jumpForce);
-        }
     }
 
     private void FixedUpdate()
     {
-        // ✅ Fix: Use `moveInputX` instead of `Vector2`
+        // ✅ Movement with Acceleration
         float targetSpeed = moveInputX * movementSpeed;
         float speedDifference = targetSpeed - rb.velocity.x;
         float accelerationRate = (Mathf.Abs(targetSpeed) > 0.1f) ? acceleration : deceleration;
@@ -118,9 +112,14 @@ public class Player : MonoBehaviour
         rb.AddForce(new Vector2(movementForce, 0), ForceMode2D.Force);
     }
 
-    private void Jump()
+    // 🚀 Handles Normal & Wall Jumping
+    private void HandleJump()
     {
-        if (isGrounded || coyoteTimeCounter > 0 || jumpCount > 0)
+        if (isWallSliding)
+        {
+            WallJump();
+        }
+        else if (isGrounded || coyoteTimeCounter > 0 || jumpCount > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             coyoteTimeCounter = 0f;
@@ -128,16 +127,56 @@ public class Player : MonoBehaviour
         }
     }
 
+    // 🧗 Fixed Wall Jump Code
+    private void WallJump()
+    {
+        isWallSliding = false; // Disable sliding so jump isn't canceled
+
+        // Determine jump direction (opposite of the wall)
+        float jumpDirection = facingRight ? -1f : 1f;
+
+        // ✅ Flip character if needed
+        if ((jumpDirection > 0 && !facingRight) || (jumpDirection < 0 && facingRight))
+        {
+            Flip(); // Flip character so it faces the new direction
+        }
+
+        // Apply force for the wall jump
+        rb.velocity = new Vector2(jumpDirection * wallJumpForce, jumpForce);
+
+        // Prevent immediate movement input after jumping
+        StartCoroutine(DisableMovementForWallJump());
+    }
+
+    // ⏳ Prevents instant wall re-stick
+    private IEnumerator DisableMovementForWallJump()
+    {
+        moveInputX = 0; // Temporarily stop movement input
+        yield return new WaitForSeconds(0.2f); // Small delay
+    }
+
+    // ⚡ Dash Function (Now Works Properly)
     private IEnumerator Dash()
     {
         isDashing = true;
-        float originalSpeed = movementSpeed;
-        movementSpeed = dashSpeed;
+
+        // Store original gravity
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0; // Disable gravity while dashing
+
+        float dashDirection = facingRight ? 1f : -1f;
+
+        // Apply instant dash velocity
+        rb.velocity = new Vector2(dashDirection * dashSpeed, 0f);
+
         yield return new WaitForSeconds(dashDuration);
-        movementSpeed = originalSpeed;
+
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = originalGravity;
         isDashing = false;
     }
 
+    // 🔄 Flip Character Direction
     private void Flip()
     {
         facingRight = !facingRight;
