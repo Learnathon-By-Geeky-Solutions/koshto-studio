@@ -567,7 +567,7 @@ MonoBehaviour:
   wallJumpForce: 10
   wallCheck: {fileID: 679281573}
   isTouchingWall: 0
-  dashSpeed: 20
+  dashSpeed: 42
   dashDuration: 0.2
   sprintSpeed: 8
   groundCheck: {fileID: 400904476}
