@@ -128,23 +128,21 @@ public class Player : MonoBehaviour
     }
 
     // 🧗 Fixed Wall Jump Code
+
     private void WallJump()
     {
-        isWallSliding = false; // Disable sliding so jump isn't canceled
+        isWallSliding = false;
 
-        // Determine jump direction (opposite of the wall)
+        // ✅ Reset gravity in case Dash modified it
+        rb.gravityScale = 1f;
+
         float jumpDirection = facingRight ? -1f : 1f;
 
-        // ✅ Flip character if needed
         if ((jumpDirection > 0 && !facingRight) || (jumpDirection < 0 && facingRight))
-        {
-            Flip(); // Flip character so it faces the new direction
-        }
+            Flip();
 
-        // Apply force for the wall jump
         rb.velocity = new Vector2(jumpDirection * wallJumpForce, jumpForce);
 
-        // Prevent immediate movement input after jumping
         StartCoroutine(DisableMovementForWallJump());
     }
 
@@ -158,21 +156,21 @@ public class Player : MonoBehaviour
     // ⚡ Dash Function (Now Works Properly)
     private IEnumerator Dash()
     {
+        if (isDashing) yield break; // Prevent multiple dashes
+
         isDashing = true;
 
-        // Store original gravity
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0; // Disable gravity while dashing
 
         float dashDirection = facingRight ? 1f : -1f;
-
-        // Apply instant dash velocity
         rb.velocity = new Vector2(dashDirection * dashSpeed, 0f);
 
         yield return new WaitForSeconds(dashDuration);
 
-        rb.velocity = Vector2.zero;
+        // ✅ Restore gravity & stop unwanted movement
         rb.gravityScale = originalGravity;
+        rb.velocity = new Vector2(0, rb.velocity.y); // Preserve any jump momentum
         isDashing = false;
     }
 
