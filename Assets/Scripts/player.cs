@@ -4,11 +4,14 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    // Components
     private Rigidbody2D rb;
+    private Animator animator;
     private PlayerControls controls;
+
+    // Input Variables
     private float moveInputX;
-    private bool isJumping, isDashing, isSprinting, isWallSliding;
-    private bool facingRight = true;
+    private bool isJumping, isDashing, isSprinting, isWallSliding, isFacingRight = true;
 
     [Header("Movement Settings")]
     public float maxSpeed = 5f;
@@ -29,7 +32,7 @@ public class Player : MonoBehaviour
     public float wallSlideSpeed = 2f;
     public float wallJumpForce = 10f;
     public Transform wallCheck;
-    public bool isTouchingWall;
+    private bool isTouchingWall;
 
     [Header("Dash Settings")]
     public float dashSpeed = 20f;
@@ -45,13 +48,13 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         controls = new PlayerControls();
 
-        // Read only the X-axis value for movement
+        // Input Events
         controls.Gameplay.Move.performed += ctx => moveInputX = ctx.ReadValue<Vector2>().x;
         controls.Gameplay.Move.canceled += ctx => moveInputX = 0f;
-
-        // Jump, Dash, and Sprint Events
         controls.Gameplay.Jump.performed += ctx => HandleJump();
         controls.Gameplay.Dash.performed += ctx => StartCoroutine(Dash());
         controls.Gameplay.Sprint.performed += ctx => isSprinting = true;
@@ -60,16 +63,27 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         movementSpeed = maxSpeed;
     }
 
     private void Update()
     {
-        // ✅ Ground Check
+        CheckGroundStatus();
+        HandleMovement();
+        HandleWallSlide();
+        UpdateAnimations();
+    }
+
+    private void FixedUpdate()
+    {
+        ApplyMovement();
+    }
+
+    // ✅ Check Ground & Coyote Time
+    private void CheckGroundStatus()
+    {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 
-        // ✅ Coyote Time Fix
         if (isGrounded)
         {
             coyoteTimeCounter = coyoteTime;
@@ -79,40 +93,29 @@ public class Player : MonoBehaviour
         {
             coyoteTimeCounter -= Time.deltaTime;
         }
-
-        // ✅ Sprinting
-        movementSpeed = isSprinting ? sprintSpeed : maxSpeed;
-
-        // ✅ Character Flip Fix
-        if (moveInputX > 0 && !facingRight)
-            Flip();
-        else if (moveInputX < 0 && facingRight)
-            Flip();
-
-        // ✅ Wall Sliding Fix
-        isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
-        if (isTouchingWall && !isGrounded && moveInputX != 0)
-        {
-            isWallSliding = true;
-            rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
-        }
-        else
-        {
-            isWallSliding = false;
-        }
     }
 
-    private void FixedUpdate()
+    // ✅ Handles Movement Input & Character Flip
+    private void HandleMovement()
     {
-        // ✅ Movement with Acceleration
+        movementSpeed = isSprinting ? sprintSpeed : maxSpeed;
+
+        if (moveInputX > 0 && !isFacingRight)
+            Flip();
+        else if (moveInputX < 0 && isFacingRight)
+            Flip();
+    }
+
+    // ✅ Handles Smooth Movement with Acceleration
+    private void ApplyMovement()
+    {
         float targetSpeed = moveInputX * movementSpeed;
         float speedDifference = targetSpeed - rb.velocity.x;
         float accelerationRate = (Mathf.Abs(targetSpeed) > 0.1f) ? acceleration : deceleration;
-        float movementForce = speedDifference * accelerationRate;
-        rb.AddForce(new Vector2(movementForce, 0), ForceMode2D.Force);
+        rb.AddForce(new Vector2(speedDifference * accelerationRate, 0), ForceMode2D.Force);
     }
 
-    // 🚀 Handles Normal & Wall Jumping
+    // ✅ Handles Normal & Wall Jumping
     private void HandleJump()
     {
         if (isWallSliding)
@@ -127,58 +130,74 @@ public class Player : MonoBehaviour
         }
     }
 
-    // 🧗 Fixed Wall Jump Code
+    // ✅ Wall Sliding Logic
+    private void HandleWallSlide()
+    {
+        isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
+        isWallSliding = isTouchingWall && !isGrounded && moveInputX != 0;
 
+        if (isWallSliding)
+            rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
+    }
+
+    // ✅ Wall Jump with Proper Gravity Reset
     private void WallJump()
     {
         isWallSliding = false;
+        rb.gravityScale = fallMultiplier;
 
-        // ✅ Reset gravity in case Dash modified it
-        rb.gravityScale = 1f;
+        float jumpDirection = isFacingRight ? -1f : 1f;
 
-        float jumpDirection = facingRight ? -1f : 1f;
-
-        if ((jumpDirection > 0 && !facingRight) || (jumpDirection < 0 && facingRight))
+        if ((jumpDirection > 0 && !isFacingRight) || (jumpDirection < 0 && isFacingRight))
+        {
             Flip();
-
+        }
         rb.velocity = new Vector2(jumpDirection * wallJumpForce, jumpForce);
-
         StartCoroutine(DisableMovementForWallJump());
     }
 
-    // ⏳ Prevents instant wall re-stick
     private IEnumerator DisableMovementForWallJump()
     {
-        moveInputX = 0; // Temporarily stop movement input
-        yield return new WaitForSeconds(0.2f); // Small delay
+        float storedInput = moveInputX;
+        moveInputX = 0;
+        yield return new WaitForSeconds(0.2f);
+        moveInputX = controls.Gameplay.Move.ReadValue<Vector2>().x;
     }
 
-    // ⚡ Dash Function (Now Works Properly)
+    // ✅ Dash Function with Proper Gravity Reset
     private IEnumerator Dash()
     {
-        if (isDashing) yield break; // Prevent multiple dashes
+        if (isDashing) yield break;
 
         isDashing = true;
-
         float originalGravity = rb.gravityScale;
-        rb.gravityScale = 0; // Disable gravity while dashing
-
-        float dashDirection = facingRight ? 1f : -1f;
+        rb.gravityScale = 0;
+        float dashDirection = isFacingRight ? 1f : -1f;
         rb.velocity = new Vector2(dashDirection * dashSpeed, 0f);
+
+        animator.SetTrigger("Dash");
 
         yield return new WaitForSeconds(dashDuration);
 
-        // ✅ Restore gravity & stop unwanted movement
         rb.gravityScale = originalGravity;
-        rb.velocity = new Vector2(0, rb.velocity.y); // Preserve any jump momentum
+        rb.velocity = new Vector2(0, rb.velocity.y);
         isDashing = false;
     }
 
-    // 🔄 Flip Character Direction
+    // ✅ Flip Character Direction
     private void Flip()
     {
-        facingRight = !facingRight;
+        isFacingRight = !isFacingRight;
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+    }
+
+    // ✅ Update Animator Parameters
+    private void UpdateAnimations()
+    {
+        animator.SetBool("isRunning", Mathf.Abs(moveInputX) > 0.1f);
+        animator.SetBool("isJumping", !isGrounded && rb.velocity.y > 0);
+        animator.SetBool("isFalling", !isGrounded && rb.velocity.y < 0);
+        animator.SetBool("isWallSliding", isWallSliding);
     }
 
     private void OnEnable() => controls.Gameplay.Enable();

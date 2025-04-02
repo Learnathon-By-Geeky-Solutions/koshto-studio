@@ -395,6 +395,7 @@ GameObject:
   - component: {fileID: 368844405}
   - component: {fileID: 368844406}
   - component: {fileID: 368844407}
+  - component: {fileID: 368844408}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -442,7 +443,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 99
   m_Sprite: {fileID: 21300000, guid: 2a5c2f3ca4ae14e7e91149316db1e054, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -566,7 +567,6 @@ MonoBehaviour:
   wallSlideSpeed: 2
   wallJumpForce: 10
   wallCheck: {fileID: 679281573}
-  isTouchingWall: 0
   dashSpeed: 42
   dashDuration: 0.2
   sprintSpeed: 8
@@ -574,6 +574,27 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+--- !u!95 &368844408
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368844402}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f3346bf50a05e7b4fa1a6b710e92add0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &400904475
 GameObject:
   m_ObjectHideFlags: 0
