@@ -48,4 +48,4 @@ jobs:
       - name: Run SonarCloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: sonar-scanner -Dsonar.organization="your_org" -Dsonar.projectKey="your_project" -Dsonar.pullrequest.key="${{ github.event.pull_request.number }}" -Dsonar.pullrequest.branch="${{ github.head_ref }}" -Dsonar.pullrequest.base="${{ github.base_ref }}"
+        run: sonar-scanner -Dsonar.organization="Learnathon" -Dsonar.projectKey="koshto-studio" -Dsonar.pullrequest.key="${{ github.event.pull_request.number }}" -Dsonar.pullrequest.branch="${{ github.head_ref }}" -Dsonar.pullrequest.base="${{ github.base_ref }}"
