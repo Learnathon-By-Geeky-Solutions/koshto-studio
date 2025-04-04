@@ -127,6 +127,9 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             coyoteTimeCounter = 0f;
             jumpCount--;
+            animator.ResetTrigger("Jump");
+            animator.Play("Jump", 0, 0f);
+            animator.SetTrigger("Jump");
         }
     }
 
@@ -195,9 +198,13 @@ public class Player : MonoBehaviour
     private void UpdateAnimations()
     {
         animator.SetBool("isRunning", Mathf.Abs(moveInputX) > 0.1f);
-        animator.SetBool("isJumping", !isGrounded && rb.velocity.y > 0);
+        animator.SetBool("isJumping", !isGrounded);
         animator.SetBool("isFalling", !isGrounded && rb.velocity.y < 0);
         animator.SetBool("isWallSliding", isWallSliding);
+        if (isGrounded)
+        {
+            animator.ResetTrigger("Jump");
+        }
     }
 
     private void OnEnable() => controls.Gameplay.Enable();

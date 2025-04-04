@@ -559,7 +559,7 @@ MonoBehaviour:
   maxSpeed: 5
   acceleration: 8
   deceleration: 6
-  jumpForce: 6
+  jumpForce: 12
   coyoteTime: 0.1
   lowJumpMultiplier: 2
   fallMultiplier: 2.5
