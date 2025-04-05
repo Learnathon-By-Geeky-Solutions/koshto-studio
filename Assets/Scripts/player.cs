@@ -16,20 +16,88 @@ public class Player : MonoBehaviour
     private float moveInputX;
     private bool isJumping, isDashing, isSprinting, isWallSliding, isFacingRight = true;
 
-    [Header("Movement Settings")]
-    public float maxSpeed = 5f;
-    public float acceleration = 8f;
-    public float deceleration = 6f;
+        [Header("Movement Settings")]
+        [SerializeField] private float maxSpeed = 5f;
+        [SerializeField] private float acceleration = 8f;
+        [SerializeField] private float deceleration = 6f;
 
-    [Header("Jump Settings")]
-    public float jumpForce = 10f;
-    public float coyoteTime = 0.1f;
-    public float lowJumpMultiplier = 2f;
-    public float fallMultiplier = 2.5f;
-    private float coyoteTimeCounter;
-    private bool isGrounded;
-    private int jumpCount;
-    public int maxJumps = 2;
+        public float MaxSpeed
+        {
+            get => maxSpeed;
+            private set => maxSpeed = value;
+        }
+
+        public float Acceleration
+        {
+            get => acceleration;
+            private set => acceleration = value;
+        }
+
+        public float Deceleration
+        {
+            get => deceleration;
+            private set => deceleration = value;
+        }
+
+
+        [Header("Jump Settings")]
+        [SerializeField] private float jumpForce = 10f;
+        [SerializeField] private float coyoteTime = 0.1f;
+        [SerializeField] private float lowJumpMultiplier = 2f;
+        [SerializeField] private float fallMultiplier = 2.5f;
+        private float coyoteTimeCounter;
+        private bool isGrounded;
+        private int jumpCount;
+        [SerializeField] private int maxJumps = 2;
+
+        public float JumpForce
+        {
+            get => jumpForce;
+            private set => jumpForce = value;
+        }
+
+        public float CoyoteTime
+        {
+            get => coyoteTime;
+            private set => coyoteTime = value;
+        }
+
+        public float LowJumpMultiplier
+        {
+            get => lowJumpMultiplier;
+            private set => lowJumpMultiplier = value;
+        }
+
+        public float FallMultiplier
+        {
+            get => fallMultiplier;
+            private set => fallMultiplier = value;
+        }
+
+        public int MaxJumps
+        {
+            get => maxJumps;
+            private set => maxJumps = value;
+        }
+
+        public float CoyoteTimeCounter
+        {
+            get => coyoteTimeCounter;
+            private set => coyoteTimeCounter = value;
+        }
+
+        public bool IsGrounded
+        {
+            get => isGrounded;
+            private set => isGrounded = value;
+        }
+
+        public int JumpCount
+        {
+            get => jumpCount;
+            private set => jumpCount = value;
+        }
+
 
         [Header("Wall Jump & Slide")]
         [SerializeField] private float wallSlideSpeed = 2f;
@@ -58,13 +126,16 @@ public class Player : MonoBehaviour
         {
             // Declare isTouchingWall as a local variable
             bool isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
-            bool isWallSliding = isTouchingWall && !isGrounded && Mathf.Abs(moveInputX) > 0.1f;
 
-            if (isWallSliding)
+            // Rename the local variable to avoid conflict with the class-level variable
+            bool isCurrentlyWallSliding = isTouchingWall && !isGrounded && Mathf.Abs(moveInputX) > 0.1f;
+
+            if (isCurrentlyWallSliding)
             {
                 rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
             }
         }
+
 
         private void WallJump1()
         {
