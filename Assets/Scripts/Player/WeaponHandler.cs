@@ -42,5 +42,14 @@ namespace Player
             Debug.Log("Attack!");
             equippedWeapon.TryAttack();
         }
+        public void OnPickup(InputAction.CallbackContext context)
+        {
+            if (!context.performed || equippedWeapon == null)
+            {
+                return;
+            }
+            Debug.Log("Pickup performed!");
+            // Add logic for picking up a weapon here, if necessary.
+        }
     }
 }
