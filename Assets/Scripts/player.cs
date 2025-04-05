@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+namespace Player.input 
+{
+
 public class Player : MonoBehaviour
 {
     // Components
@@ -136,10 +139,14 @@ public class Player : MonoBehaviour
     // ✅ Wall Sliding Logic
     private void HandleWallSlide()
     {
-        isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
-        isWallSliding = isTouchingWall && !isGrounded && moveInputX != 0;
+            isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
+            // Set a small threshold value
+            float threshold = 0.1f;
 
-        if (isWallSliding)
+            isWallSliding = isTouchingWall && !isGrounded && Mathf.Abs(moveInputX) > threshold;
+
+
+            if (isWallSliding)
             rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
     }
 
@@ -209,4 +216,5 @@ public class Player : MonoBehaviour
 
     private void OnEnable() => controls.Gameplay.Enable();
     private void OnDisable() => controls.Gameplay.Disable();
+}
 }
