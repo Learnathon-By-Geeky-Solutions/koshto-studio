@@ -31,15 +31,79 @@ public class Player : MonoBehaviour
     private int jumpCount;
     public int maxJumps = 2;
 
-    [Header("Wall Jump & Slide")]
-    public float wallSlideSpeed = 2f;
-    public float wallJumpForce = 10f;
-    public Transform wallCheck;
-    private bool isTouchingWall;
+        [Header("Wall Jump & Slide")]
+        [SerializeField] private float wallSlideSpeed = 2f;
+        [SerializeField] private float wallJumpForce = 10f;
+        [SerializeField] private Transform wallCheck;
 
-    [Header("Dash Settings")]
-    public float dashSpeed = 20f;
-    public float dashDuration = 0.2f;
+        public float WallSlideSpeed
+        {
+            get => wallSlideSpeed;
+            private set => wallSlideSpeed = value;
+        }
+
+        public float WallJumpForce
+        {
+            get => wallJumpForce;
+            private set => wallJumpForce = value;
+        }
+
+        public Transform WallCheck
+        {
+            get => wallCheck;
+            private set => wallCheck = value;
+        }
+
+        private void HandleWallSlide1()
+        {
+            // Declare isTouchingWall as a local variable
+            bool isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
+            bool isWallSliding = isTouchingWall && !isGrounded && Mathf.Abs(moveInputX) > 0.1f;
+
+            if (isWallSliding)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
+            }
+        }
+
+        private void WallJump1()
+        {
+            // Declare isTouchingWall as a local variable
+            bool isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
+
+            if (isTouchingWall)
+            {
+                isWallSliding = false;
+                rb.gravityScale = fallMultiplier;
+
+                float jumpDirection = isFacingRight ? -1f : 1f;
+
+                if ((jumpDirection > 0 && !isFacingRight) || (jumpDirection < 0 && isFacingRight))
+                {
+                    Flip();
+                }
+                rb.velocity = new Vector2(jumpDirection * wallJumpForce, jumpForce);
+                StartCoroutine(DisableMovementForWallJump());
+            }
+        }
+
+
+        [Header("Dash Settings")]
+        [SerializeField] private float dashSpeed = 20f;
+        [SerializeField] private float dashDuration = 0.2f;
+
+        public float DashSpeed
+        {
+            get => dashSpeed;
+            private set => dashSpeed = value; // You can make the setter private if you don't want it to be set outside
+        }
+
+        public float DashDuration
+        {
+            get => dashDuration;
+            private set => dashDuration = value; // Same as above, optional to keep setter private
+        }
+
 
         [Header("Sprint Settings")]
         [SerializeField] private float sprintSpeed = 8f;
@@ -147,24 +211,27 @@ public class Player : MonoBehaviour
         }
     }
 
-    // ✅ Wall Sliding Logic
-    private void HandleWallSlide()
-    {
-            isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
+        // ✅ Wall Sliding Logic
+        private void HandleWallSlide()
+        {
+            // Declare isTouchingWall as a local variable
+            bool isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
+
             // Set a small threshold value
             float threshold = 0.1f;
 
-            isWallSliding = isTouchingWall && !isGrounded && Mathf.Abs(moveInputX) > threshold;
-
+            // Use the local variable isTouchingWall
+            bool isWallSliding = isTouchingWall && !isGrounded && Mathf.Abs(moveInputX) > threshold;
 
             if (isWallSliding)
             {
                 rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
             }
-    }
+        }
 
-    // ✅ Wall Jump with Proper Gravity Reset
-    private void WallJump()
+
+        // ✅ Wall Jump with Proper Gravity Reset
+        private void WallJump()
     {
         isWallSliding = false;
         rb.gravityScale = fallMultiplier;
