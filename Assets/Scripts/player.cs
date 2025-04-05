@@ -41,15 +41,26 @@ public class Player : MonoBehaviour
     public float dashSpeed = 20f;
     public float dashDuration = 0.2f;
 
-    [Header("Sprint Settings")]
-    public float sprintSpeed = 8f;
-    private float movementSpeed;
+        [Header("Sprint Settings")]
+        [SerializeField] private float sprintSpeed = 8f;
 
-    [Header("Ground Detection")]
-    public Transform groundCheck;
-    public LayerMask groundLayer;
+        public float movementSpeed
+        {
+            get { return sprintSpeed; }
+            private set { sprintSpeed = value; } // You can make the setter private if you don't want it to be set outside
+        }
 
-    private void Awake()
+
+        [Header("Ground Detection")]
+        [SerializeField] private Transform groundCheck;
+        [SerializeField] private LayerMask groundLayer;
+
+        public Transform GroundCheck => groundCheck;
+        public LayerMask GroundLayer => groundLayer;
+
+
+
+        private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -147,7 +158,9 @@ public class Player : MonoBehaviour
 
 
             if (isWallSliding)
-            rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
+            {
+                rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
+            }
     }
 
     // ✅ Wall Jump with Proper Gravity Reset
@@ -168,7 +181,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator DisableMovementForWallJump()
     {
-        float storedInput = moveInputX;
+        
         moveInputX = 0;
         yield return new WaitForSeconds(0.2f);
         moveInputX = controls.Gameplay.Move.ReadValue<Vector2>().x;
