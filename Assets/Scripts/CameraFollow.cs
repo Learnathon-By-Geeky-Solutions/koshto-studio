@@ -1,13 +1,35 @@
 using UnityEngine;
+
 namespace MyGame.Camera
 {
-
-
     public class CameraFollow : MonoBehaviour
     {
-        public Transform player; // Assign your player in the Inspector
-        public float smoothSpeed = 5f;
-        public Vector3 offset = new Vector3(0, 1, -10); // Adjust the Y offset to center the player
+        [SerializeField]
+        private Transform player; // Assign your player in the Inspector
+
+        [SerializeField]
+        private float smoothSpeed = 5f;
+
+        [SerializeField]
+        private Vector3 offset = new Vector3(0, 1, -10); // Adjust the Y offset to center the player
+
+        public Transform Player
+        {
+            get => player;
+            set => player = value;
+        }
+
+        public float SmoothSpeed
+        {
+            get => smoothSpeed;
+            set => smoothSpeed = value;
+        }
+
+        public Vector3 Offset
+        {
+            get => offset;
+            set => offset = value;
+        }
 
         void LateUpdate()
         {
@@ -20,4 +42,3 @@ namespace MyGame.Camera
         }
     }
 }
-    
