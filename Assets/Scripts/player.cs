@@ -7,7 +7,6 @@ namespace Player.input
 
 public class Player : MonoBehaviour
 {
-    // Components
     private Rigidbody2D rb;
     private Animator animator;
     private PlayerControls controls;
