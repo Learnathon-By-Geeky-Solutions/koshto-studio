@@ -1,18 +1,23 @@
 using UnityEngine;
- 
-public class CameraFollow : MonoBehaviour
+namespace MyGame.Camera
 {
-    public Transform player; // Assign your player in the Inspector
-    public float smoothSpeed = 5f;
-    public Vector3 offset = new Vector3(0, 1, -10); // Adjust the Y offset to center the player
- 
-    void LateUpdate()
+
+
+    public class CameraFollow : MonoBehaviour
     {
-        if (player != null)
+        public Transform player; // Assign your player in the Inspector
+        public float smoothSpeed = 5f;
+        public Vector3 offset = new Vector3(0, 1, -10); // Adjust the Y offset to center the player
+
+        void LateUpdate()
         {
-            // Follow the player’s X and Y, but keep the Z fixed for 2D
-            Vector3 targetPosition = new Vector3(player.position.x + offset.x, player.position.y + offset.y, -10);
-            transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
+            if (player != null)
+            {
+                // Follow the player’s X and Y, but keep the Z fixed for 2D
+                Vector3 targetPosition = new Vector3(player.position.x + offset.x, player.position.y + offset.y, -10);
+                transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
+            }
         }
     }
 }
+    
