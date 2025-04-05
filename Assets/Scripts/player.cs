@@ -220,14 +220,16 @@ public class Player : MonoBehaviour
             // Set a small threshold value
             float threshold = 0.1f;
 
-            // Use the local variable isTouchingWall
-            bool isWallSliding = isTouchingWall && !isGrounded && Mathf.Abs(moveInputX) > threshold;
+            // Rename the local variable to avoid conflict with the class-level variable
+            bool isCurrentlyWallSliding = isTouchingWall && !isGrounded && Mathf.Abs(moveInputX) > threshold;
 
-            if (isWallSliding)
+            if (isCurrentlyWallSliding)
             {
                 rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
             }
         }
+
+
 
 
         // ✅ Wall Jump with Proper Gravity Reset
