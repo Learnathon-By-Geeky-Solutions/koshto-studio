@@ -6,33 +6,30 @@ namespace Player
 {
     public class WeaponPickup : MonoBehaviour
     {
-        [SerializeField] private Transform weaponHolder; // Reference to the weapon holder
+        [SerializeField] private Transform weaponHolder;
         private Collider2D weaponInRange;
+        private Weapon currentWeapon;
 
-        // Reference the PlayerControls class
         private PlayerControls controls;
 
         private void Awake()
         {
-            // Initialize PlayerControls
             controls = new PlayerControls();
         }
 
         private void OnEnable()
         {
-            // Enable the Gameplay action map
             controls.Gameplay.Enable();
 
-            // Subscribe to the Pickup action
             controls.Gameplay.Pickup.performed += OnPickupPerformed;
+            controls.Gameplay.Attack.performed += OnAttackPerformed;
         }
 
         private void OnDisable()
         {
-            // Unsubscribe from the Pickup action
             controls.Gameplay.Pickup.performed -= OnPickupPerformed;
+            controls.Gameplay.Attack.performed -= OnAttackPerformed;
 
-            // Disable the Gameplay action map
             controls.Gameplay.Disable();
         }
 
@@ -60,19 +57,24 @@ namespace Player
             }
         }
 
+        private void OnAttackPerformed(InputAction.CallbackContext _)
+        {
+            currentWeapon?.TryAttack(); // Unified attack call
+        }
+
         private void PickupWeapon(GameObject weapon)
         {
             weapon.transform.SetParent(weaponHolder);
             weapon.transform.localPosition = Vector3.zero;
             weapon.transform.localRotation = Quaternion.identity;
 
-            var weaponScript = weapon.GetComponent<MeleeWeapon>();
+            var weaponScript = weapon.GetComponent<Weapon>(); // CHANGE: use Weapon (the base class)
             if (weaponScript != null)
             {
-                weaponScript.enabled = true; // Activate weapon behavior
+                weaponScript.enabled = true;
+                currentWeapon = weaponScript;
             }
 
-            // Optional: disable collider so you don't re-trigger pickup
             var col = weapon.GetComponent<Collider2D>();
             if (col != null) col.enabled = false;
         }

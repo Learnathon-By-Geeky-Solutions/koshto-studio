@@ -23,6 +23,7 @@ namespace Player.Weapons
 
         protected override void Attack()
         {
+            Debug.Log("Sword swung!");
             Collider2D[] hits = Physics2D.OverlapBoxAll(attackOrigin.position, attackRange, 0f, enemyLayer);
 
             foreach (Collider2D hit in hits)

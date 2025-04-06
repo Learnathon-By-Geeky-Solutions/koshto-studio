@@ -22,7 +22,7 @@ namespace Player.Weapons
             {
                 return;
             }
-
+            Debug.Log($"{gameObject.name} is attacking!");
             Attack();
             StartCoroutine(AttackCooldown());
         }

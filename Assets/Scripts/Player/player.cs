@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Player.Weapons;
 
 namespace Player.input 
 {
@@ -9,6 +10,7 @@ namespace Player.input
     {
         private Rigidbody2D rb;
         private Animator animator;
+        private Weapon equippedWeapon;
         private PlayerControls controls;
 
         // Input Variables
@@ -207,6 +209,11 @@ namespace Player.input
             controls.Gameplay.Dash.performed += ctx => StartCoroutine(Dash());
             controls.Gameplay.Sprint.performed += ctx => isSprinting = true;
             controls.Gameplay.Sprint.canceled += ctx => isSprinting = false;
+        }
+        
+        public void EquipWeapon(Weapon weapon)
+        {
+            equippedWeapon = weapon;
         }
 
         private void Start()
