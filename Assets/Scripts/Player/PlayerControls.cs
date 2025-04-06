@@ -213,21 +213,21 @@ namespace Player
         // Dispose pattern implementation
         private bool disposed = false;
 
-        // Finalizer (destructor)
+        
         ~PlayerControls()
         {
             UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, PlayerControls.Gameplay.Disable() has not been called.");
             Dispose(false);
         }
 
-        // Public Dispose method
+        
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        // Protected Dispose method following the .NET pattern
+        
         protected virtual void Dispose(bool disposing)
         {
             if (disposed)
@@ -235,14 +235,14 @@ namespace Player
 
             if (disposing)
             {
-                // Dispose managed resources
+                
                 if (asset != null)
                 {
                     UnityEngine.Object.Destroy(asset);
                 }
             }
 
-            // Clean up unmanaged resources here (if any)
+            
 
             disposed = true;
         }
