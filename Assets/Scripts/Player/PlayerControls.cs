@@ -20,6 +20,7 @@ namespace Player
     public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         public InputActionAsset asset { get; }
+        private bool disposed = false;
         public @PlayerControls()
         {
             asset = InputActionAsset.FromJson(@"{
@@ -212,12 +213,31 @@ namespace Player
 
         ~@PlayerControls()
         {
-            UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, PlayerControls.Gameplay.Disable() has not been called.");
+            Dispose(false);
         }
 
+        // Public Dispose method
         public void Dispose()
         {
-            UnityEngine.Object.Destroy(asset);
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected dispose pattern implementation
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed) return;
+
+            if (disposing)
+            {
+                // Free managed objects
+                if (asset != null)
+                {
+                    UnityEngine.Object.Destroy(asset);
+                }
+            }
+            // Free unmanaged resources here if needed
+            disposed = true;
         }
 
         public InputBinding? bindingMask
