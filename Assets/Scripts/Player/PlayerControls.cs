@@ -210,14 +210,41 @@ namespace Player
             m_Gameplay_Pickup = m_Gameplay.FindAction("Pickup", throwIfNotFound: true);
         }
 
-        ~@PlayerControls()
+        // Dispose pattern implementation
+        private bool disposed = false;
+
+        // Finalizer (destructor)
+        ~PlayerControls()
         {
             UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, PlayerControls.Gameplay.Disable() has not been called.");
+            Dispose(false);
         }
 
+        // Public Dispose method
         public void Dispose()
         {
-            UnityEngine.Object.Destroy(asset);
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected Dispose method following the .NET pattern
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                // Dispose managed resources
+                if (asset != null)
+                {
+                    UnityEngine.Object.Destroy(asset);
+                }
+            }
+
+            // Clean up unmanaged resources here (if any)
+
+            disposed = true;
         }
 
         public InputBinding? bindingMask
@@ -280,6 +307,7 @@ namespace Player
         private readonly InputAction m_Gameplay_Sprint;
         private readonly InputAction m_Gameplay_Attack;
         private readonly InputAction m_Gameplay_Pickup;
+
         public struct GameplayActions
         {
             private readonly @PlayerControls m_Wrapper;
