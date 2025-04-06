@@ -15,352 +15,357 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @PlayerControls: IInputActionCollection2, IDisposable
+namespace Player
 {
-    public InputActionAsset asset { get; }
-    public @PlayerControls()
+    public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
-        asset = InputActionAsset.FromJson(@"{
-    ""name"": ""PlayerControls"",
-    ""maps"": [
+        public InputActionAsset asset { get; }
+        public @PlayerControls()
         {
-            ""name"": ""Gameplay"",
-            ""id"": ""fd7397ca-e04a-42c4-886d-c47334c86203"",
-            ""actions"": [
-                {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""6edc2695-fbd2-4b6a-a0c4-bb47ae56c6fb"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""35070062-6dad-4419-8e3f-1246e9f4aeca"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Dash"",
-                    ""type"": ""Button"",
-                    ""id"": ""cc05b565-a0d3-41eb-ae40-3675235a9cda"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Sprint"",
-                    ""type"": ""Button"",
-                    ""id"": ""b8263916-39ab-4cb6-86f6-6cb897947f1d"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": ""Hold"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Attack"",
-                    ""type"": ""Button"",
-                    ""id"": ""9a66500b-0dfd-4f5e-9359-59694c0a258c"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Pickup"",
-                    ""type"": ""Button"",
-                    ""id"": ""9f2c9d68-65a4-445f-9635-d1da204a7b84"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""a1a34a25-06d2-4b5f-9d95-985e87e1859b"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""90cd0504-5a04-4c0b-9722-52124c177476"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""19fb0815-c008-4834-9119-a0e03cd94c2b"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""afaf5c9d-0760-4b49-a185-f3c192649d2b"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""d4508748-e22d-4f56-a32f-7c753db0e701"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a29908b0-e480-4759-af44-c23a3f64eb58"",
-                    ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": ""Tap"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Dash"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""79850dc1-c589-4450-9f8c-e5ca9da806bc"",
-                    ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": ""Hold"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""af0dacef-8b8a-490d-9d2a-aeb78db83ebc"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""933e5e26-36f8-4e14-8112-628526471d7f"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d28f8224-b469-488c-8f5f-94ff641abd58"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pickup"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
+            asset = InputActionAsset.FromJson(@"{
+        ""name"": ""PlayerControls"",
+        ""maps"": [
+            {
+                ""name"": ""Gameplay"",
+                ""id"": ""fd7397ca-e04a-42c4-886d-c47334c86203"",
+                ""actions"": [
+                    {
+                        ""name"": ""Move"",
+                        ""type"": ""Value"",
+                        ""id"": ""6edc2695-fbd2-4b6a-a0c4-bb47ae56c6fb"",
+                        ""expectedControlType"": ""Vector2"",
+                        ""processors"": """",
+                        ""interactions"": """",
+                        ""initialStateCheck"": true
+                    },
+                    {
+                        ""name"": ""Jump"",
+                        ""type"": ""Button"",
+                        ""id"": ""35070062-6dad-4419-8e3f-1246e9f4aeca"",
+                        ""expectedControlType"": """",
+                        ""processors"": """",
+                        ""interactions"": """",
+                        ""initialStateCheck"": false
+                    },
+                    {
+                        ""name"": ""Dash"",
+                        ""type"": ""Button"",
+                        ""id"": ""cc05b565-a0d3-41eb-ae40-3675235a9cda"",
+                        ""expectedControlType"": """",
+                        ""processors"": """",
+                        ""interactions"": """",
+                        ""initialStateCheck"": false
+                    },
+                    {
+                        ""name"": ""Sprint"",
+                        ""type"": ""Button"",
+                        ""id"": ""b8263916-39ab-4cb6-86f6-6cb897947f1d"",
+                        ""expectedControlType"": """",
+                        ""processors"": """",
+                        ""interactions"": ""Hold"",
+                        ""initialStateCheck"": false
+                    },
+                    {
+                        ""name"": ""Attack"",
+                        ""type"": ""Button"",
+                        ""id"": ""9a66500b-0dfd-4f5e-9359-59694c0a258c"",
+                        ""expectedControlType"": """",
+                        ""processors"": """",
+                        ""interactions"": """",
+                        ""initialStateCheck"": false
+                    },
+                    {
+                        ""name"": ""Pickup"",
+                        ""type"": ""Button"",
+                        ""id"": ""9f2c9d68-65a4-445f-9635-d1da204a7b84"",
+                        ""expectedControlType"": """",
+                        ""processors"": """",
+                        ""interactions"": """",
+                        ""initialStateCheck"": false
+                    }
+                ],
+                ""bindings"": [
+                    {
+                        ""name"": ""2D Vector"",
+                        ""id"": ""a1a34a25-06d2-4b5f-9d95-985e87e1859b"",
+                        ""path"": ""2DVector"",
+                        ""interactions"": """",
+                        ""processors"": """",
+                        ""groups"": """",
+                        ""action"": ""Move"",
+                        ""isComposite"": true,
+                        ""isPartOfComposite"": false
+                    },
+                    {
+                        ""name"": ""up"",
+                        ""id"": ""90cd0504-5a04-4c0b-9722-52124c177476"",
+                        ""path"": """",
+                        ""interactions"": """",
+                        ""processors"": """",
+                        ""groups"": """",
+                        ""action"": ""Move"",
+                        ""isComposite"": false,
+                        ""isPartOfComposite"": true
+                    },
+                    {
+                        ""name"": ""down"",
+                        ""id"": ""19fb0815-c008-4834-9119-a0e03cd94c2b"",
+                        ""path"": """",
+                        ""interactions"": """",
+                        ""processors"": """",
+                        ""groups"": """",
+                        ""action"": ""Move"",
+                        ""isComposite"": false,
+                        ""isPartOfComposite"": true
+                    },
+                    {
+                        ""name"": ""left"",
+                        ""id"": ""afaf5c9d-0760-4b49-a185-f3c192649d2b"",
+                        ""path"": ""<Keyboard>/a"",
+                        ""interactions"": """",
+                        ""processors"": """",
+                        ""groups"": """",
+                        ""action"": ""Move"",
+                        ""isComposite"": false,
+                        ""isPartOfComposite"": true
+                    },
+                    {
+                        ""name"": ""right"",
+                        ""id"": ""d4508748-e22d-4f56-a32f-7c753db0e701"",
+                        ""path"": ""<Keyboard>/d"",
+                        ""interactions"": """",
+                        ""processors"": """",
+                        ""groups"": """",
+                        ""action"": ""Move"",
+                        ""isComposite"": false,
+                        ""isPartOfComposite"": true
+                    },
+                    {
+                        ""name"": """",
+                        ""id"": ""a29908b0-e480-4759-af44-c23a3f64eb58"",
+                        ""path"": ""<Keyboard>/leftShift"",
+                        ""interactions"": ""Tap"",
+                        ""processors"": """",
+                        ""groups"": """",
+                        ""action"": ""Dash"",
+                        ""isComposite"": false,
+                        ""isPartOfComposite"": false
+                    },
+                    {
+                        ""name"": """",
+                        ""id"": ""79850dc1-c589-4450-9f8c-e5ca9da806bc"",
+                        ""path"": ""<Keyboard>/leftShift"",
+                        ""interactions"": ""Hold"",
+                        ""processors"": """",
+                        ""groups"": """",
+                        ""action"": ""Sprint"",
+                        ""isComposite"": false,
+                        ""isPartOfComposite"": false
+                    },
+                    {
+                        ""name"": """",
+                        ""id"": ""af0dacef-8b8a-490d-9d2a-aeb78db83ebc"",
+                        ""path"": ""<Keyboard>/space"",
+                        ""interactions"": """",
+                        ""processors"": """",
+                        ""groups"": """",
+                        ""action"": ""Jump"",
+                        ""isComposite"": false,
+                        ""isPartOfComposite"": false
+                    },
+                    {
+                        ""name"": """",
+                        ""id"": ""933e5e26-36f8-4e14-8112-628526471d7f"",
+                        ""path"": ""<Mouse>/leftButton"",
+                        ""interactions"": """",
+                        ""processors"": """",
+                        ""groups"": """",
+                        ""action"": ""Attack"",
+                        ""isComposite"": false,
+                        ""isPartOfComposite"": false
+                    },
+                    {
+                        ""name"": """",
+                        ""id"": ""d28f8224-b469-488c-8f5f-94ff641abd58"",
+                        ""path"": ""<Keyboard>/e"",
+                        ""interactions"": """",
+                        ""processors"": """",
+                        ""groups"": """",
+                        ""action"": ""Pickup"",
+                        ""isComposite"": false,
+                        ""isPartOfComposite"": false
+                    }
+                ]
+            }
+        ],
+        ""controlSchemes"": []
+    }");
+            // Gameplay
+            m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
+            m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
+            m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
+            m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
+            m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
+            m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
+            m_Gameplay_Pickup = m_Gameplay.FindAction("Pickup", throwIfNotFound: true);
         }
-    ],
-    ""controlSchemes"": []
-}");
+
+        ~@PlayerControls()
+        {
+            UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, PlayerControls.Gameplay.Disable() has not been called.");
+        }
+
+        public void Dispose()
+        {
+            UnityEngine.Object.Destroy(asset);
+        }
+
+        public InputBinding? bindingMask
+        {
+            get => asset.bindingMask;
+            set => asset.bindingMask = value;
+        }
+
+        public ReadOnlyArray<InputDevice>? devices
+        {
+            get => asset.devices;
+            set => asset.devices = value;
+        }
+
+        public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
+
+        public bool Contains(InputAction action)
+        {
+            return asset.Contains(action);
+        }
+
+        public IEnumerator<InputAction> GetEnumerator()
+        {
+            return asset.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Enable()
+        {
+            asset.Enable();
+        }
+
+        public void Disable()
+        {
+            asset.Disable();
+        }
+
+        public IEnumerable<InputBinding> bindings => asset.bindings;
+
+        public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
+        {
+            return asset.FindAction(actionNameOrId, throwIfNotFound);
+        }
+
+        public int FindBinding(InputBinding bindingMask, out InputAction action)
+        {
+            return asset.FindBinding(bindingMask, out action);
+        }
+
         // Gameplay
-        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
-        m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
-        m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
-        m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
-        m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
-        m_Gameplay_Pickup = m_Gameplay.FindAction("Pickup", throwIfNotFound: true);
-    }
-
-    ~@PlayerControls()
-    {
-        UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, PlayerControls.Gameplay.Disable() has not been called.");
-    }
-
-    public void Dispose()
-    {
-        UnityEngine.Object.Destroy(asset);
-    }
-
-    public InputBinding? bindingMask
-    {
-        get => asset.bindingMask;
-        set => asset.bindingMask = value;
-    }
-
-    public ReadOnlyArray<InputDevice>? devices
-    {
-        get => asset.devices;
-        set => asset.devices = value;
-    }
-
-    public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
-
-    public bool Contains(InputAction action)
-    {
-        return asset.Contains(action);
-    }
-
-    public IEnumerator<InputAction> GetEnumerator()
-    {
-        return asset.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    public void Enable()
-    {
-        asset.Enable();
-    }
-
-    public void Disable()
-    {
-        asset.Disable();
-    }
-
-    public IEnumerable<InputBinding> bindings => asset.bindings;
-
-    public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
-    {
-        return asset.FindAction(actionNameOrId, throwIfNotFound);
-    }
-
-    public int FindBinding(InputBinding bindingMask, out InputAction action)
-    {
-        return asset.FindBinding(bindingMask, out action);
-    }
-
-    // Gameplay
-    private readonly InputActionMap m_Gameplay;
-    private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
-    private readonly InputAction m_Gameplay_Move;
-    private readonly InputAction m_Gameplay_Jump;
-    private readonly InputAction m_Gameplay_Dash;
-    private readonly InputAction m_Gameplay_Sprint;
-    private readonly InputAction m_Gameplay_Attack;
-    private readonly InputAction m_Gameplay_Pickup;
-    public struct GameplayActions
-    {
-        private @PlayerControls m_Wrapper;
-        public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Gameplay_Move;
-        public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
-        public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
-        public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
-        public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
-        public InputAction @Pickup => m_Wrapper.m_Gameplay_Pickup;
-        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
-        public void AddCallbacks(IGameplayActions instance)
+        private readonly InputActionMap m_Gameplay;
+        private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
+        private readonly InputAction m_Gameplay_Move;
+        private readonly InputAction m_Gameplay_Jump;
+        private readonly InputAction m_Gameplay_Dash;
+        private readonly InputAction m_Gameplay_Sprint;
+        private readonly InputAction m_Gameplay_Attack;
+        private readonly InputAction m_Gameplay_Pickup;
+        public struct GameplayActions
         {
-            if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
-            @Jump.started += instance.OnJump;
-            @Jump.performed += instance.OnJump;
-            @Jump.canceled += instance.OnJump;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
-            @Sprint.started += instance.OnSprint;
-            @Sprint.performed += instance.OnSprint;
-            @Sprint.canceled += instance.OnSprint;
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
-            @Pickup.started += instance.OnPickup;
-            @Pickup.performed += instance.OnPickup;
-            @Pickup.canceled += instance.OnPickup;
-        }
+            private @PlayerControls m_Wrapper;
+            public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Move => m_Wrapper.m_Gameplay_Move;
+            public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+            public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
+            public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
+            public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
+            public InputAction @Pickup => m_Wrapper.m_Gameplay_Pickup;
+            public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
+            public void AddCallbacks(IGameplayActions instance)
+            {
+                if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
+                @Sprint.started += instance.OnSprint;
+                @Sprint.performed += instance.OnSprint;
+                @Sprint.canceled += instance.OnSprint;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
+                @Pickup.started += instance.OnPickup;
+                @Pickup.performed += instance.OnPickup;
+                @Pickup.canceled += instance.OnPickup;
+            }
 
-        private void UnregisterCallbacks(IGameplayActions instance)
-        {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
-            @Jump.started -= instance.OnJump;
-            @Jump.performed -= instance.OnJump;
-            @Jump.canceled -= instance.OnJump;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
-            @Sprint.started -= instance.OnSprint;
-            @Sprint.performed -= instance.OnSprint;
-            @Sprint.canceled -= instance.OnSprint;
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
-            @Pickup.started -= instance.OnPickup;
-            @Pickup.performed -= instance.OnPickup;
-            @Pickup.canceled -= instance.OnPickup;
-        }
+            private void UnregisterCallbacks(IGameplayActions instance)
+            {
+                @Move.started -= instance.OnMove;
+                @Move.performed -= instance.OnMove;
+                @Move.canceled -= instance.OnMove;
+                @Jump.started -= instance.OnJump;
+                @Jump.performed -= instance.OnJump;
+                @Jump.canceled -= instance.OnJump;
+                @Dash.started -= instance.OnDash;
+                @Dash.performed -= instance.OnDash;
+                @Dash.canceled -= instance.OnDash;
+                @Sprint.started -= instance.OnSprint;
+                @Sprint.performed -= instance.OnSprint;
+                @Sprint.canceled -= instance.OnSprint;
+                @Attack.started -= instance.OnAttack;
+                @Attack.performed -= instance.OnAttack;
+                @Attack.canceled -= instance.OnAttack;
+                @Pickup.started -= instance.OnPickup;
+                @Pickup.performed -= instance.OnPickup;
+                @Pickup.canceled -= instance.OnPickup;
+            }
 
-        public void RemoveCallbacks(IGameplayActions instance)
-        {
-            if (m_Wrapper.m_GameplayActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
+            public void RemoveCallbacks(IGameplayActions instance)
+            {
+                if (m_Wrapper.m_GameplayActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
 
-        public void SetCallbacks(IGameplayActions instance)
-        {
-            foreach (var item in m_Wrapper.m_GameplayActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_GameplayActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
+            public void SetCallbacks(IGameplayActions instance)
+            {
+                foreach (var item in m_Wrapper.m_GameplayActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_GameplayActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
         }
-    }
-    public GameplayActions @Gameplay => new GameplayActions(this);
-    public interface IGameplayActions
-    {
-        void OnMove(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
-        void OnSprint(InputAction.CallbackContext context);
-        void OnAttack(InputAction.CallbackContext context);
-        void OnPickup(InputAction.CallbackContext context);
+        public GameplayActions @Gameplay => new GameplayActions(this);
+        public interface IGameplayActions
+        {
+            void OnMove(InputAction.CallbackContext context);
+            void OnJump(InputAction.CallbackContext context);
+            void OnDash(InputAction.CallbackContext context);
+            void OnSprint(InputAction.CallbackContext context);
+            void OnAttack(InputAction.CallbackContext context);
+            void OnPickup(InputAction.CallbackContext context);
+        }
     }
 }
+
+
