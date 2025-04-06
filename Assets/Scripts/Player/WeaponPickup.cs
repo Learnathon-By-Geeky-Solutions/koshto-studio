@@ -52,7 +52,7 @@ namespace Player
             }
         }
 
-        private void OnPickupPerformed(InputAction.CallbackContext context)
+        private void OnPickupPerformed(InputAction.CallbackContext _)
         {
             if (weaponInRange != null)
             {
