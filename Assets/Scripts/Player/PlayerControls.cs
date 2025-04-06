@@ -226,17 +226,17 @@ namespace Player
         // Protected dispose pattern implementation
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed) return;
+            if (disposed)
+                return;
 
-            if (disposing)
+            if (disposing && asset != null)
             {
                 // Free managed objects
-                if (asset != null)
-                {
-                    UnityEngine.Object.Destroy(asset);
-                }
+                UnityEngine.Object.Destroy(asset);
             }
+
             // Free unmanaged resources here if needed
+
             disposed = true;
         }
 
