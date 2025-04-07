@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Player.input;
@@ -10,6 +11,10 @@ namespace Player
         private PlayerControls controls;
         [SerializeField]
         private Weapon equippedWeapon;
+        [SerializeField] private Weapon primaryWeapon;
+        [SerializeField] private Weapon secondaryWeapon;
+        private bool isAttacking = false;
+
 
         private void Awake()
         {
@@ -33,14 +38,26 @@ namespace Player
         public void OnSprint(InputAction.CallbackContext context) { /* ignored */ }
 
         // 👇 Add this to PlayerControls.inputactions first!
-        public void OnAttack(InputAction.CallbackContext context)
+        public void OnPrimaryAttack(InputAction.CallbackContext context)
         {
-            if (!context.performed || equippedWeapon == null)
-            {
-                return;
-            }
-            Debug.Log("Attack!");
-            equippedWeapon.TryAttack();
+            if (!context.performed || primaryWeapon == null || isAttacking) return;
+            isAttacking = true;
+            primaryWeapon.TryAttack();
+            StartCoroutine(ResetAttack());
+        }
+
+        public void OnSecondaryAttack(InputAction.CallbackContext context)
+        {
+            if (!context.performed || secondaryWeapon == null || isAttacking) return;
+            isAttacking = true;
+            secondaryWeapon.TryAttack();
+            StartCoroutine(ResetAttack());
+        }
+
+        private IEnumerator ResetAttack()
+        {
+            yield return new WaitForSeconds(0.2f);
+            isAttacking = false;
         }
         public void OnPickup(InputAction.CallbackContext context)
         {
@@ -49,7 +66,7 @@ namespace Player
                 return;
             }
             Debug.Log("Pickup performed!");
-            // Add logic for picking up a weapon here, if necessary.
+            // Add logic for picking up a weapon here
         }
     }
 }

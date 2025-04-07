@@ -12,6 +12,10 @@ namespace Enemy
 
         private int currentHealth;
 
+        // ✅ Declare event inside the class
+        public event System.Action<int, int> OnHealthChanged;
+        public event System.Action OnDeath;
+
         private void Awake()
         {
             currentHealth = maxHealth;
@@ -26,6 +30,9 @@ namespace Enemy
             currentHealth -= amount;
             currentHealth = Mathf.Max(currentHealth, 0);
 
+            // ✅ Notify listeners
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
             Debug.Log($"{gameObject.name} took {amount} damage. Current health: {currentHealth}");
 
             if (currentHealth <= 0)
@@ -37,7 +44,7 @@ namespace Enemy
         private void HandleDeath()
         {
             Debug.Log($"{gameObject.name} died.");
-            // You could add animation, particles, sounds, etc.
+            OnDeath?.Invoke();
             Destroy(gameObject);
         }
     }

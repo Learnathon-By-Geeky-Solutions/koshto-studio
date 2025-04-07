@@ -27,13 +27,12 @@ namespace Player.Weapons
 
             foreach (Collider2D hit in hits)
             {
+                Debug.Log("Melee attack triggered.");
                 if (hit.TryGetComponent(out EnemyHealth enemyHealth))
                 {
                     enemyHealth.TakeDamage(damage);
                 }
             }
-
-            Debug.Log("Melee attack triggered.");
         }
 
 #if UNITY_EDITOR
