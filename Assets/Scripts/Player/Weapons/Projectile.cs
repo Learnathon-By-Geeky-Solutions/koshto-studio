@@ -5,7 +5,6 @@ namespace Player.Weapons
 {
     public class Projectile : MonoBehaviour
     {
-        private float speed;
         private int damage;
         private Rigidbody2D rb;
 
@@ -19,8 +18,8 @@ namespace Player.Weapons
 
         public void Fire(Vector2 dir, float spd, int dmg)
         {
-            Vector2 direction = dir.normalized; // <-- Local variable now
-            speed = spd;
+            Vector2 direction = dir.normalized;
+            float speed = spd; // <-- Now a local variable
             damage = dmg;
             rb.velocity = direction * speed;
             Destroy(gameObject, lifeTime);
