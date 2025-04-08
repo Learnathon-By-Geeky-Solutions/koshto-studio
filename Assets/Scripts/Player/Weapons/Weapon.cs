@@ -10,6 +10,7 @@ namespace Player.Weapons
         [SerializeField]
         [Tooltip("Cooldown time between attacks in seconds.")]
         private float attackCooldown = 0.5f;
+        [SerializeField] public WeaponType weaponType;
 
         protected bool CanAttack = true;
 

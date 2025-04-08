@@ -9,7 +9,6 @@ namespace Player
         [SerializeField] private Transform weaponHolder; // Reference to the weapon holder
         private Collider2D weaponInRange;
 
-        // Reference the PlayerControls class
         private PlayerControls controls;
 
         private void Awake()
