@@ -10,7 +10,6 @@ namespace Player
         private Collider2D weaponInRange;
 
         private PlayerControls controls;
-
         private void Awake()
         {
             // Initialize PlayerControls
@@ -65,13 +64,33 @@ namespace Player
             weapon.transform.localPosition = Vector3.zero;
             weapon.transform.localRotation = Quaternion.identity;
 
-            var weaponScript = weapon.GetComponent<MeleeWeapon>();
+            bool isFacingRight = transform.localScale.x > 0f;
+
+            // Flip the weapon to match player direction
+            Vector3 scale = weapon.transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * (isFacingRight ? 1 : -1);
+            weapon.transform.localScale = scale;
+
+            // Adjust rotation if needed (optional)
+            weapon.transform.localRotation = Quaternion.Euler(0, isFacingRight ? 0f : 180f, 0f);
+
+            var weaponScript = weapon.GetComponent<Weapon>();
             if (weaponScript != null)
             {
-                weaponScript.enabled = true; // Activate weapon behavior
+                weaponScript.enabled = true;
+
+                var handler = GetComponent<WeaponHandler>();
+                if (handler != null)
+                {
+                    handler.SetEquippedWeapon(weaponScript);
+                    handler.FlipWeapon(isFacingRight);
+                }
+
+                // Call firePoint flip (now called safely after weapon scale is set)
+                weaponScript.FlipFirePoint(isFacingRight);
             }
 
-            // Optional: disable collider so you don't re-trigger pickup
+            // Disable collider so it doesn’t trigger again
             var col = weapon.GetComponent<Collider2D>();
             if (col != null) col.enabled = false;
         }

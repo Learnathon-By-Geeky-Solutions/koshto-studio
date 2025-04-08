@@ -102,6 +102,7 @@ namespace Player.input
         [SerializeField] private float wallSlideSpeed = 2f;
         [SerializeField] private float wallJumpForce = 10f;
         [SerializeField] private Transform wallCheck;
+        [SerializeField] private WeaponHandler weaponHandler;
 
         public float WallSlideSpeed
         {
@@ -134,7 +135,6 @@ namespace Player.input
                 rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
             }
         }
-
 
         private void WallJump1()
         {
@@ -345,6 +345,8 @@ namespace Player.input
         {
             isFacingRight = !isFacingRight;
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            if (weaponHandler != null)
+                weaponHandler.FlipWeapon(isFacingRight);
         }
 
         // ✅ Update Animator Parameters

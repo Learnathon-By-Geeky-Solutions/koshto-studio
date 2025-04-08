@@ -15,8 +15,7 @@ namespace Player
         [SerializeField] private Transform weaponHolder;
 
         private bool isAttacking = false;
-
-
+        
         private void Awake()
         {
             controls = new PlayerControls();
@@ -31,6 +30,26 @@ namespace Player
         private void OnDisable()
         {
             controls.Gameplay.Disable();
+        }
+        public void SetEquippedWeapon(Weapon newWeapon)
+        {
+            equippedWeapon = newWeapon;
+
+            // Optional: set as primary or secondary
+            if (newWeapon is MeleeWeapon)
+                primaryWeapon = newWeapon;
+            else
+                secondaryWeapon = newWeapon;
+
+            Debug.Log($"Equipped weapon: {newWeapon.name}");
+        }
+        public void FlipWeapon(bool isFacingRight)
+        {
+            if (equippedWeapon == null) return;
+
+            Vector3 weaponScale = equippedWeapon.transform.localScale;
+            weaponScale.x = Mathf.Abs(weaponScale.x) * (isFacingRight ? 1 : -1);
+            equippedWeapon.transform.localScale = weaponScale;
         }
 
         public void OnMove(InputAction.CallbackContext context) { /* ignored */ }

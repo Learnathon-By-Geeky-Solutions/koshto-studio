@@ -13,6 +13,8 @@ namespace Player.Weapons
         [SerializeField] public WeaponType weaponType;
 
         protected bool CanAttack = true;
+        
+        public virtual void FlipFirePoint(bool facingRight) { }
 
         /// <summary>
         /// Called to trigger an attack.

@@ -28,17 +28,31 @@ namespace Player.Weapons
                 return;
             }
 
-            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
             Projectile projScript = projectile.GetComponent<Projectile>();
 
             if (projScript != null)
             {
-                Vector2 direction = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-                projScript.Fire(direction, projectileSpeed, damage);
-            }
+                bool isFacingRight = transform.lossyScale.x > 0;
+                Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
 
+                projScript.Fire(direction, projectileSpeed, damage);
+
+                // Optional: rotate the projectile sprite to match the direction it's flying
+                projectile.transform.right = direction;
+            }
             Debug.Log("Projectile fired.");
         }
+        // public override void FlipFirePoint(bool facingRight)
+        // {
+        //     if (firePoint != null)
+        //     {
+        //         Vector3 pos = firePoint.localPosition;
+        //         pos.x = Mathf.Abs(pos.x) * (facingRight ? 1 : -1);
+        //         firePoint.localPosition = pos;
+        //     }
+        // }
+
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
