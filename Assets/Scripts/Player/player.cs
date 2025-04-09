@@ -348,6 +348,14 @@ namespace Player.input
             if (weaponHandler != null)
                 weaponHandler.FlipWeapon(isFacingRight);
         }
+        
+        public void FaceDirection(bool faceRight)
+        {
+            if (isFacingRight != faceRight)
+            {
+                Flip();
+            }
+        }
 
         // ✅ Update Animator Parameters
         private void UpdateAnimations()

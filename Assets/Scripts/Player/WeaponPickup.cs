@@ -60,19 +60,29 @@ namespace Player
 
         private void PickupWeapon(GameObject weapon)
         {
+            bool isPlayerFacingRight = transform.localScale.x > 0f;
+            bool isWeaponFacingRight = weapon.transform.right.x > 0f;
+
+            if (isPlayerFacingRight != isWeaponFacingRight)
+            {
+                // Use Player's own method to face the correct direction
+                var playerScript = GetComponent<Player.input.Player>();
+                if (playerScript != null)
+                {
+                    playerScript.FaceDirection(isWeaponFacingRight);
+                    isPlayerFacingRight = isWeaponFacingRight; // Update after flip
+                }
+            }
+
             weapon.transform.SetParent(weaponHolder);
             weapon.transform.localPosition = Vector3.zero;
             weapon.transform.localRotation = Quaternion.identity;
 
-            bool isFacingRight = transform.localScale.x > 0f;
-
-            // Flip the weapon to match player direction
             Vector3 scale = weapon.transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * (isFacingRight ? 1 : -1);
+            scale.x = Mathf.Abs(scale.x) * (isPlayerFacingRight ? 1 : -1);
             weapon.transform.localScale = scale;
 
-            // Adjust rotation if needed (optional)
-            weapon.transform.localRotation = Quaternion.Euler(0, isFacingRight ? 0f : 180f, 0f);
+            weapon.transform.localRotation = Quaternion.Euler(0, isPlayerFacingRight ? 0f : 180f, 0f);
 
             var weaponScript = weapon.GetComponent<Weapon>();
             if (weaponScript != null)
@@ -83,14 +93,13 @@ namespace Player
                 if (handler != null)
                 {
                     handler.SetEquippedWeapon(weaponScript);
-                    handler.FlipWeapon(isFacingRight);
+                    handler.FlipWeapon(isPlayerFacingRight);
                 }
 
-                // Call firePoint flip (now called safely after weapon scale is set)
-                weaponScript.FlipFirePoint(isFacingRight);
+                weaponScript.FlipFirePoint(isPlayerFacingRight);
             }
 
-            // Disable collider so it doesn’t trigger again
+            // Disable weapon's collider to prevent re-picking
             var col = weapon.GetComponent<Collider2D>();
             if (col != null) col.enabled = false;
         }
