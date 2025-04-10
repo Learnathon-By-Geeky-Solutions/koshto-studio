@@ -5,33 +5,55 @@ namespace Player.Weapons
 {
     public class MeleeWeapon : Weapon
     {
-        [SerializeField]
-        [Tooltip("The damage this weapon deals.")]
+        [SerializeField, Tooltip("The damage this weapon deals.")]
         private int damage = 25;
 
-        [SerializeField]
-        [Tooltip("The size of the attack range box.")]
+        [SerializeField, Tooltip("The size of the attack range box.")]
         private Vector2 attackRange = new Vector2(1f, 1f);
 
-        [SerializeField]
-        [Tooltip("Position from which the attack is cast.")]
+        [SerializeField, Tooltip("Position from which the attack is cast.")]
         private Transform attackOrigin;
 
-        [SerializeField]
-        [Tooltip("Layer mask for enemies.")]
+        [SerializeField, Tooltip("Layer mask for enemies.")]
         private LayerMask enemyLayer;
 
         protected override void Attack()
         {
-            Collider2D[] hits = Physics2D.OverlapBoxAll(attackOrigin.position, attackRange, 0f, enemyLayer);
+            if (!IsConfigured()) return;
 
-            foreach (Collider2D hit in hits)
+            var hits = Physics2D.OverlapBoxAll(attackOrigin.position, attackRange, 0f, enemyLayer);
+
+            foreach (var hit in hits)
             {
-                Debug.Log("Melee attack triggered.");
-                if (hit.TryGetComponent(out EnemyHealth enemyHealth))
-                {
-                    enemyHealth.TakeDamage(damage);
-                }
+                TryDamageEnemy(hit);
+            }
+
+            Debug.Log("Melee attack executed.");
+        }
+
+        private bool IsConfigured()
+        {
+            if (attackOrigin == null)
+            {
+                Debug.LogWarning("Attack origin not set.");
+                return false;
+            }
+
+            if (attackRange.x <= 0 || attackRange.y <= 0)
+            {
+                Debug.LogWarning("Invalid attack range.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void TryDamageEnemy(Collider2D collider)
+        {
+            if (collider.TryGetComponent(out EnemyHealth enemyHealth))
+            {
+                enemyHealth.TakeDamage(damage);
+                Debug.Log($"Hit enemy with {damage} damage.");
             }
         }
 

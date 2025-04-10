@@ -4,54 +4,56 @@ namespace Player.Weapons
 {
     public class ProjectileWeapon : Weapon
     {
-        [SerializeField]
-        [Tooltip("Projectile prefab to instantiate.")]
+        [SerializeField, Tooltip("Projectile prefab to instantiate.")]
         private GameObject projectilePrefab;
 
-        [SerializeField]
-        [Tooltip("Spawn point for the projectile.")]
+        [SerializeField, Tooltip("Spawn point for the projectile.")]
         private Transform firePoint;
 
-        [SerializeField]
-        [Tooltip("Speed of the projectile.")]
+        [SerializeField, Tooltip("Speed of the projectile.")]
         private float projectileSpeed = 10f;
 
-        [SerializeField]
-        [Tooltip("Damage dealt by the projectile.")]
+        [SerializeField, Tooltip("Damage dealt by the projectile.")]
         private int damage = 10;
 
         protected override void Attack()
         {
+            if (!IsReadyToFire()) return;
+
+            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+            InitializeProjectile(projectile);
+        }
+
+        private bool IsReadyToFire()
+        {
             if (projectilePrefab == null || firePoint == null)
             {
-                Debug.LogWarning("ProjectileWeapon is missing references.");
+                Debug.LogWarning("ProjectileWeapon is missing firePoint or prefab.");
+                return false;
+            }
+            return true;
+        }
+
+        private void InitializeProjectile(GameObject projectile)
+        {
+            var projScript = projectile.GetComponent<Projectile>();
+            if (projScript == null)
+            {
+                Debug.LogWarning("Projectile script missing on prefab.");
                 return;
             }
 
-            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-            Projectile projScript = projectile.GetComponent<Projectile>();
+            Vector2 direction = GetFacingDirection();
+            projScript.Fire(direction, projectileSpeed, damage);
 
-            if (projScript != null)
-            {
-                bool isFacingRight = transform.lossyScale.x > 0;
-                Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
-
-                projScript.Fire(direction, projectileSpeed, damage);
-
-                // Optional: rotate the projectile sprite to match the direction it's flying
-                projectile.transform.right = direction;
-            }
+            projectile.transform.right = direction;
             Debug.Log("Projectile fired.");
         }
-        // public override void FlipFirePoint(bool facingRight)
-        // {
-        //     if (firePoint != null)
-        //     {
-        //         Vector3 pos = firePoint.localPosition;
-        //         pos.x = Mathf.Abs(pos.x) * (facingRight ? 1 : -1);
-        //         firePoint.localPosition = pos;
-        //     }
-        // }
+
+        private Vector2 GetFacingDirection()
+        {
+            return transform.lossyScale.x > 0 ? Vector2.right : Vector2.left;
+        }
 
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
