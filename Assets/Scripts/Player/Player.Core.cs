@@ -11,35 +11,37 @@ namespace Player.input
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
-            animator = GetComponent<Animator>();
-            controls = new PlayerControls();
-
-            // Input Events
-            controls.Gameplay.Move.performed += ctx => moveInputX = ctx.ReadValue<Vector2>().x;
-            controls.Gameplay.Move.canceled += ctx => moveInputX = 0f;
-            controls.Gameplay.Jump.performed += ctx => HandleJump();
-            controls.Gameplay.Dash.performed += ctx => StartCoroutine(Dash());
-            controls.Gameplay.Sprint.performed += ctx => isSprinting = true;
-            controls.Gameplay.Sprint.canceled += ctx => isSprinting = false;
+            InitializeComponents();
+            BindInputs();
         }
 
-        private void Start()
-        {
-            movementSpeed = maxSpeed;
-        }
+        private void Start() => movementSpeed = maxSpeed;
 
         private void Update()
         {
-            CheckGroundStatus();
+            UpdateGroundStatus();
             HandleMovement();
             HandleWallSlide();
             UpdateAnimations();
         }
 
-        private void FixedUpdate()
+        private void FixedUpdate() => ApplyMovement();
+
+        private void InitializeComponents()
         {
-            ApplyMovement();
+            rb = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
+            controls = new PlayerControls();
+        }
+
+        private void BindInputs()
+        {
+            controls.Gameplay.Move.performed += ctx => moveInputX = ctx.ReadValue<Vector2>().x;
+            controls.Gameplay.Move.canceled += _ => moveInputX = 0f;
+            controls.Gameplay.Jump.performed += _ => HandleJump();
+            controls.Gameplay.Dash.performed += _ => StartCoroutine(Dash());
+            controls.Gameplay.Sprint.performed += _ => isSprinting = true;
+            controls.Gameplay.Sprint.canceled += _ => isSprinting = false;
         }
     }
 }

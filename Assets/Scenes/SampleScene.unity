@@ -1025,19 +1025,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac12511395b6026498e827ce70e45227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 42
+  dashSpeed: 40
   dashDuration: 0.2
-  jumpForce: 12
+  jumpForce: 10
   coyoteTime: 0.1
   lowJumpMultiplier: 2
   fallMultiplier: 2.5
   maxJumps: 2
-  sprintSpeed: 15
+  sprintSpeed: 10
   maxSpeed: 5
   acceleration: 8
   deceleration: 6
-  wallSlideSpeed: 2
-  wallJumpForce: 10
+  wallSlideSpeed: 1
+  wallJumpForce: 12
   wallCheck: {fileID: 679281573}
   weaponHandler: {fileID: 0}
   groundCheck: {fileID: 400904476}

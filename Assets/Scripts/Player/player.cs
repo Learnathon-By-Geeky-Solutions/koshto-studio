@@ -1,12 +1,12 @@
-// using System.Collections;
-// using UnityEngine;
-// using UnityEngine.InputSystem;
-//
-// namespace Player.input 
-// {
-//
-//     public class Player : MonoBehaviour
-//     {
+using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+namespace Player.input 
+{
+
+    public partial class Player : MonoBehaviour
+    {
 //         private Rigidbody2D rb;
 //         private Animator animator;
 //         private PlayerControls controls;
@@ -372,5 +372,5 @@
 //
 //         private void OnEnable() => controls.Gameplay.Enable();
 //         private void OnDisable() => controls.Gameplay.Disable();
-//     }
-// }
+    }
+}

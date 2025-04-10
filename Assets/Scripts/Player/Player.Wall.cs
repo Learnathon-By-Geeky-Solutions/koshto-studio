@@ -23,15 +23,30 @@ namespace Player.input
 
         private void HandleWallSlide()
         {
-            bool isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
-            float threshold = 0.1f;
+            isWallSliding = ShouldSlide();
 
-            isWallSliding = isTouchingWall && !isGrounded && Mathf.Abs(moveInputX) > threshold;
+            if (!isWallSliding) return;
 
-            if (isWallSliding)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
-            }
+            ApplyWallSlide();
+        }
+
+        private bool ShouldSlide()
+        {
+            if (isGrounded) return false;
+            if (!IsTouchingWall()) return false;
+            if (Mathf.Abs(moveInputX) <= 0.1f) return false;
+
+            return true;
+        }
+
+        private bool IsTouchingWall()
+        {
+            return Physics2D.OverlapCircle(wallCheck.position, 0.2f, groundLayer);
+        }
+
+        private void ApplyWallSlide()
+        {
+            rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
         }
 
         private void WallJump()

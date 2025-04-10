@@ -14,17 +14,11 @@ namespace Player.input
         public float MaxSpeed => maxSpeed;
         public float Acceleration => acceleration;
         public float Deceleration => deceleration;
-        private float currentSpeed;
-
-        public float movementSpeed
-        {
-            get { return sprintSpeed; }
-            private set { sprintSpeed = value; }
-        }
+        private float movementSpeed;
 
         private void HandleMovement()
         {
-            currentSpeed = isSprinting ? sprintSpeed : maxSpeed;
+            movementSpeed = isSprinting ? sprintSpeed : maxSpeed;
 
             if (moveInputX > 0 && !isFacingRight)
                 Flip();
@@ -34,7 +28,7 @@ namespace Player.input
 
         private void ApplyMovement()
         {
-            float targetSpeed = moveInputX * currentSpeed;
+            float targetSpeed = moveInputX * movementSpeed;
             float speedDifference = targetSpeed - rb.velocity.x;
             float accelerationRate = (Mathf.Abs(targetSpeed) > 0.1f) ? acceleration : deceleration;
             rb.AddForce(new Vector2(speedDifference * accelerationRate, 0), ForceMode2D.Force);

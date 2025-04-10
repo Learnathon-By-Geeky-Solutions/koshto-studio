@@ -10,10 +10,7 @@ namespace Player.input
             animator.SetBool("isFalling", !isGrounded && rb.velocity.y < 0);
             animator.SetBool("isWallSliding", isWallSliding);
 
-            if (isGrounded)
-            {
-                animator.ResetTrigger("Jump");
-            }
+            if (isGrounded) animator.ResetTrigger("Jump");
         }
     }
 }

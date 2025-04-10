@@ -24,19 +24,22 @@ namespace Player.input
         public bool IsGrounded { get => isGrounded; private set => isGrounded = value; }
         public int JumpCount { get => jumpCount; private set => jumpCount = value; }
 
-        private void CheckGroundStatus()
+        private void UpdateGroundStatus()
         {
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+            UpdateCoyoteTimeAndJumpCount();
+        }
 
+        private void UpdateCoyoteTimeAndJumpCount()
+        {
             if (isGrounded)
             {
                 coyoteTimeCounter = coyoteTime;
                 jumpCount = maxJumps;
+                return;
             }
-            else
-            {
-                coyoteTimeCounter -= Time.deltaTime;
-            }
+
+            coyoteTimeCounter -= Time.deltaTime;
         }
 
         private void HandleJump()
@@ -44,16 +47,22 @@ namespace Player.input
             if (isWallSliding)
             {
                 WallJump();
+                return;
             }
-            else if (isGrounded || coyoteTimeCounter > 0 || jumpCount > 0)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                coyoteTimeCounter = 0f;
-                jumpCount--;
-                animator.ResetTrigger("Jump");
-                animator.Play("Jump", 0, 0f);
-                animator.SetTrigger("Jump");
-            }
+
+            if (!isGrounded && coyoteTimeCounter <= 0 && jumpCount <= 0) return;
+
+            PerformJump();
+        }
+
+        private void PerformJump()
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            coyoteTimeCounter = 0f;
+            jumpCount--;
+            animator.ResetTrigger("Jump");
+            animator.Play("Jump", 0, 0f);
+            animator.SetTrigger("Jump");
         }
     }
 }

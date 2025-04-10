@@ -16,17 +16,25 @@ namespace Player.input
         {
             if (isDashing) yield break;
 
-            isDashing = true;
-            float originalGravity = rb.gravityScale;
-            rb.gravityScale = 0;
-            float dashDirection = isFacingRight ? 1f : -1f;
-            rb.velocity = new Vector2(dashDirection * dashSpeed, 0f);
-
-            animator.SetTrigger("Dash");
+            StartDash();
 
             yield return new WaitForSeconds(dashDuration);
 
-            rb.gravityScale = originalGravity;
+            EndDash();
+        }
+
+        private void StartDash()
+        {
+            isDashing = true;
+            rb.gravityScale = 0;
+            float direction = isFacingRight ? 1f : -1f;
+            rb.velocity = new Vector2(direction * dashSpeed, 0f);
+            animator.SetTrigger("Dash");
+        }
+
+        private void EndDash()
+        {
+            rb.gravityScale = fallMultiplier;
             rb.velocity = new Vector2(0, rb.velocity.y);
             isDashing = false;
         }
