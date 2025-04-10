@@ -1,47 +1,44 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Common;
 
-namespace Enemy
+namespace Player
 {
-    public class EnemyHealthBar : MonoBehaviour
+    public class PlayerHealthBar : MonoBehaviour
     {
-        [SerializeField] private Health health;
+        [SerializeField] private PlayerHealth playerHealth;
         [SerializeField] private Slider healthSlider;
         [SerializeField] private Vector3 offset = new Vector3(0, 1.5f, 0);
         [SerializeField] private Camera mainCamera;
 
         private void Awake()
         {
-            if (health == null)
-                health = GetComponentInParent<Health>();
-
             if (mainCamera == null)
                 mainCamera = Camera.main;
 
-            if (health != null)
-                health.OnHealthChanged += UpdateHealth;
+            if (playerHealth == null)
+                playerHealth = GetComponentInParent<PlayerHealth>();
+
+            playerHealth.OnHealthChanged += UpdateHealth;
         }
 
         private void LateUpdate()
         {
-            if (health != null)
+            if (playerHealth != null)
             {
-                Vector3 screenPos = mainCamera.WorldToScreenPoint(health.transform.position + offset);
+                Vector3 screenPos = mainCamera.WorldToScreenPoint(playerHealth.transform.position + offset);
                 transform.position = screenPos;
             }
         }
 
         private void UpdateHealth(int current, int max)
         {
-            if (healthSlider != null)
-                healthSlider.value = (float)current / max;
+            healthSlider.value = (float)current / max;
         }
 
         private void OnDestroy()
         {
-            if (health != null)
-                health.OnHealthChanged -= UpdateHealth;
+            if (playerHealth != null)
+                playerHealth.OnHealthChanged -= UpdateHealth;
         }
     }
 }

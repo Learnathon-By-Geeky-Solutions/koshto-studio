@@ -1,5 +1,5 @@
 using UnityEngine;
-using Enemy;
+using Common;
 
 namespace Player.Weapons
 {
@@ -50,10 +50,9 @@ namespace Player.Weapons
 
         private void TryDamageEnemy(Collider2D collider)
         {
-            if (collider.TryGetComponent(out EnemyHealth enemyHealth))
+            if (collider.TryGetComponent(out Common.IDamageable damageable))
             {
-                enemyHealth.TakeDamage(damage);
-                Debug.Log($"Hit enemy with {damage} damage.");
+                damageable.TakeDamage(damage);
             }
         }
 

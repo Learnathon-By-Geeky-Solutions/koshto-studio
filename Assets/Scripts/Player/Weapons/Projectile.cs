@@ -27,9 +27,9 @@ namespace Player.Weapons
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out EnemyHealth enemyHealth))
+            if (collision.TryGetComponent(out Common.IDamageable damageable))
             {
-                enemyHealth.TakeDamage(damage);
+                damageable.TakeDamage(damage);
                 Destroy(gameObject);
             }
         }
