@@ -153,7 +153,6 @@ Transform:
   m_Children:
   - {fileID: 1360340386}
   - {fileID: 80454282}
-  - {fileID: 275667730}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &18577380
@@ -314,7 +313,8 @@ Transform:
   m_LocalPosition: {x: -0.75780296, y: 1.3441994, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 275667730}
   m_Father: {fileID: 6946372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &223662943
@@ -550,12 +550,12 @@ Transform:
   m_GameObject: {fileID: 275667729}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.6800003, y: -0.12800002, z: -0.044647813}
+  m_LocalPosition: {x: -1.9221973, y: -1.4721994, z: -0.044647813}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1505056677}
-  m_Father: {fileID: 6946372}
+  m_Father: {fileID: 80454282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &275667731
 MonoBehaviour:
@@ -1025,21 +1025,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac12511395b6026498e827ce70e45227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
-  acceleration: 8
-  deceleration: 6
+  dashSpeed: 42
+  dashDuration: 0.2
   jumpForce: 12
   coyoteTime: 0.1
   lowJumpMultiplier: 2
   fallMultiplier: 2.5
   maxJumps: 2
+  sprintSpeed: 15
+  maxSpeed: 5
+  acceleration: 8
+  deceleration: 6
   wallSlideSpeed: 2
   wallJumpForce: 10
   wallCheck: {fileID: 679281573}
   weaponHandler: {fileID: 0}
-  dashSpeed: 42
-  dashDuration: 0.2
-  sprintSpeed: 8
   groundCheck: {fileID: 400904476}
   groundLayer:
     serializedVersion: 2
