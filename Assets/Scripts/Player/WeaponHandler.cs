@@ -15,7 +15,7 @@ namespace Player
         [SerializeField] private Transform weaponHolder;
 
         private bool isAttacking = false;
-        
+
         private void Awake()
         {
             controls = new PlayerControls();
@@ -31,6 +31,7 @@ namespace Player
         {
             controls.Gameplay.Disable();
         }
+
         public void SetEquippedWeapon(Weapon newWeapon)
         {
             equippedWeapon = newWeapon;
@@ -43,6 +44,7 @@ namespace Player
 
             Debug.Log($"Equipped weapon: {newWeapon.name}");
         }
+
         public void FlipWeapon(bool isFacingRight)
         {
             if (equippedWeapon == null) return;
@@ -62,7 +64,7 @@ namespace Player
             if (!context.performed || primaryWeapon == null || isAttacking) return;
             primaryWeapon.gameObject.SetActive(true);
             if (secondaryWeapon != null) secondaryWeapon.gameObject.SetActive(false);
-            
+
             isAttacking = true;
             primaryWeapon.TryAttack();
             StartCoroutine(ResetAttack());
@@ -73,7 +75,7 @@ namespace Player
             if (!context.performed || secondaryWeapon == null || isAttacking) return;
             secondaryWeapon.gameObject.SetActive(true);
             if (primaryWeapon != null) primaryWeapon.gameObject.SetActive(false);
-            
+
             isAttacking = true;
             secondaryWeapon.TryAttack();
             StartCoroutine(ResetAttack());
@@ -84,6 +86,7 @@ namespace Player
             yield return new WaitForSeconds(0.2f);
             isAttacking = false;
         }
+
         public void OnPickup(InputAction.CallbackContext context)
         {
             if (!context.performed || equippedWeapon == null)
@@ -92,6 +95,7 @@ namespace Player
             }
             Debug.Log("Pickup performed!");
         }
+
         public void EquipWeapon(Weapon newWeapon)
         {
             if (newWeapon.weaponType == WeaponType.Primary)
@@ -127,7 +131,7 @@ namespace Player
             if (rb != null) rb.simulated = false;
         }
 
-        private void DropWeapon(Weapon weapon)
+        private static void DropWeapon(Weapon weapon)
         {
             weapon.transform.SetParent(null);
             weapon.gameObject.SetActive(true);
