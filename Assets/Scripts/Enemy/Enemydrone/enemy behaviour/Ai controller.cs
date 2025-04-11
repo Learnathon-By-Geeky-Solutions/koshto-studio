@@ -9,9 +9,24 @@ public class EnemyAIController : MonoBehaviour
 
     private EnemyCore core;
 
-    private void Awake()
+   
+
+    private void Update()
     {
-        core = GetComponent<EnemyCore>();
+        if (core == null || core.player == null) return;
+
+        float distance = Vector2.Distance(transform.position, core.player.position);
+
+        if (distance <= core.detectionRange)
+        {
+            SetBehavior(attackBehavior);
+        }
+        else
+        {
+            SetBehavior(patrolBehavior);
+        }
+
+        currentBehavior?.ExecuteBehavior();
     }
 
     
