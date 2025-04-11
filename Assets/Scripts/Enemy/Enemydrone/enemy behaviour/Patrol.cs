@@ -5,11 +5,10 @@ public class PatrolBehavior : MonoBehaviour, IEnemyBehavior
     private EnemyCore core;
 
     [Header("Patrol Settings")]
-    public Transform patrolPointA;
-    public Transform patrolPointB;
+    public Transform[] patrolPoints;
     public float patrolSpeed = 2f;
 
-    private bool isMovingToA = true;
+    private int currentPointIndex = 0;
 
     private void Awake()
     {
@@ -18,21 +17,26 @@ public class PatrolBehavior : MonoBehaviour, IEnemyBehavior
 
     public void ExecuteBehavior()
     {
-        if (core == null || patrolPointA == null || patrolPointB == null)
-            return;
-
-        Vector3 target = isMovingToA ? patrolPointA.position : patrolPointB.position;
-        MoveTowards(target);
-    }
-
-    private void MoveTowards(Vector3 target)
-    {
-        float step = patrolSpeed * Time.deltaTime;
-        core.rb.position = Vector2.MoveTowards(core.rb.position, target, step);
-
-        if (Vector2.Distance(core.rb.position, target) < 0.1f)
+        if (core == null || patrolPoints == null || patrolPoints.Length == 0)
         {
-            isMovingToA = !isMovingToA;  // Switch target when the patrol point is reached
+            Debug.LogWarning("PatrolBehavior: Core or patrol points missing.");
+            return;
+        }
+
+        Transform targetPoint = patrolPoints[currentPointIndex];
+
+        Vector2 direction = (targetPoint.position - core.transform.position).normalized;
+        Vector2 newPosition = core.rb.position + direction * patrolSpeed * Time.deltaTime;
+
+        core.rb.MovePosition(newPosition);
+
+        float distance = Vector2.Distance(core.transform.position, targetPoint.position);
+        Debug.Log($"Moving to patrol point {currentPointIndex}. Distance: {distance}");
+
+        if (distance < 1f)
+        {
+            currentPointIndex = (currentPointIndex + 1) % patrolPoints.Length;
+            Debug.Log("Switching to patrol point: " + currentPointIndex);
         }
     }
 }
