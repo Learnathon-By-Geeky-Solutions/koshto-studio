@@ -9,7 +9,10 @@ public class EnemyAIController : MonoBehaviour
 
     private EnemyCore core;
 
-   
+    private void Awake()
+    {
+        core = GetComponent<EnemyCore>();
+    }
 
     private void Update()
     {
@@ -29,5 +32,9 @@ public class EnemyAIController : MonoBehaviour
         currentBehavior?.ExecuteBehavior();
     }
 
-    
+    private void SetBehavior(IEnemyBehavior newBehavior)
+    {
+        if (currentBehavior == newBehavior) return;
+        currentBehavior = newBehavior;
+    }
 }
