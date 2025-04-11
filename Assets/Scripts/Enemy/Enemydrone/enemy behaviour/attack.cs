@@ -30,5 +30,15 @@ public class AttackBehavior : MonoBehaviour, IEnemyBehavior
         }
     }
 
-    
+    private void Attack()
+    {
+        // Assuming the player has a Health script attached
+        var playerHealth = core.player.GetComponent<Health>();
+
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(attackDamage); // Apply the attack damage
+            Debug.Log("Enemy attacked the player for " + attackDamage + " damage.");
+        }
+    }
 }
