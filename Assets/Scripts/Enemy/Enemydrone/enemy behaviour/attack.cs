@@ -7,7 +7,7 @@ public class AttackBehavior : MonoBehaviour, IEnemyBehavior
 
     [Header("Attack Settings")]
     public int attackDamage = 50;  // Damage dealt on attack
-    public float attackRange = 1.8f; // How close the enemy has to be to attack
+    public float attackRange = 1f; // How close the enemy has to be to attack
 
     private void Awake()
     {
