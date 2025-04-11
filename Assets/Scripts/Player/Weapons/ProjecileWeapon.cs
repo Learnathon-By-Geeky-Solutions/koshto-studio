@@ -43,16 +43,16 @@ namespace Player.Weapons
                 return;
             }
 
-            Vector2 direction = GetFacingDirection();
+            Vector2 direction = GetFacingDirection(transform);
             projScript.Fire(direction, projectileSpeed, damage);
 
             projectile.transform.right = direction;
             Debug.Log("Projectile fired.");
         }
 
-        private Vector2 GetFacingDirection()
+        private static Vector2 GetFacingDirection(Transform weaponTransform)
         {
-            return transform.lossyScale.x > 0 ? Vector2.right : Vector2.left;
+            return weaponTransform.lossyScale.x > 0 ? Vector2.right : Vector2.left;
         }
 
 #if UNITY_EDITOR
