@@ -18,18 +18,11 @@ public class AttackBehavior : MonoBehaviour, IEnemyBehavior
     {
         if (core == null || core.player == null) return;
 
-        // Calculate direction to the player
-        Vector2 direction = (core.player.position - core.transform.position).normalized;
-
-        // Check if the enemy is within attack range
+        // Check if the enemy is within attack range of the player
         if (Vector2.Distance(core.transform.position, core.player.position) <= attackRange)
         {
-            Attack();  // Attack the player if in range
-            return;  // Don't move the enemy if we're attacking
+            Attack();
         }
-
-        // Move the enemy towards the player if not in attack range
-        core.rb.MovePosition(core.rb.position + direction * core.moveSpeed * Time.deltaTime);
     }
 
     private void Attack()
