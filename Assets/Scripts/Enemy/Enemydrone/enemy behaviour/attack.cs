@@ -1,8 +1,13 @@
+using Common;
 using UnityEngine;
 
 public class AttackBehavior : MonoBehaviour, IEnemyBehavior
 {
     private EnemyCore core;
+
+    [Header("Attack Settings")]
+    public int attackDamage = 10;  // Damage dealt on attack
+    public float attackRange = 1.5f; // How close the enemy has to be to attack
 
     private void Awake()
     {
@@ -14,9 +19,16 @@ public class AttackBehavior : MonoBehaviour, IEnemyBehavior
         if (core == null || core.player == null) return;
 
         Vector2 direction = (core.player.position - core.transform.position).normalized;
+
+        // Move the enemy toward the player
         core.rb.MovePosition(core.rb.position + direction * core.moveSpeed * Time.deltaTime);
 
-        // Add your attack animation or bullet firing here
-        Debug.Log("Attacking Player!");
+        // Check if the enemy is in attack range
+        if (Vector2.Distance(core.transform.position, core.player.position) <= attackRange)
+        {
+            Attack();
+        }
     }
+
+    
 }
