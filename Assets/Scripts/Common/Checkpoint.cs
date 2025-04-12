@@ -15,8 +15,13 @@ namespace Common
 
         private void OnDrawGizmos()
         {
+            DrawCheckpointGizmo(transform.position);
+        }
+
+        public static void DrawCheckpointGizmo(Vector3 position)
+        {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, 0.3f);
+            Gizmos.DrawWireSphere(position, 0.3f);
         }
     }
 }
