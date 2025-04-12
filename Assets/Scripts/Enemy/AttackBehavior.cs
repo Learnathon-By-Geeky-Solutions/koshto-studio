@@ -22,7 +22,13 @@ namespace Enemy
             set => attackRange = value;
         }
 
-        public float attackCooldown = 1f;
+        [SerializeField]
+        private float attackCooldown = 1f;
+        public float AttackCooldown
+        {
+            get => attackCooldown;
+            set => attackCooldown = value;
+        }
 
         private float lastAttackTime;
         private EnemyCore core;
