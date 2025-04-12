@@ -7,11 +7,9 @@ namespace Game
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
-
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private Transform uiCanvas;
         [SerializeField] private Transform defaultSpawnPoint;
-
         private GameObject currentPlayer;
 
         private void Awake()
@@ -21,7 +19,6 @@ namespace Game
                 Destroy(gameObject);
                 return;
             }
-
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -36,7 +33,6 @@ namespace Game
             Vector3 spawnPoint = CheckpointManager.Instance.GetCheckpoint();
             if (spawnPoint == Vector3.zero && defaultSpawnPoint != null)
                 spawnPoint = defaultSpawnPoint.position;
-
             SpawnPlayer(spawnPoint);
             SetupUI();
         }
@@ -55,7 +51,7 @@ namespace Game
                 uiCanvas.gameObject.SetActive(true);
         }
 
-        public void ReloadLevel()
+        public static void ReloadLevel() // Changed to static method
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
