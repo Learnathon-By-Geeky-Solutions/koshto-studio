@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 namespace Common
 {
     public class Health : MonoBehaviour, IDamageable
     {
         [SerializeField] private int maxHealth = 100;
+        [SerializeField] private bool destroyOnDeath = true;
         private int currentHealth;
 
         public event Action<int, int> OnHealthChanged;
@@ -15,8 +14,7 @@ namespace Common
 
         private void Awake()
         {
-            currentHealth = maxHealth;
-            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+            ResetHealth();
         }
 
         public void TakeDamage(int amount)
@@ -31,7 +29,14 @@ namespace Common
         private void Die()
         {
             OnDeath?.Invoke();
-            Destroy(gameObject); // or disable, animate, etc.
+            if (destroyOnDeath)
+                Destroy(gameObject);
+        }
+
+        public void ResetHealth()
+        {
+            currentHealth = maxHealth;
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
         }
 
         public int GetCurrentHealth() => currentHealth;
