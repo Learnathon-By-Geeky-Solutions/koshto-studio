@@ -37,12 +37,5 @@ namespace Common
             return respawnPosition;
         }
 
-        // public void ResetCheckpoint()
-        // {
-        //     if (defaultSpawnPoint != null)
-        //         respawnPosition = defaultSpawnPoint.position;
-        //     else
-        //         respawnPosition = Vector3.zero;
-        // }
     }
 }
