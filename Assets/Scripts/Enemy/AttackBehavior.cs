@@ -6,7 +6,14 @@ namespace Enemy
 {
     public class AttackBehavior : MonoBehaviour, IEnemyBehavior
     {
-        public int attackDamage = 50;
+        [SerializeField]
+        private int attackDamage = 50;
+        public int AttackDamage
+        {
+            get => attackDamage;
+            set => attackDamage = value;
+        }
+
         public float attackRange = 1f;
         public float attackCooldown = 1f;
 
