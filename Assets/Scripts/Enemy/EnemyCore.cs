@@ -15,7 +15,16 @@ namespace Enemy
             set => moveSpeed = value;
         }
 
-        public float detectionRange = 5f;
+        [SerializeField]
+        private float detectionRange = 5f; // now private
+
+        // Public property to access and modify detectionRange
+        public float DetectionRange
+        {
+            get => detectionRange;
+            set => detectionRange = value;
+        }
+
         [HideInInspector] public Transform player;
         [HideInInspector] public Rigidbody2D rb;
 
