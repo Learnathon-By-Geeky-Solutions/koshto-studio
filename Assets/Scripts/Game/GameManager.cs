@@ -56,9 +56,6 @@ namespace Game
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        // public void SetCheckpoint(Vector3 position)
-        // {
-        //     CheckpointManager.Instance.SetCheckpoint(position);
-        // }
+        
     }
 }
