@@ -14,7 +14,14 @@ namespace Enemy
             set => attackDamage = value;
         }
 
-        public float attackRange = 1f;
+        [SerializeField]
+        private float attackRange = 1f;
+        public float AttackRange
+        {
+            get => attackRange;
+            set => attackRange = value;
+        }
+
         public float attackCooldown = 1f;
 
         private float lastAttackTime;
