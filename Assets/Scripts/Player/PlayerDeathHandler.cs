@@ -56,20 +56,7 @@ namespace Player
             GameManager.Instance.SetupLevel(); // Let GameManager spawn new player
         }
         
-        // private IEnumerator RespawnAfterDelay(float delay)
-        // {
-        //     yield return new WaitForSecondsRealtime(delay);
-        //
-        //     transform.position = CheckpointManager.Instance.GetCheckpoint();
-        //     rb.isKinematic = false;
-        //     GetComponent<Player.input.Player>().enabled = true;
-        //
-        //     // Restore health
-        //     health.ResetHealth(); // ← No reflection anymore 🔥
-        //
-        //     gameOverUI.Hide();
-        // }
-
+        
         private void OnDestroy()
         {
             if (health != null)
