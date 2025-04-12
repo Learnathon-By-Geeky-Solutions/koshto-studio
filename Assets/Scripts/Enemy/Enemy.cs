@@ -64,14 +64,17 @@ namespace Enemy
         private void HandleDeath()
         {
             animator.SetTrigger("isDead");
-
-            // Disable logic after animation plays
-            Invoke(nameof(DisableEnemy), 1f);
+            Invoke(nameof(InvokeDisableEnemy), 1f);
         }
 
-        private void DisableEnemy()
+        private void InvokeDisableEnemy()
         {
-            gameObject.SetActive(false);
+            DisableEnemy(gameObject);
+        }
+
+        private static void DisableEnemy(GameObject enemyObject)
+        {
+            enemyObject.SetActive(false);
         }
     }
 }
