@@ -3,12 +3,18 @@ using Common;
 using System.Collections;
 using UI;
 using Game;
+using Player.Weapons;
+
 
 namespace Player
 {
     [RequireComponent(typeof(Health))]
     public class PlayerDeathHandler : MonoBehaviour
     {
+
+        private WeaponHandler weaponHandler;
+        private Weapon equippedWeaponBeforeDeath;
+
         [SerializeField] private GameObject deathScreenUI;
         private Animator animator;
         private Health health;
