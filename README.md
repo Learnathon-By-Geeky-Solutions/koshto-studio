@@ -1,91 +1,185 @@
-# koshto-studio
+<div align="center">
 
-## Team Members
-- Samiul191139 (Team Leader)
-- Yiasin01
-- Tazriiann
+# 🎮 Koshto Studio Presents: **Project De**
 
-## Mentor
-- dipokDipu
+*An action-packed 2D platformer with liberation or elimination mechanics.*
 
-## Project Description
-Untitled 2D Game
+![Game Banner Placeholder](https://via.placeholder.com/1000x300?text=Insert+Game+Banner+Here)
 
-### Story
-In a corporate dystopia where office workers have been brainwashed by a corrupt CEO using mind-control devices, the protagonist, an ex-employee and hacker, takes on the mission to dismantle the system floor by floor. Armed with a unique "Deneuralizer Gun" and basic survival skills, they must decide to liberate or eliminate the brainwashed workforce. Each choice carries weight, with liberation unlocking shops, blacksmiths, and more to aid in the journey.
 
-### Player Objective
-Navigate through the hostile corporate building, defeat brainwashed workers, and confront the CEO to restore sanity to the company and uncover the truth behind the mind-control scheme.
+### Explore Our Wiki, Project Management Docs, and Tools!
 
-### How to Play
-- **Combat Options:** Use the Deneuralizer Gun to either free enemies or eliminate them directly.
-- **Explore and Upgrade:** Unlock special locations (shops, energy stations, and upgrade points) by liberating specific NPCs.
-- **Level Progression:** Each floor is a self-contained level with unique layouts, enemies, and challenges.
-- **Strategize:** Balancing resources, upgrades, and choices between freeing or killing impacts overall success.
+[![Explore the Wiki](https://img.shields.io/badge/Explore-Wiki-0077B5?style=for-the-badge&logo=readthedocs&logoColor=white)](https://github.com/Learnathon-By-Geeky-Solutions/koshto-studio/wiki)
+[![📝 Game Design Sheet](https://img.shields.io/badge/Game%20Design-Google%20Docs-34A853?style=for-the-badge&logo=googledocs&logoColor=white)](https://docs.google.com/spreadsheets/d/1HfC4I4lZOLnwaDKq280pMgBI-3kx7fSDRoJx61ivo34/edit?usp=sharing)
+[![🔧 SonarCloud Quality](https://img.shields.io/badge/Code%20Quality-SonarCloud-4E9BCD?style=for-the-badge&logo=sonarcloud&logoColor=white)](https://sonarcloud.io/summary/new_code?id=Learnathon-By-Geeky-Solutions_koshto-studio)
 
-### Artwork (Design)
-- **Art Style:** Hand-drawn pixel art with a retro aesthetic.
-- **Visual Elements:** Bright, minimalist environments with distinct corporate themes per floor.
 
-### Technical Requirements
-- **Resolution:** 1280x720 minimum, scalable to 4K.
-- **Platform:** Windows, with potential future mobile and console support.
-- **Engine:** Unity.
-- **Scripting Language:** C#.
 
-### Heads-Up Display (HUD)
-- **Health Bar:** Shows player health status.
-- **Energy Gauge:** Displays charge for the Deneuralizer Gun.
-- **Upgrade Tracker:** Displays active upgrades and skill points.
-- **Enemy Status:** Visual indicator for freed or eliminated enemies.
+### 🚧 In Development • Made with Unity • Powered by Passion
 
-### Characters
-- **Protagonist:** A former office worker turned resistance fighter.
-- **Brainwashed Workers (Enemies):** Various types, ranging from aggressive melee attackers to ranged snipers.
-- **Boss (CEO):** Final adversary with multiple attack phases and a narrative twist.
+[![Engine](https://img.shields.io/badge/Engine-Unity-000000?style=for-the-badge&logo=unity&logoColor=white)](https://unity.com)
+[![Language](https://img.shields.io/badge/Language-C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)](https://learn.microsoft.com/en-us/dotnet/csharp/)
+[![Rendering](https://img.shields.io/badge/Rendering-URP-6E40C9?style=for-the-badge&logo=unity&logoColor=white)](https://unity.com/universal-render-pipeline)
+[![Platform](https://img.shields.io/badge/Platform-Windows-blue?style=for-the-badge&logo=windows&logoColor=white)](https://unity.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-00A859?style=for-the-badge&logo=open-source-initiative&logoColor=white)](LICENSE)
 
-### Level Design
-- **Structure:** Floors represent levels, each with increasing difficulty and complexity.
-- **Settings:** Office spaces, tech labs, server rooms, and an opulent CEO penthouse.
+<br>
 
-### Global Elements
-- **Dynamic Lighting:** Flickering lights in hostile areas to enhance suspense.
-- **Sound Effects:** Office ambiance mixed with ominous corporate-themed music.
+<p align="center"> <a href="https://sonarcloud.io/summary/new_code?id=Learnathon-By-Geeky-Solutions_koshto-studio"> <img src="https://img.shields.io/badge/SonarCloud-Analysis-4E9BCD?style=for-the-badge&logo=sonarcloud&logoColor=white" alt="SonarCloud Analysis" width="250"> </a> </p>
 
-### Audio & Sound F/X
-- **Player Elements:** Unique sound for freeing enemies versus damaging them.
-- **Enemy & Environment:** Alarm systems activate when enemies detect the player.
+<!-- SonarCloud Badges - Organized in a borderless table -->
 
-### Technical Details
-- **Game Architecture:** Developed in Unity for modularity and scalability.
-- **Core Components:**
-  - `CharacterController`: Manages player movement and interaction.
-  - `EnemyAI`: Handles worker behavior, pathfinding, and attack patterns.
-  - `LevelManager`: Controls level transitions, enemy placements, and objectives.
+<table style="border: none; border-collapse: collapse;">
+ <tr style="border: none;"> 
+ <td style="border: none; padding: 5px;"> <a href="https://sonarcloud.io/summary/new_code?id=Learnathon-By-Geeky-Solutions_koshto-studio"> <img src="https://sonarcloud.io/api/project_badges/measure?project=Learnathon-By-Geeky-Solutions_koshto-studio&metric=alert_status" alt="Quality Gate Status"> </a> </td> 
+ <td style="border: none; padding: 5px;"> <a href="https://sonarcloud.io/summary/new_code?id=Learnathon-By-Geeky-Solutions_koshto-studio"> <img src="https://sonarcloud.io/api/project_badges/measure?project=Learnathon-By-Geeky-Solutions_koshto-studio&metric=ncloc" alt="Lines of Code"> </a> </td> 
+ 
+ <td style="border: none; padding: 5px;"> <a href="https://sonarcloud.io/summary/new_code?id=Learnathon-By-Geeky-Solutions_koshto-studio"> <img src="https://sonarcloud.io/api/project_badges/measure?project=Learnathon-By-Geeky-Solutions_koshto-studio&metric=vulnerabilities" alt="Vulnerabilities"> </a> </td>
+  <td style="border: none; padding: 5px;"> <a href="https://sonarcloud.io/summary/new_code?id=Learnathon-By-Geeky-Solutions_koshto-studio"> <img src="https://sonarcloud.io/api/project_badges/measure?project=Learnathon-By-Geeky-Solutions_koshto-studio&metric=code_smells" alt="Code Smells"> </a> </td> 
+ 
+  </tr>
 
-### Game Flow Chart
-- **Menu:** New Game -> Floor Selection -> Gameplay.
-- **Gameplay Loop:** Level -> Combat & Liberation -> Upgrades -> Next Level.
-- **Victory:** Defeat the CEO and end the mind-control system.
+ <tr style="border: none;"> 
+ <td style="border: none; padding: 5px;"> <a href="https://sonarcloud.io/summary/new_code?id=Learnathon-By-Geeky-Solutions_koshto-studio"> <img src="https://sonarcloud.io/api/project_badges/measure?project=Learnathon-By-Geeky-Solutions_koshto-studio&metric=sqale_index" alt="Technical Debt"> </a> </td> 
+ <td style="border: none; padding: 5px;"> <a href="https://sonarcloud.io/summary/new_code?id=Learnathon-By-Geeky-Solutions_koshto-studio"> <img src="https://sonarcloud.io/api/project_badges/measure?project=Learnathon-By-Geeky-Solutions_koshto-studio&metric=duplicated_lines_density" alt="Duplicated Lines (%)"> </a> </td> <td style="border: none; padding: 5px;"> <a href="https://sonarcloud.io/summary/new_code?id=Learnathon-By-Geeky-Solutions_koshto-studio"> <img src="https://sonarcloud.io/api/project_badges/measure?project=Learnathon-By-Geeky-Solutions_koshto-studio&metric=coverage" alt="Coverage"> </a> </td> 
+ <td style="border: none; padding: 5px;"> <a href="https://sonarcloud.io/summary/new_code?id=Learnathon-By-Geeky-Solutions_koshto-studio"> <img src="https://sonarcloud.io/api/project_badges/measure?project=Learnathon-By-Geeky-Solutions_koshto-studio&metric=bugs" alt="Bugs"> </a> </td> 
+ </tr>
+</table>
 
-### Marketing
-- **Key Features:**
-  - Unique mechanic: Deneuralizer Gun for strategic enemy liberation or elimination.
-  - Diverse gameplay: Combat, exploration, and decision-making combined.
-  - Pixel art design: Nostalgic aesthetic with modern gameplay depth.
+</div>
 
-## Getting Started
-1. Clone the repository
-2. Install dependencies
-3. Start development
 
-## Development Guidelines
-1. Create feature branches
-2. Make small, focused commits
-3. Write descriptive commit messages
-4. Create pull requests for review
+<div align="center">
 
-## Resources
-- [Project Documentation](docs/)
-- [Development Setup](docs/setup.md)
-- [Contributing Guidelines](CONTRIBUTING.md)
+  <h2>🔥 Meet Team - <b>Koshto Studio</b></h2>
+
+  <table style="width: 90%;">
+    <tr>
+      <td align="center" width="25%">
+        <h4>Samiul Karim Mazumder</h4>
+        <img src="https://img.shields.io/badge/Role-Team%20Lead%20%26%20Programmer-2D9CDB?style=for-the-badge">
+        <br>
+        <a href="https://github.com/Samiul191139" target="_blank">
+          <img src="https://img.shields.io/badge/GitHub-Samiul191139-100000?style=flat&logo=github&logoColor=white">
+        </a>
+      </td>
+      <td align="center" width="25%">
+        <h4>Tazrian Rafin</h4>
+        <img src="https://img.shields.io/badge/Role-Game%20Programmer-F2994A?style=for-the-badge">
+        <br>
+        <a href="https://github.com/Tazriiann" target="_blank">
+          <img src="https://img.shields.io/badge/GitHub-Tazriiann-100000?style=flat&logo=github&logoColor=white">
+        </a>
+      </td>
+      <td align="center" width="25%">
+        <h4>Yiasin Arafat</h4>
+        <img src="https://img.shields.io/badge/Role-Game%20Designer-27AE60?style=for-the-badge">
+        <br>
+        <a href="https://github.com/Yiasin01" target="_blank">
+          <img src="https://img.shields.io/badge/GitHub-Yiasin01-100000?style=flat&logo=github&logoColor=white">
+        </a>
+      </td>
+      <td align="center" width="25%">
+        <h4>Dipok Dipu</h4>
+        <img src="https://img.shields.io/badge/Role-Mentor-4E9BCD?style=for-the-badge">
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+
+---
+
+## 🧠 Storyline
+
+In a hyper-capitalist future where a **corrupt CEO** uses mind-control tech to enslave employees, you play as a rogue ex-worker determined to dismantle the system.
+
+💡 **Free or Fight** — use the powerful **Deneuralizer Gun** to either liberate NPCs or eliminate them entirely. Your choices affect progression, unlocks, and the ending.
+
+---
+
+## 🎯 Game Objectives
+
+- 🧠 **Free or Fight**: Use the Deneuralizer Gun to liberate enemies or end them.
+- 🧭 **Explore & Progress**: Unlock special zones like shops, smiths, and terminals.
+- 💥 **Combat & Strategy**: Mix melee and ranged mechanics while managing cooldowns.
+- 👑 **Defeat the CEO**: Engage in a multi-phase boss fight to end the system.
+
+---
+
+## 🕹 How to Play
+
+| Action         | Controls (Default) |
+|----------------|--------------------|
+| Move           | A/D or Left/Right  |
+| Jump           | Space              |
+| Dash           | Left Shift (Tap)   |
+| Sprint         | Left Shift (Hold)  |
+| Attack         | Left Click         |
+| Pickup Weapon  | E                  |
+
+---
+
+## 🧩 Key Features
+
+| Feature           | Description                                                                            |
+|------------------|----------------------------------------------------------------------------------------|
+| 🔁 Liberation vs Elimination | Every enemy can be saved or killed—impacting the story, upgrades, and NPCs.       |
+| ⚔️ Combat System   | Modular melee, ranged, and special weapon architecture with cooldown logic.          |
+| 🧠 NPC Logic       | Freed enemies may become allies—offering healing, upgrades, or lore.                  |
+| 🌟 Dynamic HUD     | Displays player health, energy, upgrades, and enemy state.                            |
+| 🗝️ Narrative Paths | Endings vary based on how many enemies you saved or destroyed.                        |
+
+---
+
+## 🎨 Art & Design
+
+- **Style:** Retro pixel art, minimalist UI, cyberpunk color palette
+- **Assets:** Custom-made and open-source blended
+- **Scenes:** Office levels, tech labs, server rooms, penthouse
+
+---
+
+## 🔋 UI & HUD
+
+- **Player Health**: Top-right health bar (custom-styled)
+- **Energy Bar**: Ammo for the Deneuralizer
+- **Upgrade Indicators**: Visual slots for skills and tools
+- **Enemy States**: Icon toggles for 'freed' or 'eliminated'
+
+---
+
+## 🧠 Characters
+
+| Name       | Role                                      |
+|------------|-------------------------------------------|
+| 🧑‍💻 Protagonist | Ex-employee turned rebel         |
+| 🧠 Workers    | Mind-controlled by corporate overlords     |
+| 🏢 CEO        | The main antagonist with multiple phases   |
+
+---
+
+## 🗺️ Level Design
+
+- Each level = a floor of the office, enlarged by a space-time phenomenon
+- Increasing difficulty and enemy complexity
+- Hidden rooms, key NPCs, lore fragments
+
+---
+
+## 🛠 Project Structure
+
+```bash
+Assets/
+└── Scripts/
+    ├── Common/            # Shared logic (Health, Interfaces)
+    ├── Player/
+    │   ├── Input/
+    │   ├── Movement/
+    │   ├── Weapons/
+    ├── Enemy/
+    └── UI/
+```
+
+---
