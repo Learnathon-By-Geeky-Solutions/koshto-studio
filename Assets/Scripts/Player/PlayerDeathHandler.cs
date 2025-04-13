@@ -74,6 +74,11 @@ namespace Player
                 if (deathScreenUI) deathScreenUI.SetActive(false);
 
             }
+            if (equippedWeaponBeforeDeath != null && weaponHandler != null)
+            {
+                weaponHandler.EquipWeapon(equippedWeaponBeforeDeath);
+            }
+
 
             GameManager.Instance.SetupLevel(); // Let GameManager spawn new player
         }
