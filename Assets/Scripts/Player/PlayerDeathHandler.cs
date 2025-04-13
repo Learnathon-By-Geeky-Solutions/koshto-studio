@@ -43,6 +43,8 @@ namespace Player
 
             GetComponent<Player.input.Player>().enabled = false;
             StartCoroutine(Respawn());
+            equippedWeaponBeforeDeath = weaponHandler != null ? GetEquippedWeapon() : null;
+
 
         }
 
