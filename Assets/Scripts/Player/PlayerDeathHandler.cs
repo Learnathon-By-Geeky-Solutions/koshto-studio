@@ -31,6 +31,8 @@ namespace Player
 
             health.OnDeath += HandleDeath;
             gameOverUI = FindObjectOfType<GameOverUI>();
+            weaponHandler = GetComponent<WeaponHandler>();
+
         }
 
         private void HandleDeath()
@@ -41,7 +43,16 @@ namespace Player
 
             GetComponent<Player.input.Player>().enabled = false;
             StartCoroutine(Respawn());
+
         }
+
+        private Weapon GetEquippedWeapon()
+        {
+            // Assuming the weapon currently active is the equipped one
+            // You can modify this logic if your system is different
+            return weaponHandler != null ? weaponHandler.GetComponentInChildren<Weapon>(true) : null;
+        }
+
 
         private IEnumerator Respawn()
         {
