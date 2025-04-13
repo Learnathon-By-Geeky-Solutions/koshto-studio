@@ -51,6 +51,9 @@ namespace Player
                 transform.position = CheckpointManager.Instance.GetCheckpoint();
                 GetComponent<Player.input.Player>().enabled = true;
                 GetComponent<Health>().ResetHealth();
+                //ensures 'you died' text doesn't appear after respawn
+                if (deathScreenUI) deathScreenUI.SetActive(false);
+
             }
 
             GameManager.Instance.SetupLevel(); // Let GameManager spawn new player
