@@ -6,7 +6,7 @@ using Player.Weapons;
 
 namespace Player
 {
-    public class WeaponHandler : MonoBehaviour, PlayerControls.IGameplayActions
+    public class WeaponHandler : MonoBehaviour
     {
         private PlayerControls controls;
         [SerializeField] private Weapon equippedWeapon;
@@ -19,7 +19,11 @@ namespace Player
         private void Awake()
         {
             controls = new PlayerControls();
-            controls.Gameplay.SetCallbacks(this);
+
+            // Manual input binding — only what WeaponHandler needs
+            controls.Gameplay.PrimaryAttack.performed += OnPrimaryAttack;
+            controls.Gameplay.SecondaryAttack.performed += OnSecondaryAttack;
+            controls.Gameplay.Pickup.performed += OnPickup;
         }
 
         private void OnEnable()
@@ -53,11 +57,6 @@ namespace Player
             weaponScale.x = Mathf.Abs(weaponScale.x) * (isFacingRight ? 1 : -1);
             equippedWeapon.transform.localScale = weaponScale;
         }
-
-        public void OnMove(InputAction.CallbackContext context) { /* ignored */ }
-        public void OnJump(InputAction.CallbackContext context) { /* ignored */ }
-        public void OnDash(InputAction.CallbackContext context) { /* ignored */ }
-        public void OnSprint(InputAction.CallbackContext context) { /* ignored */ }
 
         public void OnPrimaryAttack(InputAction.CallbackContext context)
         {
@@ -141,11 +140,6 @@ namespace Player
 
             var rb = weapon.GetComponent<Rigidbody2D>();
             if (rb != null) rb.simulated = true;
-        }
-        
-        public void OnPause(InputAction.CallbackContext context)
-        {
-            //ignored
         }
     }
 }

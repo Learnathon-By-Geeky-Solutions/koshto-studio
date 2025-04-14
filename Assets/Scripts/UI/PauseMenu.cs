@@ -32,22 +32,30 @@ namespace UI
 
         private void HandlePauseInput(InputAction.CallbackContext context)
         {
-            TogglePause();
+            Debug.Log($"Pause input performed. Phase: {context.phase}, Control: {context.control}");
+
+            if (context.performed)
+            {
+                TogglePause();
+            }
         }
 
         private void TogglePause()
         {
             isPaused = !isPaused;
+
             if (isPaused)
                 ShowPauseMenu();
             else
                 HidePauseMenu();
+
             Debug.Log("Pause triggered. isPaused: " + isPaused);
             OnPauseToggled?.Invoke(isPaused);
         }
 
         private void ShowPauseMenu()
         {
+            Debug.Log("Showing Pause Menu");
             pauseMenu.SetActive(true);
             Time.timeScale = 0;
         }

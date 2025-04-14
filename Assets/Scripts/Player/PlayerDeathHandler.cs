@@ -42,6 +42,7 @@ namespace Player
             if (gameOverUI) gameOverUI.Show();
 
             GetComponent<Player.input.Player>().enabled = false;
+            weaponHandler.enabled = false;
             StartCoroutine(Respawn());
             // equippedWeaponBeforeDeath = weaponHandler != null ? GetEquippedWeapon() : null;
 
@@ -59,6 +60,7 @@ namespace Player
         private IEnumerator Respawn()
         {
             yield return new WaitForSecondsRealtime(respawnDelay);
+            weaponHandler.enabled = true;
 
             if (this == null || gameObject == null)
             {
