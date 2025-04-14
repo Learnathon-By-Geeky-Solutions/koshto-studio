@@ -1,17 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
 
 namespace UI
 {
     public class PauseMenu : MonoBehaviour
     {
-        [SerializeField] private GameObject pauseMenu;
+        [SerializeField] private GameObject pauseMenuUI;
 
-        private PlayerControls controls;
         private bool isPaused;
-
-        public static event Action<bool> OnPauseToggled;
+        private PlayerControls controls;
 
         private void Awake()
         {
@@ -21,23 +18,13 @@ namespace UI
         private void OnEnable()
         {
             controls.Gameplay.Enable();
-            controls.Gameplay.Pause.performed += HandlePauseInput;
+            controls.Gameplay.Pause.performed += ctx => TogglePause();
         }
 
         private void OnDisable()
         {
-            controls.Gameplay.Pause.performed -= HandlePauseInput;
+            controls.Gameplay.Pause.performed -= ctx => TogglePause();
             controls.Gameplay.Disable();
-        }
-
-        private void HandlePauseInput(InputAction.CallbackContext context)
-        {
-            Debug.Log($"Pause input performed. Phase: {context.phase}, Control: {context.control}");
-
-            if (context.performed)
-            {
-                TogglePause();
-            }
         }
 
         private void TogglePause()
@@ -45,35 +32,32 @@ namespace UI
             isPaused = !isPaused;
 
             if (isPaused)
-                ShowPauseMenu();
+                Pause();
             else
-                HidePauseMenu();
-
-            Debug.Log("Pause triggered. isPaused: " + isPaused);
-            OnPauseToggled?.Invoke(isPaused);
+                Resume();
         }
 
-        private void ShowPauseMenu()
+        private void Pause()
         {
-            Debug.Log("Showing Pause Menu");
-            pauseMenu.SetActive(true);
-            Time.timeScale = 0;
+            pauseMenuUI.SetActive(true);
+            Time.timeScale = 0f;
+            Debug.Log("Game Paused");
         }
 
-        private void HidePauseMenu()
+        public void Resume()
         {
-            pauseMenu.SetActive(false);
-            Time.timeScale = 1;
+            pauseMenuUI.SetActive(false);
+            Time.timeScale = 1f;
+            isPaused = false;
+            Debug.Log("Game Resumed");
         }
-
-        public void Resume() => HidePauseMenu();
 
         public void QuitGame()
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+                Application.Quit();
 #endif
         }
     }

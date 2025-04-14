@@ -66,7 +66,7 @@ namespace Player
             if (isPlayerFacingRight != isWeaponFacingRight)
             {
                 // Use Player's own method to face the correct direction
-                var playerScript = GetComponent<Player.input.Player>();
+                var playerScript = GetComponent<Player.Input.PlayerController>();
                 if (playerScript != null)
                 {
                     playerScript.FaceDirection(isWeaponFacingRight);

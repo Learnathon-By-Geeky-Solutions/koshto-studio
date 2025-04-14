@@ -14,7 +14,8 @@ namespace Player
 
         private WeaponHandler weaponHandler;
         private Weapon equippedWeaponBeforeDeath;
-
+        private InputManager inputManager;
+        
         [SerializeField] private GameObject deathScreenUI;
         private Animator animator;
         private Health health;
@@ -41,7 +42,10 @@ namespace Player
             if (deathScreenUI) deathScreenUI.SetActive(true);
             if (gameOverUI) gameOverUI.Show();
 
-            GetComponent<Player.input.Player>().enabled = false;
+            if (inputManager != null)
+            {
+                inputManager.DisablePlayerInput();
+            }
             weaponHandler.enabled = false;
             StartCoroutine(Respawn());
             // equippedWeaponBeforeDeath = weaponHandler != null ? GetEquippedWeapon() : null;
@@ -70,7 +74,10 @@ namespace Player
             {
                 // Just respawn this player at checkpoint
                 transform.position = CheckpointManager.Instance.GetCheckpoint();
-                GetComponent<Player.input.Player>().enabled = true;
+                if (inputManager != null)
+                {
+                    inputManager.EnablePlayerInput();
+                }
                 GetComponent<Health>().ResetHealth();
                 //ensures 'you died' text doesn't appear after respawn
                 if (deathScreenUI) deathScreenUI.SetActive(false);

@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Player.input;
 using Player.Weapons;
 
 namespace Player
