@@ -142,5 +142,10 @@ namespace Player
             var rb = weapon.GetComponent<Rigidbody2D>();
             if (rb != null) rb.simulated = true;
         }
+        
+        public void OnPause(InputAction.CallbackContext context)
+        {
+            //ignored
+        }
     }
 }
