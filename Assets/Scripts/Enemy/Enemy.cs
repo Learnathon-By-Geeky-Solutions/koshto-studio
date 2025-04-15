@@ -15,14 +15,13 @@ namespace Enemy
         [SerializeField] private float detectionRange = 5f;
 
         private Transform player;
-        private EnemyCore core;
         private Health health;
         private IEnemyBehavior currentBehavior;
         private Animator animator;
 
         private void Awake()
         {
-            core = GetComponent<EnemyCore>();
+            
             animator = GetComponent<Animator>();
             health = GetComponent<Health>();
 
