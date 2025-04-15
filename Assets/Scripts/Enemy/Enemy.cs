@@ -1,5 +1,6 @@
 using UnityEngine;
 using Common;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace Enemy
 {
@@ -15,13 +16,15 @@ namespace Enemy
         [SerializeField] private float detectionRange = 5f;
 
         private Transform player;
+        private EnemyCore core;
         private Health health;
         private IEnemyBehavior currentBehavior;
         private Animator animator;
 
         private void Awake()
         {
-            
+            core = GetComponent<EnemyCore>();
+
             animator = GetComponent<Animator>();
             health = GetComponent<Health>();
 
@@ -29,7 +32,8 @@ namespace Enemy
                 Debug.LogWarning("Enemy is missing one or more behaviors");
 
             health.OnDeath += HandleDeath;
-            player = GameObject.FindGameObjectWithTag("Player")?.transform;
+            player = core.Player;
+
         }
 
         private void Update()

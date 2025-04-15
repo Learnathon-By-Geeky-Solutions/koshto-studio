@@ -18,7 +18,7 @@ namespace Enemy
 
             Transform target = patrolPoints[currentPointIndex];
             Vector2 direction = (target.position - transform.position).normalized;
-            core.rb.MovePosition(core.rb.position + direction * patrolSpeed * Time.deltaTime);
+            core.Rb.MovePosition(core.Rb.position + direction * patrolSpeed * Time.deltaTime);
 
             if (Vector2.Distance(transform.position, target.position) < 0.5f)
                 currentPointIndex = (currentPointIndex + 1) % patrolPoints.Length;

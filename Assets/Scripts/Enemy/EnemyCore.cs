@@ -25,8 +25,12 @@ namespace Enemy
             set => detectionRange = value;
         }
 
-        [HideInInspector] public Transform player;
-        [HideInInspector] public Rigidbody2D rb;
+        private Transform player;
+        private Rigidbody2D rb;
+
+        public Transform Player => player;
+        public Rigidbody2D Rb => rb;
+
 
         private void Awake()
         {

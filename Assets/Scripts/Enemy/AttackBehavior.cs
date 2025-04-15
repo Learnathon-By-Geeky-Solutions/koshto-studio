@@ -42,9 +42,9 @@ namespace Enemy
 
         public void ExecuteBehavior()
         {
-            if (core == null || core.player == null) return;
+            if (core == null || core.Player == null) return;
 
-            float distance = Vector2.Distance(core.transform.position, core.player.position);
+            float distance = Vector2.Distance(core.transform.position, core.Player.position);
 
             if (distance <= attackRange)
             {
@@ -52,7 +52,7 @@ namespace Enemy
                 {
                     lastAttackTime = Time.time;
 
-                    var health = core.player.GetComponent<Health>();
+                    var health = core.Player.GetComponent<Health>();
                     health?.TakeDamage(attackDamage);
 
                     animator?.SetTrigger("Attack");
