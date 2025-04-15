@@ -48,18 +48,11 @@ namespace Player
             }
             weaponHandler.enabled = false;
             StartCoroutine(Respawn());
-            // equippedWeaponBeforeDeath = weaponHandler != null ? GetEquippedWeapon() : null;
-
+         
 
         }
 
-        // private Weapon GetEquippedWeapon()
-        // {
-        //     // Assuming the weapon currently active is the equipped one
-        //     // You can modify this logic if your system is different
-        //     return weaponHandler != null ? weaponHandler.GetComponentInChildren<Weapon>(true) : null;
-        // }
-
+        
 
         private IEnumerator Respawn()
         {
