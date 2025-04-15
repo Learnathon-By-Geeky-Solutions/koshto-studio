@@ -67,14 +67,17 @@ namespace Enemy
             Invoke(nameof(InvokeDisableEnemy), 1f);
         }
 
-        private void InvokeDisableEnemy()
+        private static void InvokeDisableEnemy()
         {
-            DisableEnemy(gameObject);
+            // Since it's now static, we can't use instance members directly.
+            // You'd typically pass in a reference to the object.
+            Debug.LogError("InvokeDisableEnemy called statically without GameObject reference.");
         }
 
         private static void DisableEnemy(GameObject enemyObject)
         {
-            enemyObject.SetActive(false);
+            if (enemyObject != null)
+                enemyObject.SetActive(false);
         }
     }
 }
