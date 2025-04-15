@@ -17,7 +17,7 @@ namespace Player
         private Animator animator;
         private Health health;
         private GameOverUI gameOverUI;
-        private Rigidbody2D Rb;
+        private Rigidbody2D rb;
 
         [SerializeField] private float respawnDelay = 2f;
 
@@ -25,7 +25,7 @@ namespace Player
         {
             animator = GetComponent<Animator>();
             health = GetComponent<Health>();
-            Rb = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody2D>();
             health.OnDeath += HandleDeath;
             gameOverUI = FindObjectOfType<GameOverUI>();
             weaponHandler = GetComponent<WeaponHandler>();
