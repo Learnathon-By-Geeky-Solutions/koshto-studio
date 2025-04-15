@@ -32,7 +32,7 @@ namespace Enemy
                 Debug.LogWarning("Enemy is missing one or more behaviors");
 
             health.OnDeath += HandleDeath;
-            player = core.Player;
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         }
 
