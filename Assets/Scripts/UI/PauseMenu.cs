@@ -6,7 +6,6 @@ namespace UI
     public class PauseMenu : MonoBehaviour
     {
         [SerializeField] private GameObject pauseMenuUI;
-
         private bool isPaused;
         private PlayerControls controls;
 
@@ -30,7 +29,6 @@ namespace UI
         private void TogglePause()
         {
             isPaused = !isPaused;
-
             if (isPaused)
                 Pause();
             else
@@ -52,12 +50,12 @@ namespace UI
             Debug.Log("Game Resumed");
         }
 
-        public void QuitGame()
+        public static void QuitGame()
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-                Application.Quit();
+            Application.Quit();
 #endif
         }
     }
