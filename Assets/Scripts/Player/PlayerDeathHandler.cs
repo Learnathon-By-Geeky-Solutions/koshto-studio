@@ -48,6 +48,8 @@ namespace Player
         {
             yield return new WaitForSecondsRealtime(respawnDelay);
             weaponHandler.enabled = true;
+            animator.SetTrigger("Respawn");
+
 
             if (this == null || gameObject == null)
             {
