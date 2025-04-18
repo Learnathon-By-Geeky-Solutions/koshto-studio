@@ -34,7 +34,6 @@ namespace Player.Input
         [SerializeField] private float wallSlideSpeed = 2f;
         [SerializeField] private float wallJumpForce = 10f;
         [SerializeField] private float wallJumpDuration = 0.2f;
-
         private Rigidbody2D rb;
         private Animator animator;
 
@@ -48,7 +47,15 @@ namespace Player.Input
         private bool isWallSliding;
         private bool isDashing;
         private bool isWallJumping;
-
+        
+        public bool isDead { get; private set; }
+        
+        public void SetDeadState(bool state)
+        {
+            isDead = state;
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = state;
+        }
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -60,8 +67,9 @@ namespace Player.Input
 
         private void Update()
         {
-            moveInputX = inputManager.MoveInput.x;
+            if (isDead) return;
 
+            moveInputX = inputManager.MoveInput.x;
             UpdateGroundCheck();
             UpdateWallCheck();
             HandleWallSlide();
@@ -69,7 +77,11 @@ namespace Player.Input
             UpdateAnimations();
         }
 
-        private void FixedUpdate() => ApplyMovement();
+        private void FixedUpdate()
+        {
+            if (isDead) return;
+            ApplyMovement();
+        }
 
         private void UpdateGroundCheck()
         {
@@ -103,6 +115,8 @@ namespace Player.Input
 
         private void HandleJump()
         {
+            if (isDead) return;
+
             if (isWallSliding)
             {
                 StartCoroutine(PerformWallJump());
@@ -188,6 +202,8 @@ namespace Player.Input
 
         private void UpdateAnimations()
         {
+            if (isDead) return;
+
             animator.SetBool("isRunning", Mathf.Abs(moveInputX) > 0.1f);
             animator.SetBool("isJumping", !isGrounded && rb.velocity.y > 0f);
             animator.SetBool("isFalling", !isGrounded && rb.velocity.y < 0f);

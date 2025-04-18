@@ -875,7 +875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathScreenUI: {fileID: 296440953}
-  respawnDelay: 1
+  respawnDelay: 5
 --- !u!114 &368844406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2934,7 +2934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2805041046550777671, guid: 3c83d2a389d498d4d92f534fbfc42a35, type: 3}
       propertyPath: respawnDelay
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4388530940949425909, guid: 3c83d2a389d498d4d92f534fbfc42a35, type: 3}
       propertyPath: m_Name

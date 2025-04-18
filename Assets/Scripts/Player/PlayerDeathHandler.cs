@@ -10,6 +10,7 @@ namespace Player
     [RequireComponent(typeof(Health))]
     public class PlayerDeathHandler : MonoBehaviour
     {
+        private Player.Input.PlayerController playerController;
         private WeaponHandler weaponHandler;
         private InputManager inputManager;
 
@@ -21,55 +22,62 @@ namespace Player
 
         [SerializeField] private float respawnDelay = 2f;
 
+        private bool isDead = false; // 🔐 Prevent duplicate triggers
+
         private void Awake()
         {
+            playerController = GetComponent<Player.Input.PlayerController>();
             animator = GetComponent<Animator>();
             health = GetComponent<Health>();
             rb = GetComponent<Rigidbody2D>();
-            health.OnDeath += HandleDeath;
-            gameOverUI = FindObjectOfType<GameOverUI>();
             weaponHandler = GetComponent<WeaponHandler>();
+            inputManager = FindObjectOfType<InputManager>();
+            gameOverUI = FindObjectOfType<GameOverUI>();
+
+            health.OnDeath += HandleDeath;
         }
 
         private void HandleDeath()
         {
+            if (isDead) return; // ✅ Prevent multiple deaths from stacking
+
+            isDead = true;
+
             animator.SetTrigger("isDead");
+
+            if (playerController != null)
+                playerController.SetDeadState(true); // Freeze player movement
+
             if (deathScreenUI) deathScreenUI.SetActive(true);
             if (gameOverUI) gameOverUI.Show();
-            if (inputManager != null)
-            {
-                inputManager.DisablePlayerInput();
-            }
-            weaponHandler.enabled = false;
+            if (inputManager != null) inputManager.DisablePlayerInput();
+            if (weaponHandler != null) weaponHandler.enabled = false;
+
             StartCoroutine(Respawn());
         }
 
         private IEnumerator Respawn()
         {
             yield return new WaitForSecondsRealtime(respawnDelay);
-            weaponHandler.enabled = true;
+
+            transform.position = CheckpointManager.Instance.GetCheckpoint();
+
             animator.SetTrigger("Respawn");
+            health.ResetHealth();
 
+            if (playerController != null)
+                playerController.SetDeadState(false);
 
-            if (this == null || gameObject == null)
-            {
-                GameManager.Instance.SetupLevel();
-            }
-            else
-            {
-                transform.position = CheckpointManager.Instance.GetCheckpoint();
+            if (inputManager != null)
+                inputManager.EnablePlayerInput();
 
-                if (inputManager != null)
-                {
-                    inputManager.EnablePlayerInput();
-                }
+            if (weaponHandler != null)
+                weaponHandler.enabled = true;
 
-                GetComponent<Health>().ResetHealth();
+            if (deathScreenUI) deathScreenUI.SetActive(false);
+            if (gameOverUI) gameOverUI.Hide();
 
-                if (deathScreenUI) deathScreenUI.SetActive(false);
-            }
-
-            GameManager.Instance.SetupLevel(); // Let GameManager spawn new player
+            isDead = false; // ✅ Allow future deaths
         }
 
         private void OnDestroy()
