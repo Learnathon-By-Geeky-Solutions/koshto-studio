@@ -40,7 +40,7 @@ namespace Enemy
             animator = GetComponent<Animator>();
         }
 
-        public void ExecuteBehavior()
+        public void ExecuteBehavior(EnemyCore core)
         {
             if (core == null || core.Player == null) return;
 

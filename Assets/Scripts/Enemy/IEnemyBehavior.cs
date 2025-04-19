@@ -2,6 +2,6 @@ namespace Enemy
 {
     public interface IEnemyBehavior
     {
-        void ExecuteBehavior();
+        void ExecuteBehavior(EnemyCore core);
     }
 }

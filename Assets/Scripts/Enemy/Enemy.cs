@@ -1,6 +1,5 @@
 using UnityEngine;
 using Common;
-using UnityEngine.SocialPlatforms.Impl;
 
 namespace Enemy
 {
@@ -9,11 +8,16 @@ namespace Enemy
     public class Enemy : MonoBehaviour, IDamageable
     {
         [Header("Behaviors")]
-        [SerializeField] private PatrolBehavior patrolBehavior;
-        [SerializeField] private AttackBehavior attackBehavior;
-
+        [SerializeField] private MonoBehaviour patrolBehaviorScript;
+        [SerializeField] private MonoBehaviour attackBehaviorScript;
+        
+        private IEnemyBehavior patrolBehavior;
+        private IEnemyBehavior attackBehavior;
+        
         [Header("Detection")]
         [SerializeField] private float detectionRange = 5f;
+        [SerializeField] private LayerMask obstacleMask;
+        [SerializeField] private LayerMask playerMask;
 
         private Transform player;
         private EnemyCore core;
@@ -24,16 +28,21 @@ namespace Enemy
         private void Awake()
         {
             core = GetComponent<EnemyCore>();
-
-            animator = GetComponent<Animator>();
             health = GetComponent<Health>();
-
-            if (patrolBehavior == null || attackBehavior == null)
-                Debug.LogWarning("Enemy is missing one or more behaviors");
-
-            health.OnDeath += HandleDeath;
+            animator = GetComponent<Animator>();
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
+            // Cast MonoBehaviours to IEnemyBehavior
+            patrolBehavior = patrolBehaviorScript as IEnemyBehavior;
+            attackBehavior = attackBehaviorScript as IEnemyBehavior;
+
+            if (patrolBehavior == null)
+                Debug.LogError($"{gameObject.name}: Patrol behavior does not implement IEnemyBehavior.");
+
+            if (attackBehavior == null)
+                Debug.LogError($"{gameObject.name}: Attack behavior does not implement IEnemyBehavior.");
+
+            health.OnDeath += HandleDeath;
         }
 
         private void Update()
@@ -41,7 +50,32 @@ namespace Enemy
             if (player == null) return;
 
             float distance = Vector2.Distance(transform.position, player.position);
-            bool isPlayerDetected = distance <= detectionRange;
+            bool isInRange = distance <= detectionRange;
+            bool hasLineOfSight = false;
+
+            if (isInRange)
+            {
+                Vector3 scale = transform.localScale;
+                scale.x = (player.position.x < transform.position.x) ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+                transform.localScale = scale;
+                Vector2 direction = (player.position - transform.position).normalized;
+
+                // First raycast: check if anything blocks the view
+                RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, direction, detectionRange, obstacleMask);
+
+                if (obstacleHit.collider == null)
+                {
+                    // No obstacle hit, now raycast to see if we hit the player
+                    RaycastHit2D playerHit = Physics2D.Raycast(transform.position, direction, detectionRange, playerMask);
+        
+                    if (playerHit.collider != null && playerHit.collider.CompareTag("Player"))
+                    {
+                        hasLineOfSight = true;
+                    }
+                }
+            }
+
+            bool isPlayerDetected = isInRange && hasLineOfSight;
 
             animator.SetBool("isMoving", !isPlayerDetected); // Assume movement during patrol only
 
@@ -50,7 +84,7 @@ namespace Enemy
             else
                 SetBehavior(patrolBehavior);
 
-            currentBehavior?.ExecuteBehavior();
+            currentBehavior?.ExecuteBehavior(core);
         }
 
         private void SetBehavior(IEnemyBehavior newBehavior)

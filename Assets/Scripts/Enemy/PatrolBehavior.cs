@@ -12,7 +12,7 @@ namespace Enemy
 
         private void Awake() => core = GetComponent<EnemyCore>();
 
-        public void ExecuteBehavior()
+        public void ExecuteBehavior(EnemyCore core)
         {
             if (core == null || patrolPoints.Length == 0) return;
 
