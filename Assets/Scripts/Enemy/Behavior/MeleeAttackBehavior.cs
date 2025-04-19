@@ -40,17 +40,16 @@ namespace Enemy
                 playerHealth?.TakeDamage(damage);
 
                 // Trigger the attack animation.
-                Animator animator = core.GetComponent<Animator>();
-                if (animator != null)
-                {
-                    animator.SetTrigger("Attack");
-                }
+                IEnemyAnimator animator = core.GetComponent<IEnemyAnimator>();
+                animator?.PlayAttack();
+
             }
             else
             {
                 // Optionally, if needed, reset the trigger when not in attack range.
-                Animator animator = core.GetComponent<Animator>();
-                animator?.ResetTrigger("Attack");
+                IEnemyAnimator animator = core.GetComponent<IEnemyAnimator>();
+                animator?.PlayAttack();
+
             }
 
             // Also, you might want to have the enemy move toward the player when not attacking.
