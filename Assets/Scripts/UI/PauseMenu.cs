@@ -34,6 +34,11 @@ namespace UI
             else
                 Resume();
         }
+        void Start()
+        {
+            pauseMenuUI.SetActive(false);
+        }
+
 
         private void Pause()
         {
