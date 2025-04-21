@@ -1,34 +1,37 @@
 using UnityEngine;
 using Common;
 
-public class SpecialProjectile : MonoBehaviour
+namespace Player.Weapons
 {
-    private float speed;
-    private Vector2 direction;
-
-    [SerializeField] private float lifetime = 3f;
-
-    public void Launch(Vector2 dir, float spd)
+    public class SpecialProjectile : MonoBehaviour
     {
-        direction = dir.normalized;
-        speed = spd;
-        Destroy(gameObject, lifetime); // Destroy after lifetime
-    }
+        private float speed;
+        private Vector2 direction;
 
-    private void Update()
-    {
-        transform.Translate(direction * speed * Time.deltaTime);
-    }
+        [SerializeField] private float lifetime = 3f;
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        var freeable = other.GetComponent<IFreeable>();
-        if (freeable != null)
+        public void Launch(Vector2 dir, float spd)
         {
-            freeable.Free(); // Trigger the freeing logic
-            Destroy(gameObject);
+            direction = dir.normalized;
+            speed = spd;
+            Destroy(gameObject, lifetime); // Destroy after lifetime
         }
 
-        // Optional: Add feedback (particles, SFX) here
+        private void Update()
+        {
+            transform.Translate(direction * speed * Time.deltaTime);
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            var freeable = other.GetComponent<IFreeable>();
+            if (freeable != null)
+            {
+                freeable.Free(); // Trigger the freeing logic
+                Destroy(gameObject);
+            }
+
+            // Optional: Add feedback (particles, SFX) here
+        }
     }
 }
