@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -95,7 +95,616 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_0'
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df5f3161b980ef4469bbb95c7780fb47
+      internalID: -454813781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_1'
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc8bfa831b1f09a48b4a60a32e2f20b9
+      internalID: -2072863457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_2'
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42d4b8b1349c23040a440cc99dfb7f5e
+      internalID: 1997973846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_3'
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0255c9d9b181649459a984c25880417e
+      internalID: -623316505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_4'
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ef3b3dab4a18ff41a0afd92a337be3d
+      internalID: 1658959929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_5'
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a7be55a50e4c5847bf302e7a2d63382
+      internalID: -1433442018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_6'
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd0cdb0a3479013458cefb517dd36cfd
+      internalID: 1846320284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_7'
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e8e08f46a3158945a181605cdb998a1
+      internalID: -2134898118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_8'
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 692c0c0e5ce087a49ad595a9753ca6ae
+      internalID: 1081539945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_9'
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89dced5035f15d448a12d7e2cc118f90
+      internalID: 1770362711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_10'
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 223340f3ecc60f9428e6c56717c2891b
+      internalID: 185856607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_11'
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14342e9a50fc56a4285e011b9b0c5770
+      internalID: 595954203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_12'
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b480aca6aa37c543ac68c3e538d5c77
+      internalID: -2061935209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_13'
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3991baf65c3753040aa808bc3a251d1f
+      internalID: -1260307071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_14'
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a949bd0f705217489b84aafccd9763e
+      internalID: -1464566288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_15'
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2715239b29e5e541abb444b89565fb0
+      internalID: -298437606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_16'
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7834dd10ac1d73a4eb4a382ad0c3bb31
+      internalID: -338703734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_17'
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e446c8875e8cc54489f6343682798584
+      internalID: 531812235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_18'
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 265fa872a386d0a43800a08538c297ee
+      internalID: 1489039460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_19'
+      rect:
+        serializedVersion: 2
+        x: 1216
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b221f24106e487c4d8f8fa827f65eaba
+      internalID: 412702401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_20'
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f8e79ff0a7cf164cbcf2fd00c3beac2
+      internalID: 786991730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_21'
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f709e44db6dca2248a0b1f1ae0191b2b
+      internalID: 865356254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_22'
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2c8bac7eaf70464b96d29c7b5a84524
+      internalID: 464336614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_23'
+      rect:
+        serializedVersion: 2
+        x: 1472
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f22e24a3422665448ad77441546077e1
+      internalID: 2089869906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_24'
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 301fea3b9ebd6234dbd2a1aa12ec1db9
+      internalID: -1077649042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_25'
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de35a3676b12b4749bbbb5a6c71dc79d
+      internalID: 814660606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_26'
+      rect:
+        serializedVersion: 2
+        x: 1664
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01c9d2ad2adc45244884f57a941562e7
+      internalID: -1193537345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_27'
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe3fddd324053dd439aea429086e3170
+      internalID: -1744407322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: '[EMPTY NO CASINGS] Revolver - Colt 45_28'
+      rect:
+        serializedVersion: 2
+        x: 1792
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97b351afd2a331e45b951c1d3fbeceb1
+      internalID: -1967131446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +715,36 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      '[EMPTY NO CASINGS] Revolver - Colt 45_0': -454813781
+      '[EMPTY NO CASINGS] Revolver - Colt 45_1': -2072863457
+      '[EMPTY NO CASINGS] Revolver - Colt 45_10': 185856607
+      '[EMPTY NO CASINGS] Revolver - Colt 45_11': 595954203
+      '[EMPTY NO CASINGS] Revolver - Colt 45_12': -2061935209
+      '[EMPTY NO CASINGS] Revolver - Colt 45_13': -1260307071
+      '[EMPTY NO CASINGS] Revolver - Colt 45_14': -1464566288
+      '[EMPTY NO CASINGS] Revolver - Colt 45_15': -298437606
+      '[EMPTY NO CASINGS] Revolver - Colt 45_16': -338703734
+      '[EMPTY NO CASINGS] Revolver - Colt 45_17': 531812235
+      '[EMPTY NO CASINGS] Revolver - Colt 45_18': 1489039460
+      '[EMPTY NO CASINGS] Revolver - Colt 45_19': 412702401
+      '[EMPTY NO CASINGS] Revolver - Colt 45_2': 1997973846
+      '[EMPTY NO CASINGS] Revolver - Colt 45_20': 786991730
+      '[EMPTY NO CASINGS] Revolver - Colt 45_21': 865356254
+      '[EMPTY NO CASINGS] Revolver - Colt 45_22': 464336614
+      '[EMPTY NO CASINGS] Revolver - Colt 45_23': 2089869906
+      '[EMPTY NO CASINGS] Revolver - Colt 45_24': -1077649042
+      '[EMPTY NO CASINGS] Revolver - Colt 45_25': 814660606
+      '[EMPTY NO CASINGS] Revolver - Colt 45_26': -1193537345
+      '[EMPTY NO CASINGS] Revolver - Colt 45_27': -1744407322
+      '[EMPTY NO CASINGS] Revolver - Colt 45_28': -1967131446
+      '[EMPTY NO CASINGS] Revolver - Colt 45_3': -623316505
+      '[EMPTY NO CASINGS] Revolver - Colt 45_4': 1658959929
+      '[EMPTY NO CASINGS] Revolver - Colt 45_5': -1433442018
+      '[EMPTY NO CASINGS] Revolver - Colt 45_6': 1846320284
+      '[EMPTY NO CASINGS] Revolver - Colt 45_7': -2134898118
+      '[EMPTY NO CASINGS] Revolver - Colt 45_8': 1081539945
+      '[EMPTY NO CASINGS] Revolver - Colt 45_9': 1770362711
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -15,13 +15,29 @@ namespace Player.Weapons
 
         [SerializeField, Tooltip("Damage dealt by the projectile.")]
         private int damage = 10;
-
+        [SerializeField] private AudioClip fireSFX;
+        private Animator animator;
+        private AudioSource audioSource;
+        
+        private void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
         protected override void Attack()
         {
             if (!IsReadyToFire()) return;
 
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
             InitializeProjectile(projectile);
+            if (animator != null)
+            {
+                animator.SetTrigger("Fire"); // Only if you have a fire animation layered
+            }
+
+            if (audioSource && fireSFX)
+            {
+                audioSource.PlayOneShot(fireSFX);
+            }
         }
 
         private bool IsReadyToFire()
