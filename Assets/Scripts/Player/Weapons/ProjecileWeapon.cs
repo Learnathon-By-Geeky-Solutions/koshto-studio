@@ -15,24 +15,27 @@ namespace Player.Weapons
 
         [SerializeField, Tooltip("Damage dealt by the projectile.")]
         private int damage = 10;
-        [SerializeField] private AudioClip fireSFX;
+
+        [SerializeField, Tooltip("Sound played when firing.")]
+        private AudioClip fireSFX;
+
         private Animator animator;
         private AudioSource audioSource;
-        
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
+            audioSource = GetComponent<AudioSource>(); // ✅ Now assigned from the same GameObject
         }
+
         protected override void Attack()
         {
             if (!IsReadyToFire()) return;
 
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
             InitializeProjectile(projectile);
-            if (animator != null)
-            {
-                animator.SetTrigger("Fire"); // Only if you have a fire animation layered
-            }
+
+            animator?.SetTrigger("Fire");
 
             if (audioSource && fireSFX)
             {
@@ -61,8 +64,8 @@ namespace Player.Weapons
 
             Vector2 direction = GetFacingDirection(transform);
             projScript.Fire(direction, projectileSpeed, damage);
-
             projectile.transform.right = direction;
+
             Debug.Log("Projectile fired.");
         }
 
