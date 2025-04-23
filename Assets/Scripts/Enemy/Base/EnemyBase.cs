@@ -69,8 +69,6 @@ namespace Enemy
             if (distance > detectionRange) return false;
 
             Vector2 direction = (player.position - transform.position).normalized;
-
-            // Flip to face the player
             FlipTowardStatic(transform, player.position);
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, detectionRange, obstacleMask | playerMask);
@@ -87,9 +85,9 @@ namespace Enemy
             enemyTransform.localScale = scale;
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int amount)
         {
-            health.TakeDamage(damage);
+            health.TakeDamage(amount);
         }
 
         protected virtual void OnDeath()
