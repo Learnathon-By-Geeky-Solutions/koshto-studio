@@ -16,21 +16,23 @@ namespace Player.Weapons
         private void Awake()
         {
             animator = GetComponent<Animator>();
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
         }
 
         protected override void Attack()
         {
             if (!CanFire()) return;
-
             FireProjectile();
-
             // No cooldown reset or ammo logic unless needed
         }
 
         private void FireProjectile()
         {
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-
             Vector2 direction = GetFacingDirection(transform);
             projectile.transform.right = direction;
 
