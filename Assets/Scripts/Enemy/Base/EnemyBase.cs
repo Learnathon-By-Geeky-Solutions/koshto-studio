@@ -1,4 +1,3 @@
-// Scripts/Enemy/Base/EnemyBase.cs
 using UnityEngine;
 using Common;
 
@@ -11,7 +10,6 @@ namespace Enemy
         [Header("Behaviors")]
         [SerializeField] private MonoBehaviour patrolScript;
         [SerializeField] private MonoBehaviour attackScript;
-
         protected IEnemyBehavior patrolBehavior;
         protected IEnemyBehavior attackBehavior;
 
@@ -24,9 +22,7 @@ namespace Enemy
         protected EnemyCore core;
         protected Health health;
         protected Animator animator;
-
         protected IEnemyBehavior currentBehavior;
-
         protected IEnemyAnimator enemyAnimator;
 
         protected virtual void Awake()
@@ -36,14 +32,13 @@ namespace Enemy
             animator = GetComponent<Animator>();
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-            // Get animation handler
             enemyAnimator = GetComponent<IEnemyAnimator>();
             if (enemyAnimator == null)
                 Debug.LogWarning($"{name}: No IEnemyAnimator attached!");
 
-            // Existing setup...
             patrolBehavior = patrolScript as IEnemyBehavior;
             attackBehavior = attackScript as IEnemyBehavior;
+
             health.OnDeath += OnDeath;
         }
 
@@ -58,7 +53,6 @@ namespace Enemy
             else
                 enemyAnimator?.PlayMove();
 
-            enemyAnimator?.PlayMove();
             SetBehavior(isPlayerDetected ? attackBehavior : patrolBehavior);
             currentBehavior?.ExecuteBehavior(core);
         }
@@ -77,27 +71,36 @@ namespace Enemy
             Vector2 direction = (player.position - transform.position).normalized;
 
             // Flip to face the player
-            FlipToward(player.position);
+            FlipTowardStatic(transform, player.position);
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, detectionRange, obstacleMask | playerMask);
             return hit.collider != null && hit.collider.CompareTag("Player");
         }
 
-        private void FlipToward(Vector3 target)
+        /// <summary>
+        /// Flips the given transform to face a target position.
+        /// </summary>
+        public static void FlipTowardStatic(Transform enemyTransform, Vector3 target)
         {
-            Vector3 scale = transform.localScale;
-            scale.x = (target.x < transform.position.x) ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
-            transform.localScale = scale;
+            Vector3 scale = enemyTransform.localScale;
+            scale.x = (target.x < enemyTransform.position.x) ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+            enemyTransform.localScale = scale;
         }
 
-        public void TakeDamage(int damage) => health.TakeDamage(damage);
+        public void TakeDamage(int damage)
+        {
+            health.TakeDamage(damage);
+        }
 
         protected virtual void OnDeath()
         {
-            enemyAnimator?.PlayDeath(); // Trigger death anim
-            Invoke(nameof(DisableSelf), 1.5f); // Delay before removing
+            enemyAnimator?.PlayDeath();
+            Invoke(nameof(DisableSelf), 1.5f);
         }
 
-        private void DisableSelf() => gameObject.SetActive(false);
+        private void DisableSelf()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
