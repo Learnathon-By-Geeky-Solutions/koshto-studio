@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DialogueSystem
 {
@@ -8,6 +9,25 @@ namespace DialogueSystem
         [SerializeField] private DialogueUI dialogueUI;
         private readonly Queue<DialogueLine> dialogueQueue = new();
         private bool isDialoguePlaying;
+
+        private PlayerControls playerControls;
+
+        private void Awake()
+        {
+            playerControls = new PlayerControls();
+        }
+
+        private void OnEnable()
+        {
+            playerControls.Enable();
+            playerControls.Gameplay.AdvanceDialogue.performed += OnAdvanceDialogue;
+        }
+
+        private void OnDisable()
+        {
+            playerControls.Gameplay.AdvanceDialogue.performed -= OnAdvanceDialogue;
+            playerControls.Disable();
+        }
 
         public void StartDialogue(DialogueData dialogueData)
         {
@@ -20,10 +40,12 @@ namespace DialogueSystem
             ShowNextLine();
         }
 
-        private void Update()
+        private void OnAdvanceDialogue(InputAction.CallbackContext context)
         {
-            if (isDialoguePlaying && Input.GetKeyDown(KeyCode.Return))
+            if (isDialoguePlaying)
+            {
                 ShowNextLine();
+            }
         }
 
         private void ShowNextLine()

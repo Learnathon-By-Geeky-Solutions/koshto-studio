@@ -16,3 +16,6 @@ MonoBehaviour:
   - speakerName: Player
     speakerSprite: {fileID: 0}
     text: Where am I?
+  - speakerName: Player
+    speakerSprite: {fileID: 0}
+    text: This looks like my office..... What am i doing here at this hour?
