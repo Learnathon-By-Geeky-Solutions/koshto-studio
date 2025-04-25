@@ -3,7 +3,6 @@ using Common;
 using System.Collections;
 using UI;
 using Game;
-using Player.Weapons;
 
 namespace Player
 {
