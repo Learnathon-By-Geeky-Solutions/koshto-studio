@@ -7,8 +7,8 @@ namespace Enemy
     public class EnemyHealthBar : MonoBehaviour
     {
         [SerializeField] private Health health;
-        [SerializeField] private Slider healthSlider;
-        [SerializeField] private Vector3 offset = new Vector3(0, 1.5f, 0);
+        [SerializeField] private Image fillImage; 
+        [SerializeField] private Vector3 offset = new Vector3(0, 0.2f, 0);
         [SerializeField] private Camera mainCamera;
 
         private void Awake()
@@ -27,15 +27,21 @@ namespace Enemy
         {
             if (health != null)
             {
-                Vector3 screenPos = mainCamera.WorldToScreenPoint(health.transform.position + offset);
-                transform.position = screenPos;
+                // Get enemy collider height
+                float enemyHeight = GetComponentInParent<Collider2D>().bounds.size.y;
+                Vector3 worldOffset = new Vector3(0, enemyHeight + 0f, 0);
+
+                transform.position = health.transform.position + worldOffset;
+                transform.LookAt(mainCamera.transform);
             }
         }
 
+
+
         private void UpdateHealth(int current, int max)
         {
-            if (healthSlider != null)
-                healthSlider.value = (float)current / max;
+            if (fillImage != null)
+                fillImage.fillAmount = (float)current / max;
         }
 
         private void OnDestroy()
