@@ -1,14 +1,20 @@
 using UnityEngine;
-using Common;
 
 namespace Player.Weapons
 {
     public class SpecialWeapon : Weapon
     {
-        [SerializeField] private GameObject projectilePrefab;
-        [SerializeField] private Transform firePoint;
-        [SerializeField] private float projectileSpeed = 8f;
-        [SerializeField] private AudioClip fireSFX;
+        [SerializeField, Tooltip("Projectile prefab to instantiate.")]
+        private GameObject projectilePrefab;
+
+        [SerializeField, Tooltip("Spawn point for the projectile.")]
+        private Transform firePoint;
+
+        [SerializeField, Tooltip("Speed of the projectile.")]
+        private float projectileSpeed = 8f;
+
+        [SerializeField, Tooltip("Sound played when firing.")]
+        private AudioClip fireSFX;
 
         private Animator animator;
         private AudioSource audioSource;
@@ -17,35 +23,16 @@ namespace Player.Weapons
         {
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
-            if (audioSource == null)
-            {
-                audioSource = gameObject.AddComponent<AudioSource>();
-            }
         }
 
         protected override void Attack()
         {
-            if (!CanFire()) return;
-            FireProjectile();
-            // No cooldown reset or ammo logic unless needed
-        }
+            if (!IsReadyToFire()) return;
 
-        private void FireProjectile()
-        {
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-            Vector2 direction = GetFacingDirection(transform);
-            projectile.transform.right = direction;
+            InitializeProjectile(projectile);
 
-            var specialProjectile = projectile.GetComponent<SpecialProjectile>();
-            if (specialProjectile != null)
-            {
-                specialProjectile.Launch(direction, projectileSpeed);
-            }
-
-            if (animator != null)
-            {
-                animator.SetTrigger("Fire"); // Only if you have a fire animation layered
-            }
+            animator?.SetTrigger("Fire");
 
             if (audioSource && fireSFX)
             {
@@ -53,14 +40,45 @@ namespace Player.Weapons
             }
         }
 
-        private bool CanFire()
+        private bool IsReadyToFire()
         {
-            return projectilePrefab != null && firePoint != null;
+            if (projectilePrefab == null || firePoint == null)
+            {
+                Debug.LogWarning("SpecialWeapon is missing firePoint or prefab.");
+                return false;
+            }
+            return true;
+        }
+
+        private void InitializeProjectile(GameObject projectile)
+        {
+            var projScript = projectile.GetComponent<SpecialProjectile>();
+            if (projScript == null)
+            {
+                Debug.LogWarning("SpecialProjectile script missing on prefab.");
+                return;
+            }
+
+            Vector2 direction = GetFacingDirection(transform);
+            projScript.Launch(direction, projectileSpeed);
+
+            projectile.transform.right = direction;
+
+            Debug.Log("Special projectile fired.");
         }
 
         private static Vector2 GetFacingDirection(Transform weaponTransform)
         {
             return weaponTransform.lossyScale.x > 0 ? Vector2.right : Vector2.left;
         }
+
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            if (firePoint == null) return;
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(firePoint.position, firePoint.position + firePoint.right * 2f);
+        }
+#endif
     }
 }

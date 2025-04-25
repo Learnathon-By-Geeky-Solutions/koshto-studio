@@ -7,31 +7,31 @@ namespace Player.Weapons
     {
         private float speed;
         private Vector2 direction;
+        private Rigidbody2D rb;
 
-        [SerializeField] private float lifetime = 3f;
+        [SerializeField]
+        private float lifeTime = 2f;
+
+        private void Awake()
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
 
         public void Launch(Vector2 dir, float spd)
         {
             direction = dir.normalized;
             speed = spd;
-            Destroy(gameObject, lifetime); // Destroy after lifetime
-        }
-
-        private void Update()
-        {
-            transform.Translate(direction * speed * Time.deltaTime);
+            rb.velocity = direction * speed;
+            Destroy(gameObject, lifeTime);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            var freeable = other.GetComponent<IFreeable>();
-            if (freeable != null)
+            if (other.TryGetComponent(out IFreeable freeable))
             {
-                freeable.Free(); // Trigger the freeing logic
+                freeable.Free(); // This triggers the NPC's freeing logic
                 Destroy(gameObject);
             }
-
-            // Optional: Add feedback (particles, SFX) here
         }
     }
 }
