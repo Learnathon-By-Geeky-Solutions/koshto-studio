@@ -1,13 +1,15 @@
 using UnityEngine;
-using Enemy.Bosses.NightBorne; //reference NightBorneController
-
+using Enemy.Bosses.NightBorne;
 namespace Common
 {
     public class Checkpoint : MonoBehaviour
     {
         [Header("Checkpoint Options")]
-        public bool isBossCheckpoint = false;
-        public NightBorneController bossToActivate;
+        [SerializeField] private bool isBossCheckpoint = false;
+        [SerializeField] private NightBorneController bossToActivate;
+
+        public bool IsBossCheckpoint => isBossCheckpoint;
+        public NightBorneController BossToActivate => bossToActivate;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
