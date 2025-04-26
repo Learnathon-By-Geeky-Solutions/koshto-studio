@@ -20,6 +20,8 @@ namespace Enemy.Bosses.NightBorne
         public float attackCooldown = 1.2f;
         private bool isAttacking = false;
 
+        [SerializeField] private BossWeaponHitbox weaponHitbox;
+
         [Header("Charge")]
         public float chargeRange = 5f;
         public float chargeSpeed = 10f;
@@ -38,6 +40,18 @@ namespace Enemy.Bosses.NightBorne
         public void ActivateBoss()
         {
             isActive = true;
+        }
+
+        public void EnableHitbox()
+        {
+            if (weaponHitbox != null)
+                weaponHitbox.EnableHitbox();
+        }
+
+        public void DisableHitbox()
+        {
+            if (weaponHitbox != null)
+                weaponHitbox.DisableHitbox();
         }
 
         private int healthCheckpoint = 75;
@@ -91,14 +105,14 @@ namespace Enemy.Bosses.NightBorne
             animationHandler.PlayAttack();
             yield return new WaitForSeconds(0.2f); // delay before hit check
 
-            if (Vector2.Distance(transform.position, player.position) <= attackRange)
-            {
-                if (player.TryGetComponent(out IDamageable damageable))
-                {
-                    damageable.TakeDamage(25);
-                    StartCoroutine(PauseTime());
-                }
-            }
+            //if (Vector2.Distance(transform.position, player.position) <= attackRange)
+            //{
+            //    //if (player.TryGetComponent(out IDamageable damageable))
+            //    //{
+            //    //    damageable.TakeDamage(25);
+            //    //    StartCoroutine(PauseTime());
+            //    //}
+            //}
 
             yield return new WaitForSeconds(attackCooldown);
             isAttacking = false;
@@ -211,5 +225,15 @@ namespace Enemy.Bosses.NightBorne
                 }
             }
         }
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            if (player == null) return;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRange); // Draw Attack Range
+        }
+#endif
+
     }
 }
