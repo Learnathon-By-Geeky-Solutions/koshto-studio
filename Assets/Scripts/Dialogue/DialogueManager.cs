@@ -40,7 +40,7 @@ namespace DialogueSystem
             ShowNextLine();
         }
 
-        private void OnAdvanceDialogue(InputAction.CallbackContext context)
+        private void OnAdvanceDialogue(InputAction.CallbackContext _)
         {
             if (isDialoguePlaying)
             {
