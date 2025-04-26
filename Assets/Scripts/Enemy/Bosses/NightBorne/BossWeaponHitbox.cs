@@ -1,7 +1,6 @@
-// Enemy/Bosses/NightBorne/BossWeaponHitbox.cs
-using UnityEngine;
+﻿using UnityEngine;
 using Common;
-using UI;
+using System.Collections;
 
 namespace Enemy.Bosses.NightBorne
 {
@@ -14,22 +13,28 @@ namespace Enemy.Bosses.NightBorne
         {
             if (!canDamage) return;
 
-            if (collision.CompareTag("Player") && collision.TryGetComponent(out IDamageable damageable))
+            if (collision.TryGetComponent(out IDamageable damageable))
             {
                 damageable.TakeDamage(damage);
-
-                // Optionally: Pause time on hit
-                Time.timeScale = 0f;
-                Invoke(nameof(UnfreezeTime), 0.08f);
+                Debug.Log("Damaged!");
+                canDamage = false;
+                PauseTimeBriefly();
             }
-        }
-
-        private static void UnfreezeTime()
-        {
-            Time.timeScale = 1f;
         }
 
         public void EnableHitbox() => canDamage = true;
         public void DisableHitbox() => canDamage = false;
+
+        private void PauseTimeBriefly()
+        {
+            Time.timeScale = 0f;
+            StartCoroutine(UnfreezeTimeCoroutine());
+        }
+
+        private IEnumerator UnfreezeTimeCoroutine()
+        {
+            yield return new WaitForSecondsRealtime(0.08f);
+            Time.timeScale = 1f;
+        }
     }
 }

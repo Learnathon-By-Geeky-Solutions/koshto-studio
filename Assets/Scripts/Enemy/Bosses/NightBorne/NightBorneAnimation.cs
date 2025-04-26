@@ -18,7 +18,7 @@ namespace Enemy.Bosses.NightBorne
             animator.ResetTrigger("Attack");
             animator.ResetTrigger("Charge");
 
-            animator.SetBool("isDead", true); // ✅ This is crucial if your Animator uses a bool
+            animator.SetBool("isDead", true);
         }
     }
 }
