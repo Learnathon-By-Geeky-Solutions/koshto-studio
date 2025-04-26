@@ -8,7 +8,13 @@ namespace Enemy.Bosses.NightBorne
         [field: SerializeField] public int MaxHealth { get; private set; } = 300;
         public int CurrentHealth { get; private set; }
 
-        public System.Action OnHealthChanged;
+        [SerializeField] private System.Action onHealthChanged;
+
+        public System.Action OnHealthChanged
+        {
+            get => onHealthChanged;
+            set => onHealthChanged = value;
+        }
 
         private void Awake()
         {
