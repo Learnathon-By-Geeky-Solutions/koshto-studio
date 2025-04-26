@@ -105,14 +105,6 @@ namespace Enemy.Bosses.NightBorne
             animationHandler.PlayAttack();
             yield return new WaitForSeconds(0.2f); // delay before hit check
 
-            //if (Vector2.Distance(transform.position, player.position) <= attackRange)
-            //{
-            //    //if (player.TryGetComponent(out IDamageable damageable))
-            //    //{
-            //    //    damageable.TakeDamage(25);
-            //    //    StartCoroutine(PauseTime());
-            //    //}
-            //}
 
             yield return new WaitForSeconds(attackCooldown);
             isAttacking = false;
