@@ -5,14 +5,35 @@ namespace Enemy.Bosses.NightBorne
 {
     public class BossHealthBarUI : MonoBehaviour
     {
-        public static BossHealthBarUI Instance;
+        
+        private static BossHealthBarUI _instance;
+        public static BossHealthBarUI Instance
+        {
+            get
+            {
+                
+                if (_instance == null)
+                {
+                    Debug.LogError("BossHealthBarUI instance is not initialized yet!");
+                }
+                return _instance;
+            }
+        }
 
         [SerializeField] private Slider healthSlider;
         [SerializeField] private GameObject barContainer;
 
         private void Awake()
         {
-            Instance = this;
+           
+            if (_instance != null && _instance != this)
+            {
+                Destroy(gameObject); 
+            }
+            else
+            {
+                _instance = this; 
+            }
         }
 
         public void Init(int maxHealth)
