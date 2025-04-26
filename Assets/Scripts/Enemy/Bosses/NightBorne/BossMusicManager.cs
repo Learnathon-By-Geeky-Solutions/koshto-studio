@@ -4,14 +4,35 @@ namespace Enemy.Bosses.NightBorne
 {
     public class BossMusicManager : MonoBehaviour
     {
-        public static BossMusicManager Instance;
+        
+        private static BossMusicManager _instance;
+        public static BossMusicManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    Debug.LogError("BossMusicManager instance is not initialized yet!");
+                }
+                return _instance;
+            }
+        }
+
         [SerializeField] private AudioClip bossMusic;
         private AudioSource audioSource;
 
         private void Awake()
         {
-            Instance = this;
-            audioSource = GetComponent<AudioSource>();
+            
+            if (_instance != null && _instance != this)
+            {
+                Destroy(gameObject); 
+            }
+            else
+            {
+                _instance = this; 
+                audioSource = GetComponent<AudioSource>();
+            }
         }
 
         public void PlayMusic()
