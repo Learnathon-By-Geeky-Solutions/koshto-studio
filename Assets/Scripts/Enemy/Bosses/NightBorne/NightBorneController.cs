@@ -33,6 +33,13 @@ namespace Enemy.Bosses.NightBorne
 
         private bool isCharging = false;
         private bool isDead = false;
+        private bool isActive = false;
+
+        public void ActivateBoss()
+        {
+            isActive = true;
+        }
+
         private int healthCheckpoint = 75;
 
         private void Awake()
@@ -46,6 +53,8 @@ namespace Enemy.Bosses.NightBorne
         private void Update()
         {
             if (isDead || isCharging || isAttacking || player == null) return;
+            if (!isActive) return;
+
 
             float distance = Vector2.Distance(transform.position, player.position);
 
