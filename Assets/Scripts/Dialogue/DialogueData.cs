@@ -6,6 +6,8 @@ namespace DialogueSystem
     [CreateAssetMenu(fileName = "NewDialogueData", menuName = "Dialogue/DialogueData")]
     public class DialogueData : ScriptableObject
     {
-        public DialogueLine[] lines;
+        [SerializeField] private DialogueLine[] lines;
+
+        public DialogueLine[] Lines => lines;
     }
 }
