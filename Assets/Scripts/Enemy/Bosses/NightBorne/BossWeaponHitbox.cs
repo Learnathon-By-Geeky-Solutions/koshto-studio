@@ -24,7 +24,7 @@ namespace Enemy.Bosses.NightBorne
             }
         }
 
-        private void UnfreezeTime()
+        private static void UnfreezeTime()
         {
             Time.timeScale = 1f;
         }
