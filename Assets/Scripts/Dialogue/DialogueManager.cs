@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DialogueSystem
 {
@@ -40,6 +42,7 @@ namespace DialogueSystem
             ShowNextLine();
         }
 
+        [SuppressMessage("CodeQuality", "IDE0060:Remove unused parameter", Justification = "Required by Input System event signature.")]
         private void OnAdvanceDialogue(InputAction.CallbackContext _)
         {
             if (isDialoguePlaying)
