@@ -21,16 +21,16 @@ namespace Enemy.Bosses.NightBorne
         [SerializeField] private AudioClip bossMusic;
         private AudioSource audioSource;
 
-        private void Awake()
+        private void OnEnable()
         {
             
             if (_instance != null && _instance != this)
             {
-                Destroy(gameObject); 
+                Destroy(gameObject); // Destroy duplicate instances
             }
             else
             {
-                _instance = this; 
+                _instance = this; // Set the instance
                 audioSource = GetComponent<AudioSource>();
             }
         }
