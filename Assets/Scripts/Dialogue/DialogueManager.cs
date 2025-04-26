@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Diagnostics.CodeAnalysis;
@@ -35,7 +34,8 @@ namespace DialogueSystem
         {
             Time.timeScale = 0f;
             dialogueQueue.Clear();
-            foreach (var line in dialogueData.lines)
+            // Accessing lines via the public property
+            foreach (var line in dialogueData.Lines)
                 dialogueQueue.Enqueue(line);
 
             isDialoguePlaying = true;
