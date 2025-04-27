@@ -216,9 +216,8 @@ namespace Enemy.Bosses.NightBorne
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (isDead) return;
+            //if (isDead) return;  //add code later when needed
 
-            
         }
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
