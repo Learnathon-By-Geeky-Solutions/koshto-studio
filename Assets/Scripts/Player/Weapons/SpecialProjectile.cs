@@ -1,5 +1,7 @@
 using UnityEngine;
 using Common;
+using System.Diagnostics.CodeAnalysis;
+
 
 namespace Player.Weapons
 {
@@ -24,6 +26,7 @@ namespace Player.Weapons
             Destroy(gameObject, lifeTime);
         }
 
+        [SuppressMessage("Major Code Smell", "S2326:Unused type parameters should be removed", Justification = "Unity event method must not be static")]
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out IFreeable freeable))
