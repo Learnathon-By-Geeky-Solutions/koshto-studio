@@ -200,22 +200,7 @@ namespace Enemy.Bosses.NightBorne
         {
             if (isDead) return;
 
-            //if (collision.gameObject.CompareTag("Player") && !isAttacking && !isCharging)
-            //{
-            //    if (collision.gameObject.TryGetComponent(out IDamageable playerDamageable))
-            //    {
-            //        playerDamageable.TakeDamage(15);
-            //        StartCoroutine(PauseTime());
-            //    }
-
-            //    // Optionally show death if player dies inside player script
-            //    var playerHealth = collision.gameObject.GetComponent<Health>();
-            //    if (playerHealth != null && playerHealth.GetCurrentHealth() <= 0)
-            //    {
-            //        GameOverUI gameOver = FindObjectOfType<GameOverUI>();
-            //        gameOver?.Show();
-            //    }
-            //}
+            
         }
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
