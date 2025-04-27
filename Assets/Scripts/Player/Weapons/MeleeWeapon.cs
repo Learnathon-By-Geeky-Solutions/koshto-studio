@@ -17,6 +17,16 @@ namespace Player.Weapons
         [SerializeField, Tooltip("Layer mask for enemies.")]
         private LayerMask enemyLayer;
 
+        [SerializeField, Tooltip("Sound played when attacking.")]
+        private AudioClip attackSFX;
+
+        private AudioSource audioSource;
+
+        private void Awake()
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
         protected override void Attack()
         {
             if (!IsConfigured()) return;
@@ -26,6 +36,11 @@ namespace Player.Weapons
             foreach (var hit in hits)
             {
                 TryDamageEnemy(hit);
+            }
+
+            if (audioSource && attackSFX)
+            {
+                audioSource.PlayOneShot(attackSFX);
             }
 
             Debug.Log("Melee attack executed.");
