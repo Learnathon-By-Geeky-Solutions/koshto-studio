@@ -6,7 +6,6 @@ namespace Player.Weapons
     public class SpecialProjectile : MonoBehaviour
     {
         private float speed;
-        private Vector2 direction;
         private Rigidbody2D rb;
 
         [SerializeField]
@@ -19,7 +18,7 @@ namespace Player.Weapons
 
         public void Launch(Vector2 dir, float spd)
         {
-            direction = dir.normalized;
+            Vector2 direction = dir.normalized;
             speed = spd;
             rb.velocity = direction * speed;
             Destroy(gameObject, lifeTime);
@@ -29,7 +28,7 @@ namespace Player.Weapons
         {
             if (other.TryGetComponent(out IFreeable freeable))
             {
-                freeable.Free(); // This triggers the NPC's freeing logic
+                freeable.Free();
                 Destroy(gameObject);
             }
         }
