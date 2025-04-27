@@ -10,23 +10,38 @@ namespace Enemy.Bosses.NightBorne
     public class NightBorneController : MonoBehaviour, IDamageable
     {
         [Header("References")]
-        public Transform player;
+        [SerializeField] private Transform player;
+        public Transform Player => player;
 
         [Header("Chase")]
-        public float runSpeed = 2f;
+        [SerializeField] private float runSpeed = 2f;
+        public float RunSpeed => runSpeed;
 
         [Header("Attack")]
-        public float attackRange = 1.8f;
-        public float attackCooldown = 1.2f;
+        [SerializeField] private float attackRange = 1.8f;
+        public float AttackRange => attackRange;
+
+        [SerializeField] private float attackCooldown = 1.2f;
+        public float AttackCooldown => attackCooldown;
+
         private bool isAttacking = false;
 
         [SerializeField] private BossWeaponHitbox weaponHitbox;
+        public BossWeaponHitbox WeaponHitbox => weaponHitbox;
 
         [Header("Charge")]
-        public float chargeRange = 5f;
-        public float chargeSpeed = 10f;
-        public float chargeWindUp = 0.5f;
-        public float chargeDuration = 1.0f;
+        [SerializeField] private float chargeRange = 5f;
+        public float ChargeRange => chargeRange;
+
+        [SerializeField] private float chargeSpeed = 10f;
+        public float ChargeSpeed => chargeSpeed;
+
+        [SerializeField] private float chargeWindUp = 0.5f;
+        public float ChargeWindUp => chargeWindUp;
+
+        [SerializeField] private float chargeDuration = 1.0f;
+        public float ChargeDuration => chargeDuration;
+
 
         private Animator animator;
         private Rigidbody2D rb;
