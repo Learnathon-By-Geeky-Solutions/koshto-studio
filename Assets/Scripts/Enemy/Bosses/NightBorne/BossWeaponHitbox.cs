@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Common;
 using System.Collections;
-using System.Diagnostics.CodeAnalysis;
+
 
 namespace Enemy.Bosses.NightBorne
 {
@@ -32,8 +32,8 @@ namespace Enemy.Bosses.NightBorne
             StartCoroutine(UnfreezeTimeCoroutine());
         }
 
-        [SuppressMessage("CodeQuality", "IDE0060:Remove unused parameter", Justification = "Required for Unity coroutine pattern.")]
-        private IEnumerator UnfreezeTimeCoroutine()
+        
+        private static IEnumerator UnfreezeTimeCoroutine()
         {
             yield return new WaitForSecondsRealtime(0.08f);
             Time.timeScale = 1f;
