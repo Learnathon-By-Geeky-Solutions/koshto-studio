@@ -109,7 +109,8 @@ namespace Enemy.Bosses.NightBorne
             animationHandler.PlayRun();
             Vector2 direction = (player.position - transform.position).normalized;
             rb.velocity = new Vector2(direction.x * runSpeed, rb.velocity.y);
-            Flip(direction.x);
+            Flip(transform, direction.x);
+
         }
 
         private IEnumerator AttackRoutine()
@@ -204,13 +205,14 @@ namespace Enemy.Bosses.NightBorne
         }
 
 
-        private void Flip(float directionX)
+        private static void Flip(Transform transform, float directionX)
         {
             if (directionX > 0)
                 transform.localScale = new Vector3(1, 1, 1);
             else if (directionX < 0)
                 transform.localScale = new Vector3(-1, 1, 1);
         }
+
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
