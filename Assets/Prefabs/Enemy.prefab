@@ -399,7 +399,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4647991507461158677}
-  - component: {fileID: 6785981861796094262}
   - component: {fileID: 1417242223309215268}
   - component: {fileID: 8300973815526335226}
   - component: {fileID: 4188739066046774619}
@@ -426,27 +425,6 @@ Transform:
   - {fileID: 8574983525061496743}
   m_Father: {fileID: 5023141046178084042}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6785981861796094262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4051181259901669853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 338c31d04078481fa34b2601cfd155e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolScript: {fileID: 0}
-  attackScript: {fileID: 0}
-  detectionRange: 5
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 264
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 384
 --- !u!50 &1417242223309215268
 Rigidbody2D:
   serializedVersion: 4
