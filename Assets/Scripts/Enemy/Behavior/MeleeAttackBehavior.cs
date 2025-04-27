@@ -21,7 +21,6 @@ namespace Enemy
 
         private float lastAttackTime;
 
-        // The ExecuteBehavior method now takes an EnemyCore reference.
         public void ExecuteBehavior(EnemyCore core)
         {
             // Ensure we have a valid player reference.
