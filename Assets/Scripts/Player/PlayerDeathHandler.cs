@@ -12,6 +12,7 @@ namespace Player
         private Player.Input.PlayerController playerController;
         private WeaponHandler weaponHandler;
         private InputManager inputManager;
+        private AudioManager audioManager; // 🎵 Added AudioManager reference
 
         [SerializeField] private GameObject deathScreenUI;
         private Animator animator;
@@ -32,20 +33,26 @@ namespace Player
             weaponHandler = GetComponent<WeaponHandler>();
             inputManager = FindObjectOfType<InputManager>();
             gameOverUI = FindObjectOfType<GameOverUI>();
+            audioManager = FindObjectOfType<AudioManager>(); // 🎵 Find the AudioManager
 
             health.OnDeath += HandleDeath;
         }
 
         private void HandleDeath()
         {
-            if (isDead) return; // ✅ Prevent multiple deaths from stacking
+            if (isDead) return; // ✅ Prevent multiple deaths
 
             isDead = true;
 
             animator.SetTrigger("isDead");
 
+            if (audioManager != null)
+            {
+                audioManager.PlaySFX(audioManager.death); // 🎵 Play the death sound
+            }
+
             if (playerController != null)
-                playerController.SetDeadState(true); // Freeze player movement
+                playerController.SetDeadState(true);
 
             if (deathScreenUI) deathScreenUI.SetActive(true);
             if (gameOverUI) gameOverUI.Show();
