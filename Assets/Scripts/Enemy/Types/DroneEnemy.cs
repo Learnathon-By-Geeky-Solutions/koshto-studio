@@ -5,6 +5,7 @@ namespace Enemy
 {
     public class DroneEnemy : EnemyBase
     {
-        // No need to override Update() if no additional behavior is added
+        // DroneEnemy currently has no additional behavior beyond EnemyBase.
+        // Reserved for future drone-specific behaviors (e.g., hover, blinking).
     }
 }
