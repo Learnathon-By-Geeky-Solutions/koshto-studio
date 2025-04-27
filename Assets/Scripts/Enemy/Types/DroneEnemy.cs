@@ -5,11 +5,7 @@ namespace Enemy
 {
     public class DroneEnemy : EnemyBase
     {
-        protected override void Update()
-        {
-            base.Update();
-
-            // Add drone-specific effects like light blinking or hover bobbing
-        }
+        // DroneEnemy currently has no additional behavior beyond EnemyBase.
+        // Reserved for future drone-specific behaviors (e.g., hover, blinking).
     }
 }
