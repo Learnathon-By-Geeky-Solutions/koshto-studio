@@ -33,7 +33,7 @@ namespace Enemy.Bosses.NightBorne
         }
 
         
-        private static IEnumerator UnfreezeTimeCoroutine()
+        private IEnumerator UnfreezeTimeCoroutine()
         {
             yield return new WaitForSecondsRealtime(0.08f);
             Time.timeScale = 1f;

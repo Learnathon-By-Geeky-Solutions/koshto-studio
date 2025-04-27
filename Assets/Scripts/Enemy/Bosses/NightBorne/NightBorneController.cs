@@ -196,12 +196,13 @@ namespace Enemy.Bosses.NightBorne
             StartCoroutine(DestroyAfterDeathAnimation());
         }
 
-        private IEnumerator PauseTime()
+        private static IEnumerator PauseTime()
         {
             Time.timeScale = 0f;
             yield return new WaitForSecondsRealtime(0.08f);
             Time.timeScale = 1f;
         }
+
 
         private void Flip(float directionX)
         {
