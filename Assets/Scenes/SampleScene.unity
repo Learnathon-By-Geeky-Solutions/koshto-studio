@@ -9950,6 +9950,10 @@ PrefabInstance:
       propertyPath: reapproachDelay
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 6517117406510743495, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
+      propertyPath: stoppingDistance
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7914437952580578922, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
