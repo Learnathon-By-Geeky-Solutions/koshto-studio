@@ -34,12 +34,19 @@ namespace Player.Input
         [SerializeField] private float wallSlideSpeed = 2f;
         [SerializeField] private float wallJumpForce = 10f;
         [SerializeField] private float wallJumpDuration = 0.2f;
+
+        [Header("Dash Charges")]
+        [SerializeField] private int maxDashCharges = 3;
+        [SerializeField] private float dashRechargeTime = 5f;
+
         private Rigidbody2D rb;
         private Animator animator;
 
         private float moveInputX;
         private float coyoteTimeCounter;
         private int jumpCount;
+        private int currentDashCharges;
+        private float lastDashTime;
 
         private bool isFacingRight = true;
         private bool isGrounded;
@@ -47,7 +54,8 @@ namespace Player.Input
         private bool isWallSliding;
         private bool isDashing;
         private bool isWallJumping;
-        
+        private bool isInvulnerable;
+
         public bool isDead { get; private set; }
 
         public void SetDeadState(bool state)
@@ -77,6 +85,8 @@ namespace Player.Input
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
 
+            currentDashCharges = maxDashCharges;
+
             inputManager.OnJump += HandleJump;
             inputManager.OnDash += () => StartCoroutine(Dash());
         }
@@ -91,6 +101,7 @@ namespace Player.Input
             HandleWallSlide();
             FlipIfNeeded();
             UpdateAnimations();
+            HandleDashRecharge();
         }
 
         private void FixedUpdate()
@@ -157,15 +168,12 @@ namespace Player.Input
             isWallJumping = true;
 
             float direction = isFacingRight ? -1f : 1f;
-
-            // Jump away from wall and upward
             rb.velocity = new Vector2(direction * wallJumpForce, jumpForce);
 
-            // Flip player if needed
             if ((direction > 0 && !isFacingRight) || (direction < 0 && isFacingRight))
                 Flip();
 
-            jumpCount = maxJumps; // Reset jump count after wall jump
+            jumpCount = maxJumps;
             animator.SetTrigger("Jump");
 
             yield return new WaitForSeconds(wallJumpDuration);
@@ -174,9 +182,13 @@ namespace Player.Input
 
         private IEnumerator Dash()
         {
-            if (isDashing) yield break;
+            if (isDashing || currentDashCharges <= 0) yield break;
 
             isDashing = true;
+            isInvulnerable = true;
+            currentDashCharges--;
+            lastDashTime = Time.time;
+
             rb.gravityScale = 0f;
             float direction = isFacingRight ? 1f : -1f;
             rb.velocity = new Vector2(direction * dashSpeed, 0f);
@@ -187,6 +199,16 @@ namespace Player.Input
             rb.gravityScale = fallMultiplier;
             rb.velocity = new Vector2(0, rb.velocity.y);
             isDashing = false;
+            isInvulnerable = false;
+        }
+
+        private void HandleDashRecharge()
+        {
+            if (currentDashCharges < maxDashCharges && Time.time - lastDashTime >= dashRechargeTime)
+            {
+                currentDashCharges++;
+                lastDashTime = Time.time; // reset timer for next recharge
+            }
         }
 
         private void ApplyMovement()
