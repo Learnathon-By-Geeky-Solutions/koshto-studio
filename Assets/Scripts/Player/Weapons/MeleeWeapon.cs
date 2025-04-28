@@ -41,7 +41,8 @@ namespace Player.Weapons
         {
             if (playerController != null)
             {
-                playerController.PlayAttackAnimation();
+                //playerController.PlayAttackAnimation();
+                Debug.LogWarning("Attack origin not set.");
             }
 
             if (audioSource && attackSFX)

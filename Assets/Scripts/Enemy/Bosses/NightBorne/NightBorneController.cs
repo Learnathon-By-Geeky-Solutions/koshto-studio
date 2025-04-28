@@ -282,6 +282,9 @@ namespace Enemy.Bosses.NightBorne
             BossHealthBarUI.Instance?.Hide();
 
             StartCoroutine(DestroyAfterDeathAnimation());
+
+            var victoryHandler = FindObjectOfType<Level.BossVictoryHandler>();
+            victoryHandler?.OnBossDefeated();
         }
 
         private IEnumerator DestroyAfterDeathAnimation()

@@ -61,13 +61,6 @@ namespace Player.Input
                 animator.SetTrigger("isDead");
             }
         }
-        public void PlayAttackAnimation()
-        {
-            if (animator != null)
-            {
-                animator.SetTrigger("Attack");
-            }
-        }
 
         public void PlayTakeHitAnimation()
         {
