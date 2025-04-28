@@ -9,6 +9,17 @@ namespace Enemy.Bosses.NightBorne
         [SerializeField] private int damage = 25;
         private bool canDamage = false;
         private bool hasDamagedThisSwing = false;
+        private int baseDamage = 10;
+
+        public void SetDamage(int newDamage)
+        {
+            baseDamage = newDamage;
+        }
+
+        public void IncreaseBaseDamageByPercentage(int percent)
+        {
+            baseDamage += (baseDamage * percent) / 100;
+        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

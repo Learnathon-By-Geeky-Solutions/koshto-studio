@@ -15,33 +15,31 @@ namespace Enemy.Bosses.NightBorne
 
         [Header("Chase")]
         [SerializeField] private float runSpeed = 2f;
-        public float RunSpeed => runSpeed;
 
         [Header("Attack")]
         [SerializeField] private float attackRange = 1.8f;
-        public float AttackRange => attackRange;
-
         [SerializeField] private float attackCooldown = 1.2f;
-        public float AttackCooldown => attackCooldown;
-
-        private bool isAttacking = false;
-
-        [SerializeField] private BossWeaponHitbox weaponHitbox;
-        public BossWeaponHitbox WeaponHitbox => weaponHitbox;
+        [SerializeField] private int baseDamage = 10; // weapon base damage
 
         [Header("Charge")]
         [SerializeField] private float chargeRange = 5f;
-        public float ChargeRange => chargeRange;
-
         [SerializeField] private float chargeSpeed = 10f;
-        public float ChargeSpeed => chargeSpeed;
-
         [SerializeField] private float chargeWindUp = 0.5f;
-        public float ChargeWindUp => chargeWindUp;
-
         [SerializeField] private float chargeDuration = 1.0f;
-        public float ChargeDuration => chargeDuration;
 
+        [Header("Knockback")]
+        [SerializeField] private Vector2 playerKnockbackForce = new Vector2(5f, 2f);
+        [SerializeField] private float bossBackOffDistance = 2f;
+
+        [Header("Weapon")]
+        [SerializeField] private BossWeaponHitbox weaponHitbox;
+
+        [Header("Chase Settings")]
+        [SerializeField] private float stoppingDistance = 1.5f; // minimum distance to player before stopping
+        [SerializeField] private float reapproachDelay = 0.8f; // wait after back-off before chasing again
+
+        private bool isBackingOff = false;
+        private float reapproachTimer = 0f;
 
         private Animator animator;
         private Rigidbody2D rb;
@@ -51,6 +49,13 @@ namespace Enemy.Bosses.NightBorne
         private bool isCharging = false;
         private bool isDead = false;
         private bool isActive = false;
+        private bool isAttacking = false;
+        private bool inSecondPhase = false;
+
+        private int healthCheckpoint = 75;
+        private int facingDirection = 1; // 1 = right, -1 = left
+
+        private Vector3 initialScale;
 
         public void ActivateBoss()
         {
@@ -60,7 +65,11 @@ namespace Enemy.Bosses.NightBorne
         public void EnableHitbox()
         {
             if (weaponHitbox != null)
+            {
+                int damage = GetCurrentDamage();
+                weaponHitbox.SetDamage(damage);
                 weaponHitbox.EnableHitbox();
+            }
         }
 
         public void DisableHitbox()
@@ -69,25 +78,26 @@ namespace Enemy.Bosses.NightBorne
                 weaponHitbox.DisableHitbox();
         }
 
-        private int healthCheckpoint = 75;
-
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             health = GetComponent<BossHealth>();
             animationHandler = GetComponent<NightBorneAnimation>();
+
+            initialScale = new Vector3(1f, 1f, 1f);
+            transform.localScale = initialScale;
         }
 
         private void Update()
         {
-            if (isDead || isCharging || isAttacking || player == null) return;
-            if (!isActive) return;
-
+            if (!CanAct()) return;
 
             float distance = Vector2.Distance(transform.position, player.position);
 
-            if (health.CurrentHealth <= health.MaxHealth * (healthCheckpoint / 100f))
+            CheckPhaseTransition();
+
+            if (ShouldCharge(distance))
             {
                 StartCoroutine(ChargeRoutine());
                 healthCheckpoint -= 25;
@@ -98,19 +108,80 @@ namespace Enemy.Bosses.NightBorne
             {
                 StartCoroutine(AttackRoutine());
             }
-            else
+            else if (!isBackingOff)
             {
-                Chase();
+                if (distance > stoppingDistance)
+                {
+                    ChasePlayer();
+                }
+                else
+                {
+                    Idle();
+                }
+            }
+
+            HandleReapproachCooldown();
+        }
+        private void HandleReapproachCooldown()
+        {
+            if (isBackingOff)
+            {
+                reapproachTimer -= Time.deltaTime;
+                if (reapproachTimer <= 0f)
+                {
+                    isBackingOff = false;
+                }
             }
         }
 
-        private void Chase()
+
+        private bool CanAct()
+        {
+            return !isDead && !isCharging && !isAttacking && isActive && player != null;
+        }
+
+        private void CheckPhaseTransition()
+        {
+            if (!inSecondPhase && health.CurrentHealth <= health.MaxHealth * 0.5f)
+            {
+                EnterSecondPhase();
+            }
+        }
+
+        private void EnterSecondPhase()
+        {
+            inSecondPhase = true;
+
+            transform.localScale = initialScale * 2f; // Boss doubles in size
+            weaponHitbox.IncreaseBaseDamageByPercentage(25); // +25% damage
+
+            Debug.Log("NightBorne has entered second phase!");
+        }
+
+        private bool ShouldCharge(float distance)
+        {
+            bool healthLowEnough = health.CurrentHealth <= health.MaxHealth * (healthCheckpoint / 100f);
+            bool playerInFront = Mathf.Sign(player.position.x - transform.position.x) == facingDirection;
+            return healthLowEnough && playerInFront && distance <= chargeRange;
+        }
+
+        private void ChasePlayer()
         {
             animationHandler.PlayRun();
             Vector2 direction = (player.position - transform.position).normalized;
             rb.velocity = new Vector2(direction.x * runSpeed, rb.velocity.y);
-            Flip(transform, direction.x);
 
+            UpdateFacingDirection(direction.x);
+        }
+
+        private void UpdateFacingDirection(float moveDirectionX)
+        {
+            int newFacingDirection = moveDirectionX > 0 ? 1 : moveDirectionX < 0 ? -1 : facingDirection;
+            if (newFacingDirection != facingDirection)
+            {
+                facingDirection = newFacingDirection;
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * facingDirection, transform.localScale.y, 1);
+            }
         }
 
         private IEnumerator AttackRoutine()
@@ -119,8 +190,13 @@ namespace Enemy.Bosses.NightBorne
             rb.velocity = Vector2.zero;
 
             animationHandler.PlayAttack();
-            yield return new WaitForSeconds(0.2f); // delay before hit check
+            yield return new WaitForSeconds(0.2f);
 
+            if (inSecondPhase)
+            {
+                KnockbackPlayer();
+                BackOffAfterAttack();
+            }
 
             yield return new WaitForSeconds(attackCooldown);
             isAttacking = false;
@@ -132,11 +208,49 @@ namespace Enemy.Bosses.NightBorne
             animationHandler.PlayCharge();
 
             yield return new WaitForSeconds(chargeWindUp);
-            rb.velocity = new Vector2(transform.localScale.x * chargeSpeed, rb.velocity.y);
+
+            rb.velocity = new Vector2(facingDirection * chargeSpeed, rb.velocity.y);
 
             yield return new WaitForSeconds(chargeDuration);
+
             rb.velocity = Vector2.zero;
             isCharging = false;
+        }
+
+        private void KnockbackPlayer()
+        {
+            if (player.TryGetComponent<Rigidbody2D>(out var playerRb))
+            {
+                Vector2 force = new Vector2(facingDirection * playerKnockbackForce.x, playerKnockbackForce.y);
+                playerRb.AddForce(force, ForceMode2D.Impulse);
+            }
+        }
+
+        private void BackOffAfterAttack()
+        {
+            if (!inSecondPhase) return;
+
+            isBackingOff = true;
+            reapproachTimer = reapproachDelay;
+
+            Vector2 backOffTarget = (Vector2)transform.position + new Vector2(-facingDirection * bossBackOffDistance, 0f);
+            StartCoroutine(SmoothBackOff(backOffTarget));
+        }
+
+        private IEnumerator SmoothBackOff(Vector2 targetPosition)
+        {
+            float elapsed = 0f;
+            float duration = 0.4f; // seconds to move back
+            Vector2 start = transform.position;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                transform.position = Vector2.Lerp(start, targetPosition, elapsed / duration);
+                yield return null;
+            }
+
+            transform.position = targetPosition;
         }
 
         public void TakeDamage(int amount)
@@ -145,35 +259,12 @@ namespace Enemy.Bosses.NightBorne
 
             health.TakeDamage(amount);
             animationHandler.PlayHit();
-
             StartCoroutine(PauseTime());
 
             if (health.CurrentHealth <= 0)
             {
                 Die();
             }
-        }
-        
-        private IEnumerator DestroyAfterDeathAnimation()
-        {
-            // Wait until death animation has fully played
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-            // Wait until we’re actually in the Death state
-            while (!stateInfo.IsName("Death"))
-            {
-                yield return null;
-                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            }
-
-            // Then wait until the animation is finished
-            while (stateInfo.normalizedTime < 1f)
-            {
-                yield return null;
-                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            }
-
-            Destroy(gameObject);
         }
 
         private void Die()
@@ -184,17 +275,32 @@ namespace Enemy.Bosses.NightBorne
             rb.velocity = Vector2.zero;
 
             animationHandler.PlayDeath();
-
             Time.timeScale = 1f;
 
-            InputManager input = FindObjectOfType<InputManager>();
-            input?.EnablePlayerInput();
-
+            FindObjectOfType<InputManager>()?.EnablePlayerInput();
             BossMusicManager.Instance?.StopMusic();
             BossHealthBarUI.Instance?.Hide();
 
-            // 👇 Wait for animation length before destroying
             StartCoroutine(DestroyAfterDeathAnimation());
+        }
+
+        private IEnumerator DestroyAfterDeathAnimation()
+        {
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+            while (!stateInfo.IsName("Death"))
+            {
+                yield return null;
+                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            }
+
+            while (stateInfo.normalizedTime < 1f)
+            {
+                yield return null;
+                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            }
+
+            Destroy(gameObject);
         }
 
         private static IEnumerator PauseTime()
@@ -204,30 +310,15 @@ namespace Enemy.Bosses.NightBorne
             Time.timeScale = 1f;
         }
 
-
-        private static void Flip(Transform transform, float directionX)
+        private int GetCurrentDamage()
         {
-            if (directionX > 0)
-                transform.localScale = new Vector3(1, 1, 1);
-            else if (directionX < 0)
-                transform.localScale = new Vector3(-1, 1, 1);
+            return inSecondPhase ? Mathf.CeilToInt(baseDamage * 1.25f) : baseDamage;
         }
 
-
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void Idle()
         {
-            //if (isDead) return;  //add code later when needed
-
+            animationHandler.PlayIdle();
+            rb.velocity = Vector2.zero;
         }
-#if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
-        {
-            if (player == null) return;
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackRange); // Draw Attack Range
-        }
-#endif
-
     }
 }

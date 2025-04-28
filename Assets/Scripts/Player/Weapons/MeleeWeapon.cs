@@ -1,41 +1,47 @@
 using UnityEngine;
 using Common;
+using Player.Input; // Import PlayerController
 
 namespace Player.Weapons
 {
     public class MeleeWeapon : Weapon
     {
-        [SerializeField, Tooltip("The damage this weapon deals.")]
-        private int damage = 25;
-
-        [SerializeField, Tooltip("The size of the attack range box.")]
-        private Vector2 attackRange = new Vector2(1f, 1f);
-
-        [SerializeField, Tooltip("Position from which the attack is cast.")]
-        private Transform attackOrigin;
-
-        [SerializeField, Tooltip("Layer mask for enemies.")]
-        private LayerMask enemyLayer;
-
-        [SerializeField, Tooltip("Sound played when attacking.")]
-        private AudioClip attackSFX;
+        [SerializeField] private int damage = 25;
+        [SerializeField] private Vector2 attackRange = new Vector2(1f, 1f);
+        [SerializeField] private Transform attackOrigin;
+        [SerializeField] private LayerMask enemyLayer;
+        [SerializeField] private AudioClip attackSFX;
 
         private AudioSource audioSource;
+        private PlayerController playerController;
 
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
+            playerController = GetComponentInParent<PlayerController>();
+
+            if (playerController == null)
+            {
+                Debug.LogError("MeleeWeapon: No PlayerController found in parent!");
+            }
         }
 
         protected override void Attack()
         {
-            if (!IsConfigured()) return;
-
-            var hits = Physics2D.OverlapBoxAll(attackOrigin.position, attackRange, 0f, enemyLayer);
-
-            foreach (var hit in hits)
+            if (!IsConfigured())
             {
-                TryDamageEnemy(hit);
+                Debug.LogWarning("MeleeWeapon: Not properly configured.");
+                return;
+            }
+
+            PerformAttack();
+        }
+
+        private void PerformAttack()
+        {
+            if (playerController != null)
+            {
+                playerController.PlayAttackAnimation();
             }
 
             if (audioSource && attackSFX)
@@ -43,41 +49,19 @@ namespace Player.Weapons
                 audioSource.PlayOneShot(attackSFX);
             }
 
-            Debug.Log("Melee attack executed.");
+            var hits = Physics2D.OverlapBoxAll(attackOrigin.position, attackRange, 0f, enemyLayer);
+            foreach (var hit in hits)
+            {
+                if (hit.TryGetComponent(out IDamageable damageable))
+                {
+                    damageable.TakeDamage(damage);
+                }
+            }
         }
 
         private bool IsConfigured()
         {
-            if (attackOrigin == null)
-            {
-                Debug.LogWarning("Attack origin not set.");
-                return false;
-            }
-
-            if (attackRange.x <= 0 || attackRange.y <= 0)
-            {
-                Debug.LogWarning("Invalid attack range.");
-                return false;
-            }
-
-            return true;
+            return attackOrigin != null && attackRange.x > 0 && attackRange.y > 0;
         }
-
-        private void TryDamageEnemy(Collider2D collider)
-        {
-            if (collider.TryGetComponent(out Common.IDamageable damageable))
-            {
-                damageable.TakeDamage(damage);
-            }
-        }
-
-#if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
-        {
-            if (attackOrigin == null) return;
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(attackOrigin.position, attackRange);
-        }
-#endif
     }
 }

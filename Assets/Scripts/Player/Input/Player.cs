@@ -49,13 +49,36 @@ namespace Player.Input
         private bool isWallJumping;
         
         public bool isDead { get; private set; }
-        
+
         public void SetDeadState(bool state)
         {
             isDead = state;
             rb.velocity = Vector2.zero;
             rb.isKinematic = state;
+
+            if (state)
+            {
+                animator.SetTrigger("isDead");
+            }
         }
+        public void PlayAttackAnimation()
+        {
+            if (animator != null)
+            {
+                animator.SetTrigger("Attack");
+            }
+        }
+
+        public void PlayTakeHitAnimation()
+        {
+            animator.SetTrigger("TakeHit");
+        }
+
+        public void PlayTakeHitCriticalAnimation()
+        {
+            animator.SetTrigger("TakeHitCritical");
+        }
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();

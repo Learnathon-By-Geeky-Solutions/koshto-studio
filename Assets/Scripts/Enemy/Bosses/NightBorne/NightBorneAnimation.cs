@@ -7,7 +7,11 @@ namespace Enemy.Bosses.NightBorne
         private Animator animator;
 
         private void Awake() => animator = GetComponent<Animator>();
-
+        public void PlayIdle()
+        {
+            if (animator == null) return;
+            animator.Play("Idle");
+        }
         public void PlayRun() => animator.SetBool("isRunning", true);
         public void PlayAttack() => animator.SetTrigger("Attack");
         public void PlayCharge() => animator.SetTrigger("Charge");
