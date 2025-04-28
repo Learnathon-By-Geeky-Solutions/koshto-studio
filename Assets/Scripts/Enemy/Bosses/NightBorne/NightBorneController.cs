@@ -95,6 +95,10 @@ namespace Enemy.Bosses.NightBorne
 
             float distance = Vector2.Distance(transform.position, player.position);
 
+            // Always update facing direction based on player
+            float directionX = player.position.x - transform.position.x;
+            UpdateFacingDirection(directionX);
+
             CheckPhaseTransition();
 
             if (ShouldCharge(distance))
@@ -176,7 +180,17 @@ namespace Enemy.Bosses.NightBorne
 
         private void UpdateFacingDirection(float moveDirectionX)
         {
-            int newFacingDirection = moveDirectionX > 0 ? 1 : moveDirectionX < 0 ? -1 : facingDirection;
+            int newFacingDirection = facingDirection;
+
+            if (moveDirectionX > 0)
+            {
+                newFacingDirection = 1;
+            }
+            else if (moveDirectionX < 0)
+            {
+                newFacingDirection = -1;
+            }
+
             if (newFacingDirection != facingDirection)
             {
                 facingDirection = newFacingDirection;
