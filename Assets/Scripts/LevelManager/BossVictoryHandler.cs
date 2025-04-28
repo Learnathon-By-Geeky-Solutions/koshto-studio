@@ -8,10 +8,11 @@ namespace Level
     public class BossVictoryHandler : MonoBehaviour
     {
         [SerializeField] private string returnSceneName = "Level1";
-        [SerializeField] private Vector2 returnPosition = new Vector2(100, 0); // Example
+        [SerializeField] private Vector2 returnPosition = new Vector2(100, 0);
 
         public void OnBossDefeated()
         {
+            LevelReturnData.PlayerReturnPosition = returnPosition;
             StartCoroutine(ReturnToLevel());
         }
 
