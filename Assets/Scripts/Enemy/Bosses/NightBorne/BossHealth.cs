@@ -19,12 +19,24 @@ namespace Enemy.Bosses.NightBorne
         private void Awake()
         {
             CurrentHealth = MaxHealth;
+
+            // Initialize health bar
+            if (BossHealthBarUI.Instance != null)
+            {
+                BossHealthBarUI.Instance.Init(MaxHealth);
+            }
         }
 
         public void TakeDamage(int amount)
         {
             CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
             OnHealthChanged?.Invoke();
+
+            // Update health bar when health changes
+            if (BossHealthBarUI.Instance != null)
+            {
+                BossHealthBarUI.Instance.UpdateHealth(CurrentHealth, MaxHealth);
+            }
         }
     }
 }
