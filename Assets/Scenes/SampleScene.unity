@@ -10256,10 +10256,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: NightBorne
       objectReference: {fileID: 0}
+    - target: {fileID: 3143534911191549157, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
+      propertyPath: maxHealth
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 3143534911191549157, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
+      propertyPath: healthBarUI
+      value: 
+      objectReference: {fileID: 2051687684}
     - target: {fileID: 6517117406510743495, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 368844404}
+    - target: {fileID: 6517117406510743495, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
+      propertyPath: attackRange
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6517117406510743495, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
       propertyPath: reapproachDelay
       value: 0.2
@@ -10315,6 +10327,10 @@ PrefabInstance:
     - target: {fileID: 7914437952580578922, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8237009255655842539, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
