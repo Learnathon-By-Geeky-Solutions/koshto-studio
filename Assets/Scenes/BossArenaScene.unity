@@ -564,8 +564,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1132122078}
   - {fileID: 721644453}
+  - {fileID: 1132122078}
   - {fileID: 774991204}
   m_Father: {fileID: 748238540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -766,8 +766,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 772898297}
   - {fileID: 1087947510}
+  - {fileID: 772898297}
   - {fileID: 291104661}
   m_Father: {fileID: 748238540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -907,19 +907,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layers:
-  - layerParent: {fileID: 376581997}
+  - layerParent: {fileID: 1777664210}
     parallaxEffect: 0.1
-  - layerParent: {fileID: 2070590231}
+  - layerParent: {fileID: 1349224129}
     parallaxEffect: 0.25
-  - layerParent: {fileID: 1454405592}
+  - layerParent: {fileID: 679523854}
     parallaxEffect: 0.4
   - layerParent: {fileID: 2091115713}
     parallaxEffect: 0.55
-  - layerParent: {fileID: 679523854}
+  - layerParent: {fileID: 1454405592}
     parallaxEffect: 0.7
-  - layerParent: {fileID: 1349224129}
+  - layerParent: {fileID: 2070590231}
     parallaxEffect: 0.85
-  - layerParent: {fileID: 1777664210}
+  - layerParent: {fileID: 376581997}
     parallaxEffect: 1
 --- !u!1 &772898296
 GameObject:
@@ -3850,8 +3850,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 47383609}
   - {fileID: 1695659056}
+  - {fileID: 47383609}
   - {fileID: 959258558}
   m_Father: {fileID: 748238540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4013,8 +4013,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2093594938}
   - {fileID: 2114071644}
+  - {fileID: 2093594938}
   - {fileID: 1363019144}
   m_Father: {fileID: 748238540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4215,8 +4215,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 42382434}
   - {fileID: 625086909}
+  - {fileID: 42382434}
   - {fileID: 1153635452}
   m_Father: {fileID: 748238540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4333,8 +4333,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1713475677}
   - {fileID: 342177078}
+  - {fileID: 1713475677}
   - {fileID: 894831654}
   m_Father: {fileID: 748238540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4367,8 +4367,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1272658336}
   - {fileID: 2062179843}
+  - {fileID: 1272658336}
   - {fileID: 609319004}
   m_Father: {fileID: 748238540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
