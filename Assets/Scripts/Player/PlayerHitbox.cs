@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using Common;
 using Player.Input;
 
@@ -6,6 +7,15 @@ namespace Player
 {
     public class PlayerHitbox : MonoBehaviour, IDamageable
     {
+        [SerializeField] private float invulnerabilityDuration = 0.5f;
+        private bool isInvulnerable;
+
+        private IEnumerator InvulnerabilityFrame()
+        {
+            isInvulnerable = true;
+            yield return new WaitForSeconds(invulnerabilityDuration);
+            isInvulnerable = false;
+        }
         private Health playerHealth;
         private PlayerController playerController;
 
