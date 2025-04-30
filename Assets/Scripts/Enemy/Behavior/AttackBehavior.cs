@@ -5,33 +5,17 @@ namespace Enemy
 {
     public class AttackBehavior : MonoBehaviour, IEnemyBehavior
     {
-        [SerializeField]
-        private int attackDamage = 50;
-        public int AttackDamage
-        {
-            get => attackDamage;
-            set => attackDamage = value;
-        }
-
-        [SerializeField]
-        private float attackRange = 1f;
-        public float AttackRange
-        {
-            get => attackRange;
-            set => attackRange = value;
-        }
-
-        [SerializeField]
-        private float attackCooldown = 1f;
-        public float AttackCooldown
-        {
-            get => attackCooldown;
-            set => attackCooldown = value;
-        }
+        [SerializeField] private int attackDamage = 50;
+        [SerializeField] private float attackRange = 1f;
+        [SerializeField] private float attackCooldown = 1f;
 
         private float lastAttackTime;
         private EnemyCore core;
         private Animator animator;
+
+        public int AttackDamage { get => attackDamage; set => attackDamage = value; }
+        public float AttackRange { get => attackRange; set => attackRange = value; }
+        public float AttackCooldown { get => attackCooldown; set => attackCooldown = value; }
 
         private void Awake()
         {
@@ -41,26 +25,37 @@ namespace Enemy
 
         public void ExecuteBehavior(EnemyCore core)
         {
-            if (core == null || core.Player == null) return;
+            if (!CanExecuteAttack(core)) return;
+
+            lastAttackTime = Time.time;
+            PerformAttack(core.Player);
+        }
+
+        private bool CanExecuteAttack(EnemyCore core)
+        {
+            if (core == null || core.Player == null) return false;
 
             float distance = Vector2.Distance(core.transform.position, core.Player.position);
+            bool inRange = distance <= attackRange;
+            bool offCooldown = Time.time >= lastAttackTime + attackCooldown;
 
-            if (distance <= attackRange)
-            {
-                if (Time.time >= lastAttackTime + attackCooldown)
-                {
-                    lastAttackTime = Time.time;
+            UpdateAttackAnimation(inRange);
 
-                    var health = core.Player.GetComponent<Health>();
-                    health?.TakeDamage(attackDamage);
+            return inRange && offCooldown;
+        }
 
-                    animator?.SetTrigger("Attack");
-                }
-            }
+        private void UpdateAttackAnimation(bool inRange)
+        {
+            if (inRange)
+                animator?.SetTrigger("Attack");
             else
-            {
-                animator?.ResetTrigger("Attack"); // cancel attack if player moved
-            }
+                animator?.ResetTrigger("Attack");
+        }
+
+        private void PerformAttack(Transform player)
+        {
+            var health = player.GetComponent<Health>();
+            health?.TakeDamage(attackDamage);
         }
     }
 }

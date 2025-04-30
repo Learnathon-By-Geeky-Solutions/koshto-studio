@@ -1160,7 +1160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolScript: {fileID: 603224436}
   attackScript: {fileID: 603224435}
-  detectionRange: 5
+  detectionRange: 3
   obstacleMask:
     serializedVersion: 2
     m_Bits: 264
@@ -1194,7 +1194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 50
-  attackRange: 1
+  attackRange: 3
   attackCooldown: 1
 --- !u!114 &603224436
 MonoBehaviour:
@@ -10269,12 +10269,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 368844404}
     - target: {fileID: 6517117406510743495, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
+      propertyPath: baseDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6517117406510743495, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
       propertyPath: attackRange
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6517117406510743495, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
+      propertyPath: chargeRange
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6517117406510743495, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
       propertyPath: reapproachDelay
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6517117406510743495, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
+      propertyPath: healthCheckpoint
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6517117406510743495, guid: 251e86491f98cd640a584f55275bddd7, type: 3}
       propertyPath: stoppingDistance
