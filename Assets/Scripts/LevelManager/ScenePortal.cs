@@ -1,15 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ScenePortal : MonoBehaviour
+namespace Scene
 {
-    public string targetSceneName = "BossArenaScene";
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public class ScenePortal : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
+        public string targetSceneName = "BossArenaScene";
+
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            FindObjectOfType<SceneFader>().FadeToScene(targetSceneName);
+            if (other.CompareTag("Player"))
+            {
+                FindObjectOfType<SceneFader>().FadeToScene(targetSceneName);
+            }
         }
     }
 }
