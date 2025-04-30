@@ -8,6 +8,7 @@ TagManager:
   - Weapon
   - UI
   - Audio
+  - PlayerSpawn
   layers:
   - Default
   - TransparentFX
