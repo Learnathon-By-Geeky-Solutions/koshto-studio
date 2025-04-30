@@ -1,80 +1,83 @@
 ﻿using UnityEngine;
 
-public class ParallaxBackground : MonoBehaviour
+namespace Parallax
 {
-    [System.Serializable]
-    public class ParallaxLayer
+    public class ParallaxBackground : MonoBehaviour
     {
-        public Transform layerParent;
-        [Range(0f, 1f)]
-        public float parallaxEffect = 0.5f;
-        private float spriteWidth;
-        private Vector3 startPos;
-        private Transform cam;
-
-        public void Initialize(Transform cameraTransform)
+        [System.Serializable]
+        public class ParallaxLayer
         {
-            cam = cameraTransform;
-            startPos = layerParent.position;
+            public Transform layerParent;
+            [Range(0f, 1f)]
+            public float parallaxEffect = 0.5f;
+            private float spriteWidth;
+            private Vector3 startPos;
+            private Transform cam;
 
-            // Calculate width from first child sprite
-            if (layerParent.childCount > 0)
+            public void Initialize(Transform cameraTransform)
             {
-                SpriteRenderer sr = layerParent.GetChild(0).GetComponent<SpriteRenderer>();
-                if (sr != null) spriteWidth = sr.bounds.size.x;
+                cam = cameraTransform;
+                startPos = layerParent.position;
+
+                // Calculate width from first child sprite
+                if (layerParent.childCount > 0)
+                {
+                    SpriteRenderer sr = layerParent.GetChild(0).GetComponent<SpriteRenderer>();
+                    if (sr != null) spriteWidth = sr.bounds.size.x;
+                }
+            }
+
+            public void UpdateLayer()
+            {
+                if (cam == null) return;
+
+                float distance = cam.position.x * parallaxEffect;
+                float temp = cam.position.x * (1 - parallaxEffect);
+
+                // Move entire parent
+                layerParent.position = startPos + Vector3.right * distance;
+
+                // Infinite scroll logic
+                if (temp > startPos.x + spriteWidth)
+                {
+                    startPos.x += spriteWidth;
+                }
+                else if (temp < startPos.x - spriteWidth)
+                {
+                    startPos.x -= spriteWidth;
+                }
             }
         }
 
-        public void UpdateLayer()
+        public ParallaxLayer[] layers = new ParallaxLayer[7];
+        private Transform camTransform;
+
+        private void Start()
         {
-            if (cam == null) return;
+            camTransform = Camera.main.transform;
 
-            float distance = cam.position.x * parallaxEffect;
-            float temp = cam.position.x * (1 - parallaxEffect);
-
-            // Move entire parent
-            layerParent.position = startPos + Vector3.right * distance;
-
-            // Infinite scroll logic
-            if (temp > startPos.x + spriteWidth)
+            for (int i = 0; i < layers.Length; i++)
             {
-                startPos.x += spriteWidth;
-            }
-            else if (temp < startPos.x - spriteWidth)
-            {
-                startPos.x -= spriteWidth;
-            }
-        }
-    }
+                if (layers[i].layerParent != null)
+                {
+                    layers[i].Initialize(camTransform);
 
-    public ParallaxLayer[] layers = new ParallaxLayer[7];
-    private Transform camTransform;
-
-    private void Start()
-    {
-        camTransform = Camera.main.transform;
-
-        for (int i = 0; i < layers.Length; i++)
-        {
-            if (layers[i].layerParent != null)
-            {
-                layers[i].Initialize(camTransform);
-
-                // Set Z position (further back = higher Z)
-                Vector3 pos = layers[i].layerParent.position;
-                pos.z = 10 + i;
-                layers[i].layerParent.position = pos;
+                    // Set Z position (further back = higher Z)
+                    Vector3 pos = layers[i].layerParent.position;
+                    pos.z = 10 + i;
+                    layers[i].layerParent.position = pos;
+                }
             }
         }
-    }
 
-    private void LateUpdate()
-    {
-        foreach (var layer in layers)
+        private void LateUpdate()
         {
-            if (layer.layerParent != null)
+            foreach (var layer in layers)
             {
-                layer.UpdateLayer();
+                if (layer.layerParent != null)
+                {
+                    layer.UpdateLayer();
+                }
             }
         }
     }

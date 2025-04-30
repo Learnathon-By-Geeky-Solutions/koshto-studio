@@ -8,7 +8,7 @@ namespace Game
    
         public static void PlayGame()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
         }
 
         public static void PlayGameFromButton()
