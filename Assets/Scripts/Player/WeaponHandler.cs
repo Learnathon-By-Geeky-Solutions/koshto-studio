@@ -14,7 +14,7 @@ namespace Player
         [SerializeField] private Weapon secondaryWeapon;
         [SerializeField] private Weapon specialWeapon;
         [SerializeField] private Transform weaponHolder;
-        
+
         [SerializeField] private int startingSpecialAmmo = 5;
         [SerializeField] private int killsPerSpecialAmmo = 2;
 
@@ -90,7 +90,7 @@ namespace Player
             primaryWeapon.TryAttack();
             StartCoroutine(ResetAttack());
         }
-        
+
         public void OnSecondaryAttack(InputAction.CallbackContext context)
         {
             if (!context.performed || secondaryWeapon == null || isAttacking) return;
@@ -196,9 +196,9 @@ namespace Player
             var rb = weapon.GetComponent<Rigidbody2D>();
             if (rb != null) rb.simulated = true;
         }
-        
+
         //special weapon
-        
+
         public void OnEnemyKilled()
         {
             killCount++;

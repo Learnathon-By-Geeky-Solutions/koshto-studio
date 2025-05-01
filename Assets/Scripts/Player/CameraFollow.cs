@@ -1,44 +1,80 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace MyGame.Camera
 {
     public class CameraFollow : MonoBehaviour
     {
-        [SerializeField]
-        private Transform player; // Assign your player in the Inspector
+        [Header("Follow Settings")]
+        [SerializeField] private Transform player;
+        [SerializeField] private float smoothSpeed = 5f;
+        [SerializeField] private Vector3 offset = new Vector3(0, 1, -10);
 
-        [SerializeField]
-        private float smoothSpeed = 5f;
+        [Header("Cutscene Settings")]
+        [SerializeField] private float cutsceneDuration = 3f;
+        private Transform _cutsceneTarget;
+        private bool _inCutscene;
+        private Vector3 _originalOffset;
+        private bool _skipRequested;
+        private PlayerControls _playerControls;
 
-        [SerializeField]
-        private Vector3 offset = new Vector3(0, 1, -10); // Adjust the Y offset to center the player
-
-        public Transform Player
+        private void Awake()
         {
-            get => player;
-            set => player = value;
-        }
-
-        public float SmoothSpeed
-        {
-            get => smoothSpeed;
-            set => smoothSpeed = value;
-        }
-
-        public Vector3 Offset
-        {
-            get => offset;
-            set => offset = value;
+            _originalOffset = offset;
+            _playerControls = new PlayerControls();
+            _playerControls.Gameplay.Jump.performed += _ => SkipCutscene();
         }
 
         void LateUpdate()
         {
-            if (player != null)
+            if (_inCutscene && _cutsceneTarget != null && !_skipRequested)
             {
-                // Follow the player’s X and Y, but keep the Z fixed for 2D
-                Vector3 targetPosition = new Vector3(player.position.x + offset.x, player.position.y + offset.y, -10);
-                transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
+                // Move to cutscene target
+                Vector3 targetPosition = _cutsceneTarget.position + _originalOffset;
+                transform.position = Vector3.Lerp(
+                    transform.position,
+                    targetPosition,
+                    smoothSpeed * Time.unscaledDeltaTime
+                );
             }
+            else if (player != null)
+            {
+                // Return to player follow
+                Vector3 targetPosition = player.position + _originalOffset;
+                transform.position = Vector3.Lerp(
+                    transform.position,
+                    targetPosition,
+                    smoothSpeed * Time.deltaTime
+                );
+            }
+        }
+
+        public void StartCutscene(Transform target, float duration)
+        {
+            _inCutscene = true;
+            _cutsceneTarget = target;
+            _skipRequested = false;
+            cutsceneDuration = duration;
+            _playerControls.Gameplay.Enable();
+            Invoke(nameof(EndCutscene), cutsceneDuration);
+        }
+
+        private void SkipCutscene()
+        {
+            if (_inCutscene) EndCutscene();
+        }
+
+        public void EndCutscene()
+        {
+            _inCutscene = false;
+            _cutsceneTarget = null;
+            _playerControls.Gameplay.Disable();
+            CancelInvoke(nameof(EndCutscene));
+        }
+
+        private void OnDestroy()
+        {
+            _playerControls.Dispose();
         }
     }
 }
