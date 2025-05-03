@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Player.Weapons;
+using Player.Input;
 
 namespace Player
 {
@@ -17,7 +18,7 @@ namespace Player
 
         [SerializeField] private int startingSpecialAmmo = 5;
         [SerializeField] private int killsPerSpecialAmmo = 2;
-
+        [SerializeField] private Animator playerAnimator;
         private int specialAmmo;
         private int killCount;
         private bool isAttacking = false;
@@ -78,17 +79,33 @@ namespace Player
         {
             if (!context.performed || primaryWeapon == null || isAttacking) return;
 
-            primaryWeapon.gameObject.SetActive(true);
+            // Hide weapon and show animation
+            primaryWeapon.gameObject.SetActive(false);
+            if (playerAnimator != null)
+            {
+                playerAnimator.SetTrigger("Attack");
+            }
 
-            if (secondaryWeapon != null)
-                secondaryWeapon.gameObject.SetActive(false);
-
-            if (specialWeapon != null)
-                specialWeapon.gameObject.SetActive(false); // Hide special when not in use
+            // Hide other weapons
+            if (secondaryWeapon != null) secondaryWeapon.gameObject.SetActive(false);
+            if (specialWeapon != null) specialWeapon.gameObject.SetActive(false);
 
             isAttacking = true;
+            StartCoroutine(AttackSequence());
+        }
+
+        private IEnumerator AttackSequence()
+        {
+            // Wait for animation to reach certain point before showing weapon
+            yield return new WaitForSeconds(0.1f); // Adjust this delay to match your animation
+
+            // Show weapon and perform attack
+            primaryWeapon.gameObject.SetActive(false);
             primaryWeapon.TryAttack();
-            StartCoroutine(ResetAttack());
+
+            // Wait before resetting attack state
+            yield return new WaitForSeconds(0.2f);
+            isAttacking = false;
         }
 
         public void OnSecondaryAttack(InputAction.CallbackContext context)
