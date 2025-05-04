@@ -37,7 +37,7 @@ namespace Enemy.Bosses.NightBorne
                 player = GameObject.FindWithTag("Player").transform;
         }
 
-        public void ActivateBoss() => isActive = true;
+        public virtual void ActivateBoss() => isActive = true;
 
         public virtual void TakeDamage(int amount)
         {
