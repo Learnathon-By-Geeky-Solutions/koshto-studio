@@ -50,6 +50,9 @@ MonoBehaviour:
   SFXSource: {fileID: 1216001494301876925}
   background: {fileID: 8300000, guid: 18b2404c34eba3c4485e98cc80f4aef7, type: 3}
   death: {fileID: 8300000, guid: 295e98cc1d7c83d4bb5b432a579f2d1e, type: 3}
+  menuMusic: {fileID: 8300000, guid: 4bbffc1f6e36fa74b85e9c040c4f716a, type: 3}
+  audioMixer: {fileID: 0}
+  musicVolumeParam: MusicVolume
 --- !u!1 &3728306462471799226
 GameObject:
   m_ObjectHideFlags: 0
