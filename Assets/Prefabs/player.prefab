@@ -285,6 +285,7 @@ MonoBehaviour:
   weaponHolder: {fileID: 589014040682097164}
   startingSpecialAmmo: 5
   killsPerSpecialAmmo: 2
+  playerAnimator: {fileID: 1606252440179663834}
 --- !u!114 &4680941027655433575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31c80d4ffae51c4194111c9c284cd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 200
   destroyOnDeath: 0
 --- !u!114 &2805041046550777671
 MonoBehaviour:
@@ -324,7 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738ebabd04ac47b6a4968db9730ea585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathScreenUI: {fileID: 3011915366617621379, guid: b0fcf5ea3f050314384b4060406f20ae, type: 3}
+  deathScreenUI: {fileID: 0}
   respawnDelay: 5
 --- !u!114 &8043675714806764113
 MonoBehaviour:
@@ -574,7 +575,7 @@ Transform:
   m_GameObject: {fileID: 8229948758009459419}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.111, y: 0.021, z: 0}
+  m_LocalPosition: {x: 0.106, y: -0.032, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

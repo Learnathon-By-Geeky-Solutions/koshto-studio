@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Player.Weapons;
+using Player.Input;
 
 namespace Player
 {
@@ -14,10 +15,10 @@ namespace Player
         [SerializeField] private Weapon secondaryWeapon;
         [SerializeField] private Weapon specialWeapon;
         [SerializeField] private Transform weaponHolder;
-        
+
         [SerializeField] private int startingSpecialAmmo = 5;
         [SerializeField] private int killsPerSpecialAmmo = 2;
-
+        [SerializeField] private Animator playerAnimator;
         private int specialAmmo;
         private int killCount;
         private bool isAttacking = false;
@@ -78,19 +79,35 @@ namespace Player
         {
             if (!context.performed || primaryWeapon == null || isAttacking) return;
 
-            primaryWeapon.gameObject.SetActive(true);
+            // Hide weapon and show animation
+            primaryWeapon.gameObject.SetActive(false);
+            if (playerAnimator != null)
+            {
+                playerAnimator.SetTrigger("Attack");
+            }
 
-            if (secondaryWeapon != null)
-                secondaryWeapon.gameObject.SetActive(false);
-
-            if (specialWeapon != null)
-                specialWeapon.gameObject.SetActive(false); // Hide special when not in use
+            // Hide other weapons
+            if (secondaryWeapon != null) secondaryWeapon.gameObject.SetActive(false);
+            if (specialWeapon != null) specialWeapon.gameObject.SetActive(false);
 
             isAttacking = true;
-            primaryWeapon.TryAttack();
-            StartCoroutine(ResetAttack());
+            StartCoroutine(AttackSequence());
         }
-        
+
+        private IEnumerator AttackSequence()
+        {
+            // Wait for animation to reach certain point before showing weapon
+            yield return new WaitForSeconds(0.1f); // Adjust this delay to match your animation
+
+            // Show weapon and perform attack
+            primaryWeapon.gameObject.SetActive(false);
+            primaryWeapon.TryAttack();
+
+            // Wait before resetting attack state
+            yield return new WaitForSeconds(0.2f);
+            isAttacking = false;
+        }
+
         public void OnSecondaryAttack(InputAction.CallbackContext context)
         {
             if (!context.performed || secondaryWeapon == null || isAttacking) return;
@@ -196,9 +213,9 @@ namespace Player
             var rb = weapon.GetComponent<Rigidbody2D>();
             if (rb != null) rb.simulated = true;
         }
-        
+
         //special weapon
-        
+
         public void OnEnemyKilled()
         {
             killCount++;

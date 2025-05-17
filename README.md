@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🎮 Koshto Studio Presents: **Project De**
+# 🎮 Koshto Studio Presents: **Awakened**
 
 *An action-packed 2D platformer with liberation or elimination mechanics.*
 
-![Game Banner Placeholder](https://via.placeholder.com/1000x300?text=Insert+Game+Banner+Here)
+![Game Banner Placeholder](https://github.com/Samiul191139/koshto-studio/blob/main/Assets/CustomAssets/MainMenu/MainMenu2.png)
 
 
 ### Explore Our Wiki, Project Management Docs, and Tools!
@@ -116,7 +116,8 @@ In a hyper-capitalist future where a **corrupt CEO** uses mind-control tech to e
 | Jump           | Space              |
 | Dash           | Left Shift (Tap)   |
 | Sprint         | Left Shift (Hold)  |
-| Attack         | Left Click         |
+| Primary Attack | Left Click         |
+| Secondary Attack| Right Click         |
 | Pickup Weapon  | E                  |
 
 ---

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 namespace Enemy.Bosses.NightBorne
@@ -12,6 +12,12 @@ namespace Enemy.Bosses.NightBorne
         [SerializeField] private float chargeDuration = 1.0f;
 
         private bool isCharging = false;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            // Optional: anything extra in your controller Awake
+        }
 
         private void Update()
         {
@@ -66,6 +72,15 @@ namespace Enemy.Bosses.NightBorne
 
             rb.velocity = Vector2.zero;
             isCharging = false;
+        }
+
+        // 🛠️ OVERRIDE ActivateBoss
+        public override void ActivateBoss()
+        {
+            base.ActivateBoss(); // First, call the base to set isActive = true
+
+            BossHealthBarUI.Instance.Show();
+            Debug.Log("NightBorne Boss Activated and Healthbar Shown!");
         }
     }
 }

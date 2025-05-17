@@ -33,7 +33,6 @@ namespace Player.Weapons
                 Debug.LogWarning("MeleeWeapon: Not properly configured.");
                 return;
             }
-
             PerformAttack();
         }
 
