@@ -21,6 +21,7 @@ namespace Common
                 if (isBossCheckpoint && bossToActivate != null)
                 {
                     bossToActivate.ActivateBoss();
+                    BossHealthBarUI.Instance.Show();
                     Debug.Log("Boss activated!");
                 }
             }

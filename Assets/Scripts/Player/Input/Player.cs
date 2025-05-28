@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Game;
+using UI;
 
 namespace Player.Input
 {
@@ -55,6 +56,42 @@ namespace Player.Input
         private bool isDashing;
         private bool isWallJumping;
         private bool isInvulnerable;
+        private bool isAttacking = false;
+
+        private DashUI dashUI;
+
+        private void Start()
+        {
+            currentDashCharges = maxDashCharges;
+            dashUI = FindObjectOfType<DashUI>();
+            UpdateDashUI(); // Initialize UI
+        }
+
+        public void PlayAttackAnimation()
+        {
+            if (!isDead) // Only attack if player isn't dead
+            {
+                isAttacking = true;
+                animator.SetTrigger("Attack");
+
+                // Reset after animation completes
+                StartCoroutine(ResetAttackState());
+            }
+        }
+
+        private IEnumerator ResetAttackState()
+        {
+            // Wait for 0.1s to ensure animation starts
+            yield return new WaitForSeconds(0.1f);
+
+            // Wait until attack animation finishes
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") == false);
+
+            isAttacking = false;
+        }
+
+        //to check attack state
+        public bool IsAttacking => isAttacking;
 
         public bool isDead { get; private set; }
 
@@ -187,6 +224,7 @@ namespace Player.Input
             isDashing = true;
             isInvulnerable = true;
             currentDashCharges--;
+            UpdateDashUI();
             lastDashTime = Time.time;
 
             rb.gravityScale = 0f;
@@ -207,10 +245,17 @@ namespace Player.Input
             if (currentDashCharges < maxDashCharges && Time.time - lastDashTime >= dashRechargeTime)
             {
                 currentDashCharges++;
+                UpdateDashUI();
                 lastDashTime = Time.time; // reset timer for next recharge
             }
         }
-
+        private void UpdateDashUI()
+        {
+            if (dashUI != null)
+            {
+                dashUI.UpdateDashUI(currentDashCharges, maxDashCharges);
+            }
+        }
         private void ApplyMovement()
         {
             if (isDashing || isWallJumping) return;

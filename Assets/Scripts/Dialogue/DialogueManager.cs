@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,6 +11,7 @@ namespace DialogueSystem
         [SerializeField] private DialogueUI dialogueUI;
         private readonly Queue<DialogueLine> dialogueQueue = new();
         private bool isDialoguePlaying;
+        public static event Action OnDialogueEnd;
 
         private PlayerControls playerControls;
 
@@ -68,6 +70,8 @@ namespace DialogueSystem
             Time.timeScale = 1f;
             isDialoguePlaying = false;
             dialogueUI.HideDialogue();
+
+            OnDialogueEnd?.Invoke();
         }
     }
 }
